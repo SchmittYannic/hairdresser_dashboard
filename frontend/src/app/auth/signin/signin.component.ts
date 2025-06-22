@@ -21,7 +21,7 @@ export class SigninComponent {
   onSubmit() {
     if (this.signinForm.valid) {
       const { username, password } = this.signinForm.value;
-      this.authService.login(username, password).subscribe({
+      this.authService.signin(username, password).subscribe({
         next: (res) => console.log('Login success', res),
         error: (err) => console.error('Login failed', err)
       });
