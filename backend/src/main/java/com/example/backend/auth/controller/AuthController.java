@@ -1,12 +1,12 @@
 package com.example.backend.auth.controller;
 
 import com.example.backend.auth.dto.*;
-import com.example.backend.auth.model.User;
 import com.example.backend.auth.service.AuthService;
 import com.example.backend.auth.security.JwtService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,6 +20,9 @@ public class AuthController {
 
     @Autowired
     private JwtService jwtService;
+
+    @Value("${cookie.refreshTokenMaxAge:604800}")
+    private int refreshTokenMaxAge;
 
     private static final String REFRESH_TOKEN_COOKIE = "refreshToken";
 
@@ -42,7 +45,7 @@ public class AuthController {
         refreshTokenCookie.setHttpOnly(true);
         refreshTokenCookie.setSecure(false); // Set true in production with HTTPS!
         refreshTokenCookie.setPath("/auth/refresh");
-        refreshTokenCookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
+        refreshTokenCookie.setMaxAge(refreshTokenMaxAge);
 
         response.addCookie(refreshTokenCookie);
 
@@ -63,7 +66,7 @@ public class AuthController {
         refreshTokenCookie.setHttpOnly(true);
         refreshTokenCookie.setSecure(false); // true on production + HTTPS
         refreshTokenCookie.setPath("/auth/refresh");
-        refreshTokenCookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
+        refreshTokenCookie.setMaxAge(refreshTokenMaxAge);
         response.addCookie(refreshTokenCookie);
 
         return newAccessToken;

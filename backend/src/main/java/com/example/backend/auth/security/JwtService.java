@@ -2,6 +2,7 @@ package com.example.backend.auth.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -12,8 +13,11 @@ public class JwtService {
     private final Key accessTokenKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private final Key refreshTokenKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    private final long accessTokenExpirationMs = 1000 * 60 * 15; // 15 minutes
-    private final long refreshTokenExpirationMs = 1000L * 60 * 60 * 24 * 7; // 7 days
+    @Value("${jwt.accessTokenExpirationMs:1200000}")
+    private long accessTokenExpirationMs;
+
+    @Value("${jwt.refreshTokenExpirationMs:604800000}")
+    private long refreshTokenExpirationMs;
 
     // Access Token
     public String generateAccessToken(String email) {
