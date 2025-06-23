@@ -11,7 +11,7 @@ import java.util.List;
 public class CorsConfig implements WebMvcConfigurer {
 
     @Value("${frontend.urls}")
-    private String frontendUrls; // Komma-separierte Liste
+    private String frontendUrls;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -22,6 +22,7 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins(origins.toArray(new String[0]))
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*");
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 }

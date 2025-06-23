@@ -23,7 +23,7 @@ public class AuthService {
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public AuthResponse register(RegisterRequest request) {
+    public void register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already taken");
         }
@@ -35,12 +35,9 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
-
-        String token = jwtService.generateToken(user.getEmail());
-        return new AuthResponse(token);
     }
 
-    public AuthResponse signin(SigninRequest request) {
+    public AccessTokenResponse signin(SigninRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
 
@@ -55,14 +52,22 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
 
-        String token = jwtService.generateToken(user.getEmail());
-        return new AuthResponse(token);
+        String accessToken = jwtService.generateAccessToken(user.getEmail());
+        return new AccessTokenResponse(accessToken);
     }
 
-    public User getCurrentUser(String authHeader) {
-        String token = authHeader.replace("Bearer ", "");
-        String email = jwtService.extractUsername(token);
+    public User getUserFromRefreshToken(String refreshToken) {
+        if (!jwtService.isRefreshTokenValid(refreshToken)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid refresh token");
+        }
+        String email = jwtService.extractEmailFromRefreshToken(refreshToken);
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
+    }
+
+    public AccessTokenResponse refreshAccessToken(String refreshToken) {
+        User user = getUserFromRefreshToken(refreshToken);
+        String newAccessToken = jwtService.generateAccessToken(user.getEmail());
+        return new AccessTokenResponse(newAccessToken);
     }
 }
