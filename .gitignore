@@ -65,3 +65,4 @@ yarn-debug.log*
 yarn-error.log*
 /backend/target
 /backend/.idea
+backend/src/main/resources/application.properties
