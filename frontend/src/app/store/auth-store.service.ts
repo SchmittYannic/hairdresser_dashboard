@@ -3,6 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStoreService {
+  private isRefreshLoadingSubject = new BehaviorSubject<boolean>(false);
+  isRefreshLoading$ = this.isRefreshLoadingSubject.asObservable();
   private accessTokenSubject = new BehaviorSubject<string | null>(null);
   accessToken$ = this.accessTokenSubject.asObservable();
 
@@ -16,5 +18,13 @@ export class AuthStoreService {
 
   clearToken() {
     this.accessTokenSubject.next(null);
+  }
+
+  setIsRefreshLoading(isLoading: boolean) {
+    this.isRefreshLoadingSubject.next(isLoading);
+  }
+
+  getIsRefreshLoading(): boolean {
+    return this.isRefreshLoadingSubject.getValue()
   }
 }

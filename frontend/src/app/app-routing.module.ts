@@ -1,17 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './auth/auth.guard';
+import { AuthGuard } from 'app/auth/auth.guard';
+import { SpinnerComponent } from 'app/shared/components/spinner';
+import { RefreshDoneGuard } from './auth/refresh-done.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'signin',
-    pathMatch: 'full'
+    component: SpinnerComponent
   },
   {
     path: 'signin',
     loadChildren: () =>
-      import('./auth/auth.module').then(m => m.AuthModule)
+      import('./auth/auth.module').then(m => m.AuthModule),
+    canActivate: [RefreshDoneGuard],
   },
   {
     path: 'dashboard',
