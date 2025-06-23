@@ -1,21 +1,32 @@
 package com.example.backend.auth.controller;
 
+import com.example.backend.auth.dto.AuthResponse;
 import com.example.backend.auth.dto.SigninRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.example.backend.auth.dto.RegisterRequest;
+import com.example.backend.auth.model.User;
+import com.example.backend.auth.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+    @Autowired
+    private AuthService authService;
+
+    @PostMapping("/register")
+    public AuthResponse register(@RequestBody RegisterRequest request) {
+        return authService.register(request);
+    }
 
     @PostMapping("/signin")
-    public void signin(@RequestBody SigninRequest request) {
-        String username = request.getUsername();
-        String password = request.getPassword();
+    public AuthResponse signin(@RequestBody SigninRequest request) {
+        return authService.signin(request);
+    }
 
-        logger.info("Login attempt - username: {}, password length: {}", username, password != null ? password.length() : 0);
+    @GetMapping("/me")
+    public User getCurrentUser(@RequestHeader("Authorization") String token) {
+        return authService.getCurrentUser(token);
     }
 }
