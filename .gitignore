@@ -1,1 +1,66 @@
-backend/src/main/resources/application.properties
+# -------------------------
+# Global - OS and IDE junk
+# -------------------------
+.DS_Store
+Thumbs.db
+*.log
+*.orig
+
+# -------------------------
+# Git
+# -------------------------
+*.swp
+*.swo
+
+# -------------------------
+# IntelliJ / JetBrains
+# -------------------------
+.idea/
+*.iml
+*.iws
+out/
+
+# VS Code
+.vscode/
+
+# -------------------------
+# Backend (Spring Boot - Maven)
+# -------------------------
+/backend/target/
+/backend/.classpath
+/backend/.project
+/backend/.settings/
+/backend/*.iml
+/backend/.env
+/backend/application-*.yml
+/backend/application-*.yaml
+/backend/application-*.properties
+
+# Maven wrapper logs and backup files
+/backend/pom.xml.tag
+/backend/pom.xml.releaseBackup
+/backend/pom.xml.versionsBackup
+/backend/pom.xml.next
+/backend/release.properties
+
+# -------------------------
+# Frontend (Angular)
+# -------------------------
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.angular/cache/
+/frontend/.env
+
+# Angular environment files (if used)
+# Adjust if you use environment.prod.ts or .local.ts
+/frontend/src/environments/environment.*.ts
+
+# -------------------------
+# Logs and temp files
+# -------------------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/backend/target
