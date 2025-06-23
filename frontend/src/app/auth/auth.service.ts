@@ -1,15 +1,39 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { AuthStoreService } from 'app/store/auth-store.service';
 import { environment } from 'environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = `${environment.apiUrl}/auth`; // Backend-URL
+  private apiUrl = `${environment.apiUrl}/auth`;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private store: AuthStoreService,
+    private router: Router
+  ) { }
 
-  signin(username: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/signin`, { username, password });
+  signin(email: string, password: string) {
+    return this.http.post<{ accessToken: string }>(
+      `${this.apiUrl}/signin`,
+      { email, password },
+      { withCredentials: true }
+    );
+  }
+
+  refreshToken() {
+    return this.http.post<{ accessToken: string }>(
+      `${this.apiUrl}/refresh`,
+      {},
+      { withCredentials: true }
+    );
+  }
+
+  logout() {
+    return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).subscribe(() => {
+      this.store.clearToken();
+      this.router.navigate(['/signin']);
+    });
   }
 }
