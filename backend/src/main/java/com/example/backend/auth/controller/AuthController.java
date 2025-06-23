@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import jakarta.annotation.PostConstruct;
 
 @RestController
 @RequestMapping("/auth")
@@ -25,6 +26,16 @@ public class AuthController {
     private int refreshTokenMaxAge;
 
     private static final String REFRESH_TOKEN_COOKIE = "refreshToken";
+
+    @Value("${spring.profiles.active:dev}")
+    private String activeProfile;
+
+    private boolean isProd;
+
+    @PostConstruct
+    private void init() {
+        this.isProd = "prod".equalsIgnoreCase(activeProfile);
+    }
 
     @PostMapping("/register")
     public void register(@RequestBody RegisterRequest request) {
@@ -43,7 +54,7 @@ public class AuthController {
         // set refresh token as HttpOnly cookie
         Cookie refreshTokenCookie = new Cookie(REFRESH_TOKEN_COOKIE, refreshToken);
         refreshTokenCookie.setHttpOnly(true);
-        refreshTokenCookie.setSecure(false); // Set true in production with HTTPS!
+        refreshTokenCookie.setSecure(isProd);
         refreshTokenCookie.setPath("/auth/refresh");
         refreshTokenCookie.setMaxAge(refreshTokenMaxAge);
 
@@ -61,10 +72,9 @@ public class AuthController {
 
         AccessTokenResponse newAccessToken = authService.refreshAccessToken(refreshToken);
 
-        // Optionally: renew refresh token cookie expiration if you want sliding sessions
         Cookie refreshTokenCookie = new Cookie(REFRESH_TOKEN_COOKIE, refreshToken);
         refreshTokenCookie.setHttpOnly(true);
-        refreshTokenCookie.setSecure(false); // true on production + HTTPS
+        refreshTokenCookie.setSecure(isProd);
         refreshTokenCookie.setPath("/auth/refresh");
         refreshTokenCookie.setMaxAge(refreshTokenMaxAge);
         response.addCookie(refreshTokenCookie);
@@ -76,7 +86,7 @@ public class AuthController {
     public void logout(HttpServletResponse response) {
         Cookie deleteCookie = new Cookie(REFRESH_TOKEN_COOKIE, null);
         deleteCookie.setHttpOnly(true);
-        deleteCookie.setSecure(false); // true on production + HTTPS
+        deleteCookie.setSecure(isProd);
         deleteCookie.setPath("/auth/refresh");
         deleteCookie.setMaxAge(0);
         response.addCookie(deleteCookie);
