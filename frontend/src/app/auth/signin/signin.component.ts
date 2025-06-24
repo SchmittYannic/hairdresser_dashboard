@@ -23,7 +23,7 @@ export class SigninComponent {
     this.signinForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      saveDetails: [false]
+      saveDetails: [true]
     });
   }
 
@@ -47,12 +47,9 @@ export class SigninComponent {
 
     const { email, password, saveDetails } = this.signinForm.value;
 
-    this.authService.signin(email, password).subscribe({
+    this.authService.signin(email, password, saveDetails).subscribe({
       next: (res) => {
         this.store.setToken(res.accessToken);
-        if (saveDetails) {
-          // You can store token/email locally here if needed in future
-        }
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {

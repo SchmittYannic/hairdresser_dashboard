@@ -46,17 +46,17 @@ public class AuthController {
     public AccessTokenResponse signin(@RequestBody SigninRequest request,
                                      HttpServletResponse response) {
 
+        boolean saveDetails = request.getSaveDetails();
+
         AccessTokenResponse accessTokenResponse = authService.signin(request);
 
-        // generate refresh token
         String refreshToken = jwtService.generateRefreshToken(request.getEmail());
 
-        // set refresh token as HttpOnly cookie
         Cookie refreshTokenCookie = new Cookie(REFRESH_TOKEN_COOKIE, refreshToken);
         refreshTokenCookie.setHttpOnly(true);
         refreshTokenCookie.setSecure(isProd);
         refreshTokenCookie.setPath("/auth/refresh");
-        refreshTokenCookie.setMaxAge(refreshTokenMaxAge);
+        refreshTokenCookie.setMaxAge(request.getSaveDetails() ? refreshTokenMaxAge : -1);
 
         response.addCookie(refreshTokenCookie);
 
@@ -72,12 +72,13 @@ public class AuthController {
 
         AccessTokenResponse newAccessToken = authService.refreshAccessToken(refreshToken);
 
-        Cookie refreshTokenCookie = new Cookie(REFRESH_TOKEN_COOKIE, refreshToken);
-        refreshTokenCookie.setHttpOnly(true);
-        refreshTokenCookie.setSecure(isProd);
-        refreshTokenCookie.setPath("/auth/refresh");
-        refreshTokenCookie.setMaxAge(refreshTokenMaxAge);
-        response.addCookie(refreshTokenCookie);
+        /* wenn der code wieder genutzt wird -> nicht vergessen save Details beim login zu berücksichtigen */
+        //        Cookie refreshTokenCookie = new Cookie(REFRESH_TOKEN_COOKIE, refreshToken);
+        //        refreshTokenCookie.setHttpOnly(true);
+        //        refreshTokenCookie.setSecure(isProd);
+        //        refreshTokenCookie.setPath("/auth/refresh");
+        //        refreshTokenCookie.setMaxAge(refreshTokenMaxAge);
+        //        response.addCookie(refreshTokenCookie);
 
         return newAccessToken;
     }

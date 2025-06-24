@@ -14,10 +14,11 @@ export class AuthService {
     private router: Router
   ) { }
 
-  signin(email: string, password: string) {
+  signin(email: string, password: string, saveDetails: boolean) {
+    console.log("saveDetails: ", saveDetails)
     return this.http.post<{ accessToken: string }>(
       `${this.apiUrl}/signin`,
-      { email, password },
+      { email, password, saveDetails },
       { withCredentials: true }
     );
   }
