@@ -44,12 +44,12 @@ public class AuthService {
         boolean hasAccess = user.getRoles().stream()
                 .anyMatch(role -> role.equalsIgnoreCase("Employee") || role.equalsIgnoreCase("Admin"));
 
-        if (!hasAccess) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied: not an employee or admin");
-        }
-
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
+        }
+
+        if (!hasAccess) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied: not an employee or admin");
         }
 
         String accessToken = jwtService.generateAccessToken(user.getEmail());
