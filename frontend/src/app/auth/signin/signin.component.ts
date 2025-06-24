@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
-import { AuthStoreService } from '../../store/auth-store.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'app/auth/auth.service';
+import { AuthStoreService } from 'app/store/auth-store.service';
 
 @Component({
   selector: 'app-signin',
@@ -22,24 +22,48 @@ export class SigninComponent {
   ) {
     this.signinForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      saveDetails: [false]
     });
   }
 
-  onSubmit() {
-    if (this.signinForm.valid) {
-      const { email, password } = this.signinForm.value;
+  get email() {
+    return this.signinForm.get('email');
+  }
 
-      this.authService.signin(email, password).subscribe({
-        next: (res) => {
-          this.store.setToken(res.accessToken);
-          this.router.navigate(['/dashboard']);
-        },
-        error: (err) => {
-          console.error('Login failed', err);
-          this.error = 'Login failed. Please check your credentials.';
-        }
-      });
+  get password() {
+    return this.signinForm.get('password');
+  }
+
+  get saveDetails() {
+    return this.signinForm.get('saveDetails');
+  }
+
+  onSubmit() {
+    if (this.signinForm.invalid) {
+      this.signinForm.markAllAsTouched();
+      return;
     }
+
+    const { email, password, saveDetails } = this.signinForm.value;
+
+    this.authService.signin(email, password).subscribe({
+      next: (res) => {
+        this.store.setToken(res.accessToken);
+        if (saveDetails) {
+          // You can store token/email locally here if needed in future
+        }
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        if (err.status === 403) {
+          this.error = 'Access denied: not an employee or admin';
+        } else if (err.status === 401) {
+          this.error = 'Login failed. Please check your credentials.'
+        } else {
+          this.error = 'An error occured. Try again later or contact support';
+        }
+      }
+    });
   }
 }
