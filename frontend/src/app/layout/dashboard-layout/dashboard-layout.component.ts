@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { CommonModule } from '@angular/common';
 import { DashboardLayoutService } from './dashboard-layout.service';
+import { SidebarModule } from './sidebar/sidebar.module';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -13,10 +13,10 @@ import { DashboardLayoutService } from './dashboard-layout.service';
   styleUrl: './dashboard-layout.component.scss',
   imports: [
     RouterModule,
-    SidebarComponent,
+    CommonModule,
+    SidebarModule,
     HeaderComponent,
     FooterComponent,
-    CommonModule
   ]
 })
 export class DashboardLayoutComponent implements OnInit {
