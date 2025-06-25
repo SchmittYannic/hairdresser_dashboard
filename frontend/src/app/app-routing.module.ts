@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'app/auth/auth.guard';
 import { SpinnerComponent } from 'app/shared/components/spinner';
-import { RefreshDoneGuard } from './auth/refresh-done.guard';
+import { RefreshDoneGuard } from 'app/auth/refresh-done.guard';
+import { DashboardLayoutComponent } from 'app/layout/dashboard-layout/dashboard-layout.component';
 
 const routes: Routes = [
   {
@@ -17,10 +18,16 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadChildren: () =>
-      import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+    component: DashboardLayoutComponent,
     canActivate: [AuthGuard],
+    children: [
+      {
+        path: '', loadComponent: () =>
+          import('./dashboard-pages/home/home.component').then(m => m.HomeComponent),
+      }
+    ]
   },
+  { path: '**', redirectTo: 'dashboard' },
 ];
 
 @NgModule({
