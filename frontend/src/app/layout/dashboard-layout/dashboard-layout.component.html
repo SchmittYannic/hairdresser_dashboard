@@ -1,5 +1,6 @@
 <div class="layout-wrapper" [ngClass]="{
     'sidebar-fixed': isFixed,
+    'sidebar-not-fixed': !isFixed,
     'sidebar-collapsed': isCollapsed
   }">
   <app-sidebar class="sidebar"></app-sidebar>

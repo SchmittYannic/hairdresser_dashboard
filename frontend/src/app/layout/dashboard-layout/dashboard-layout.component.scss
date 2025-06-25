@@ -9,17 +9,29 @@
   position: fixed;
   transition: all .3s ease-in-out;
   box-shadow: 1px 0 20px #3f4d67;
-  width: 264px;
+  width: var(--bs-sidebar-width);
   height: 100vh;
   top: 0;
   background: #3f4d67;
   color: #a9b7d0;
 }
 
+.sidebar-not-fixed .sidebar {
+  width: var(--bs-sidebar-collapsed-width);
+  height: 100%;
+  transition: all .3s ease-in-out;
+}
+
+.sidebar-not-fixed .sidebar:hover {
+  width: var(--bs-sidebar-width);
+}
+
 .main-content {
+  margin-left: var(--bs-sidebar-collapsed-width);
   flex: 1;
   display: flex;
   flex-direction: column;
+  transition: all .3s ease-in-out; // delete later
 
   .body {
     flex: 1;
@@ -29,5 +41,5 @@
 }
 
 .sidebar-fixed .main-content {
-  margin-left: 264px;
+  margin-left: var(--bs-sidebar-width);
 }
