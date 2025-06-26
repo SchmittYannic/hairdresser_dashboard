@@ -795,7 +795,7 @@ fieldset:disabled .btn {
 
 .sidebar-not-fixed .sidebar:not(:hover) .pcoded-inner-navbar app-sidebar-item>li>a,
 .sidebar-not-fixed .sidebar:not(:hover) .pcoded-inner-navbar>app-sidebar-group>app-sidebar-collapse>li>a {
-  width: 80px;
+  width: var(--bs-sidebar-collapsed-width);
 }
 
 .sidebar-not-fixed .sidebar:hover .pcoded-inner-navbar app-sidebar-item>li>a>.pcoded-mtext::after,
