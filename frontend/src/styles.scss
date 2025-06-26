@@ -261,6 +261,10 @@ p.text-muted {
   width: 100% !important;
 }
 
+label {
+  display: inline-block;
+}
+
 a {
   text-decoration: none;
 }
@@ -282,6 +286,40 @@ p {
 h6,
 p {
   font-size: 14px;
+}
+
+ol,
+ul {
+  padding-left: 2rem;
+}
+
+ol,
+ul,
+dl {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.nav {
+  --bs-nav-link-padding-x: 1rem;
+  --bs-nav-link-padding-y: .5rem;
+  --bs-nav-link-font-weight: ;
+  --bs-nav-link-color: var(--bs-link-color);
+  --bs-nav-link-hover-color: var(--bs-link-hover-color);
+  --bs-nav-link-disabled-color: var(--bs-secondary-color);
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
 }
 
 button {
@@ -550,6 +588,170 @@ fieldset:disabled .btn {
   border: 0;
 }
 
+/* sidebar styles */
+
+.pcoded-navbar .navbar-content,
+.pcoded-navbar .navbar-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.pcoded-navbar ul {
+  padding-left: 0;
+  list-style: none;
+  margin-bottom: 0;
+}
+
+.pcoded-navbar .pcoded-inner-navbar {
+  flex-direction: column;
+}
+
+.pcoded-navbar .pcoded-menu-caption {
+  color: #e8edf7;
+}
+
+.pcoded-navbar .pcoded-inner-navbar li {
+  position: relative;
+}
+
+.pcoded-navbar .pcoded-inner-navbar li.pcoded-menu-caption {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 25px 20px 5px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.pcoded-navbar .pcoded-inner-navbar app-sidebar-item>li.active::after {
+  top: 0 !important;
+  height: 100% !important;
+}
+
+.pcoded-navbar .pcoded-inner-navbar app-sidebar-item>li.nav-item.active::after,
+.pcoded-navbar .pcoded-inner-navbar app-sidebar-item>li.nav-item.pcoded-trigger::after,
+.pcoded-navbar .pcoded-inner-navbar>app-sidebar-group>app-sidebar-collapse>li.active::after,
+.pcoded-navbar .pcoded-inner-navbar>app-sidebar-group>app-sidebar-collapse>li.pcoded-trigger::after {
+  content: "";
+  background-color: #1dc4e9;
+  z-index: 1027;
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 3px;
+  height: calc(100% - 5px);
+}
+
+.nav-link {
+  display: block;
+  padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+  font-size: var(--bs-nav-link-font-size);
+  font-weight: var(--bs-nav-link-font-weight);
+  color: var(--bs-nav-link-color);
+  text-decoration: none;
+  background: none;
+  border: 0;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+}
+
+.nav-link {
+  display: block;
+  padding: 10px 24px;
+}
+
+.pcoded-navbar a {
+  color: #a9b7d0;
+}
+
+.nav-link:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 .25rem #0d6efd40;
+}
+
+.pcoded-navbar .pcoded-inner-navbar li>a {
+  text-align: left;
+  padding: 7px 15px;
+  margin: 5px 0 0;
+  display: block;
+  border-radius: 0;
+  position: relative;
+}
+
+// .pcoded-navbar .pcoded-inner-navbar>app-sidebar-group>app-sidebar-collapse li.active>a,
+// .pcoded-navbar .pcoded-inner-navbar>app-sidebar-group>app-sidebar-collapse li:focus>a,
+// .pcoded-navbar .pcoded-inner-navbar>app-sidebar-group>app-sidebar-collapse li:hover>a {
+//   color: #1dc4e9;
+// }
+
+.pcoded-navbar .pcoded-inner-navbar .nav-link:hover,
+.pcoded-navbar .pcoded-inner-navbar .nav-link:focus {
+  color: #04a9f5;
+}
+
+.sidebar-not-fixed .pcoded-inner-navbar app-sidebar-item>li>a,
+.sidebar-not-fixed .pcoded-inner-navbar>app-sidebar-group>app-sidebar-collapse>li>a {
+  z-index: 1026;
+  padding: 7px 25px;
+}
+
+.pcoded-navbar .pcoded-inner-navbar app-sidebar-item>li.nav-item.active>a,
+.pcoded-navbar .pcoded-inner-navbar app-sidebar-item>li.nav-item.pcoded-trigger>a,
+.pcoded-navbar .pcoded-inner-navbar>app-sidebar-group>app-sidebar-collapse>li.active>a,
+.pcoded-navbar .pcoded-inner-navbar>app-sidebar-group>app-sidebar-collapse>li.pcoded-trigger>a {
+  background: #333f54;
+  color: #fff;
+}
+
+.pcoded-navbar .pcoded-inner-navbar li>a>.pcoded-micon {
+  font-size: 1rem;
+  padding: 4px 7px;
+  margin-right: 7px;
+  border-radius: 4px;
+  width: 30px;
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  text-align: center;
+}
+
+.feather {
+  font-family: feather !important;
+  speak: none;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-home::before {
+  content: "\e87a";
+}
+
+.pcoded-navbar .pcoded-inner-navbar li>a .pcoded-mtext {
+  position: relative;
+}
+
+.pcoded-navbar .pcoded-inner-navbar li>a>.pcoded-micon+.pcoded-mtext {
+  position: absolute;
+  top: 11px;
+}
+
+.sidebar-not-fixed.sidebar-not-fixed .pcoded-inner-navbar app-sidebar-item>li>a>.pcoded-mtext,
+.sidebar-not-fixed.sidebar-not-fixed .pcoded-inner-navbar>app-sidebar-group>app-sidebar-collapse>li>a>.pcoded-mtext {
+  transform: rotateY(-90deg);
+  transform-origin: 0 0;
+  opacity: 0;
+  transition: all .3s ease-in-out;
+}
+
+.sidebar-not-fixed .sidebar:hover .pcoded-inner-navbar app-sidebar-item>li>a>.pcoded-mtext,
+.sidebar-not-fixed .sidebar:hover .pcoded-inner-navbar>app-sidebar-group>app-sidebar-collapse>li>a>.pcoded-mtext {
+  transform: rotateY(0);
+  opacity: 1;
+}
+
 .sidebar-not-fixed.sidebar-not-fixed .pcoded-navbar .header-logo.navbar-brand {
   width: var(--bs-sidebar-collapsed-width);
 }
@@ -563,4 +765,47 @@ fieldset:disabled .btn {
   transform: rotateY(-90deg);
   transform-origin: 0 0;
   opacity: 0;
+}
+
+.sidebar-not-fixed .pcoded-menu-caption::after {
+  content: "";
+  position: absolute;
+  top: 25px;
+  left: 15px;
+  width: calc(100% - 30px);
+  height: 1px;
+  background: #0000001a;
+}
+
+.sidebar-not-fixed .sidebar:hover .pcoded-menu-caption::after {
+  background: transparent;
+}
+
+.sidebar-not-fixed .pcoded-menu-caption>label {
+  transform: rotateY(-90deg);
+  transform-origin: 0 0;
+  opacity: 0;
+  transition: all .3s ease-in-out;
+}
+
+.sidebar-not-fixed .sidebar:hover .pcoded-menu-caption>label {
+  transform: rotateY(0);
+  opacity: 1;
+}
+
+.sidebar-not-fixed .sidebar:not(:hover) .pcoded-inner-navbar app-sidebar-item>li>a,
+.sidebar-not-fixed .sidebar:not(:hover) .pcoded-inner-navbar>app-sidebar-group>app-sidebar-collapse>li>a {
+  width: 80px;
+}
+
+.sidebar-not-fixed .sidebar:hover .pcoded-inner-navbar app-sidebar-item>li>a>.pcoded-mtext::after,
+.sidebar-not-fixed .sidebar:hover .pcoded-inner-navbar>app-sidebar-group>app-sidebar-collapse>li>a>.pcoded-mtext::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media only screen and (max-width: 1200px) and (min-width: 768px) {
+  .sidebar-not-fixed .pcoded-menu-caption>label {
+    transition: none;
+  }
 }

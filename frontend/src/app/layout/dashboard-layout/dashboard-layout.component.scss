@@ -7,7 +7,7 @@
   display: block;
   z-index: 1029;
   position: fixed;
-  transition: all .3s ease-in-out;
+  //transition: all .3s ease-in-out;
   box-shadow: 1px 0 20px #3f4d67;
   width: var(--bs-sidebar-width);
   height: 100vh;
@@ -19,7 +19,7 @@
 .sidebar-not-fixed .sidebar {
   width: var(--bs-sidebar-collapsed-width);
   height: 100%;
-  transition: all .3s ease-in-out;
+  //transition: all .3s ease-in-out;
 }
 
 .sidebar-not-fixed .sidebar:hover {

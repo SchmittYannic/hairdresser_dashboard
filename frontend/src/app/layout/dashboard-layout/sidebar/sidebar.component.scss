@@ -1,9 +1,3 @@
-.pcoded-navbar .navbar-content,
-.pcoded-navbar .navbar-wrapper {
-  width: 100%;
-  height: 100%;
-}
-
 .navbar-brand {
   padding-top: var(--bs-navbar-brand-padding-y);
   padding-bottom: var(--bs-navbar-brand-padding-y);
@@ -28,7 +22,7 @@
   width: var(--bs-sidebar-width);
   margin-right: 0;
   padding: 10px 20px;
-  transition: all .3s ease-in-out;
+  //transition: all .3s ease-in-out;
 }
 
 .pcoded-navbar .header-logo+.scroll-div {
