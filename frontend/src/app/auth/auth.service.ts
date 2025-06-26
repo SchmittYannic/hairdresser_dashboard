@@ -15,7 +15,6 @@ export class AuthService {
   ) { }
 
   signin(email: string, password: string, saveDetails: boolean) {
-    console.log("saveDetails: ", saveDetails)
     return this.http.post<{ accessToken: string }>(
       `${this.apiUrl}/signin`,
       { email, password, saveDetails },
