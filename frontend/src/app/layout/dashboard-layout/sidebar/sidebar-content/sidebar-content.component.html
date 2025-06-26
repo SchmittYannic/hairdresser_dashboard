@@ -1,1 +1,28 @@
-<p>sidebar-content works!</p>
+<ng-scrollbar style="height: calc(-70px + 100vh);">
+  <div class="navbar-content">
+    <ul class="nav pcoded-inner-navbar">
+      <app-sidebar-group forId="title" labelText="Navigation">
+        <app-sidebar-item link="/dashboard">
+          <a class="nav-link" routerLink="/dashboard">
+            <span class="pcoded-micon">
+              <i class="feather icon-home"></i>
+            </span>
+            <span class="pcoded-mtext">
+              Dashboard
+            </span>
+          </a>
+        </app-sidebar-item>
+        <app-sidebar-item link="/dashboard/schedule">
+          <a class="nav-link" routerLink="/dashboard/schedule">
+            <span class="pcoded-micon">
+              <i class="feather icon-home"></i>
+            </span>
+            <span class="pcoded-mtext">
+              Schedule
+            </span>
+          </a>
+        </app-sidebar-item>
+      </app-sidebar-group>
+    </ul>
+  </div>
+</ng-scrollbar>
