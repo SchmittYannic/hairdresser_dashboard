@@ -1,4 +1,42 @@
-<header class="header">
-  <h1>My Dashboard</h1>
+<header>
+  <div class="collapse navbar-collapse px-4" style="display: none;">
+    <div class="me-auto">
+      <ul class="navbar-nav">
+        <li>
+          <a class="full-screen">
+            <i class="feather icon-maximize"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="ms-auto">
+      <ul class="navbar-nav">
+        <li>
+          <div class="dropdown" [ngClass]="{'show' : isNotificationsOpen }">
+            <a class="dropdown-toggle" [ngClass]="{'show' : isNotificationsOpen }" data-toggle="dropdown"
+              [attr.aria-expanded]="isNotificationsOpen" (click)="handleNotificationToggleClick($event)">
+              <i class="icon feather icon-bell"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end notification" [ngClass]="{'show' : isNotificationsOpen }"
+              data-bs-popper="static">
+              TEST
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="drp-user dropdown">
+            <a class="dropdown-toggle" [ngClass]="{'show' : isUserDropdownOpen }" data-toggle="dropdown"
+              [attr.aria-expanded]="isUserDropdownOpen" (click)="handleUserDropdownToggleClick($event)">
+              <i class="icon feather icon-settings"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end profile-notification" [ngClass]="{'show' : isUserDropdownOpen }"
+              data-bs-popper="static">
+              TEST
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
   <!-- <button (click)="logout()">Logout</button> -->
 </header>
