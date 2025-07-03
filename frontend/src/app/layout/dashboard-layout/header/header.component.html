@@ -3,8 +3,9 @@
     <div class="me-auto">
       <ul class="navbar-nav">
         <li>
-          <a class="full-screen">
-            <i class="feather icon-maximize"></i>
+          <a class="full-screen" (click)="toggleFullscreen()">
+            <i class="feather icon-maximize"
+              [ngClass]="{'icon-maximize': !isFullscreen,'icon-minimize': isFullscreen}"></i>
           </a>
         </li>
       </ul>

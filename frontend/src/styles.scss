@@ -1029,6 +1029,10 @@ fieldset:disabled .btn {
   content: "\e908";
 }
 
+.icon-minimize::before {
+  content: "\e88d";
+}
+
 .pcoded-header .dropdown .dropdown-toggle {
   line-height: 70px;
   display: inline-block;
