@@ -3,7 +3,7 @@
     'sidebar-not-fixed': !isFixed,
     'sidebar-collapsed': isCollapsed
   }">
-  <app-sidebar class="sidebar"></app-sidebar>
+  <app-sidebar #sidebar class="sidebar" [class.mob-open]="!isMobileSidebarCollapsed"></app-sidebar>
   <app-header class="navbar pcoded-header navbar-expand-lg navbar-light"></app-header>
   <app-footer></app-footer>
 </div>

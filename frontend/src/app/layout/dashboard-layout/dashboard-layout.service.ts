@@ -1,17 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ElementRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardLayoutService {
-  private isSidebarFixed = new BehaviorSubject<boolean>(true); // Sidebar is fixed or overlay
-  private isSidebarCollapsed = new BehaviorSubject<boolean>(false); // True when collapsed
+  private isSidebarFixed = new BehaviorSubject<boolean>(true);
+  private isSidebarCollapsed = new BehaviorSubject<boolean>(false);
   private isNotificationsOpen = new BehaviorSubject<boolean>(false);
   private isUserDropdownOpen = new BehaviorSubject<boolean>(false);
+  private isMobileSidebarCollapsed = new BehaviorSubject<boolean>(true);
+  private sidebarElement?: ElementRef;
 
   isSidebarFixed$ = this.isSidebarFixed.asObservable();
   isSidebarCollapsed$ = this.isSidebarCollapsed.asObservable();
   isNotificationsOpen$ = this.isNotificationsOpen.asObservable();
   isUserDropdownOpen$ = this.isUserDropdownOpen.asObservable();
+  isMobileSidebarCollapsed$ = this.isMobileSidebarCollapsed.asObservable();
 
   getIsSidebarFixed(): boolean {
     return this.isSidebarFixed.getValue();
@@ -27,6 +30,10 @@ export class DashboardLayoutService {
 
   getisUserDropdownOpen(): boolean {
     return this.isUserDropdownOpen.getValue();
+  }
+
+  getIsMobileSidebarCollapsed(): boolean {
+    return this.isMobileSidebarCollapsed.getValue();
   }
 
   toggleSidebarCollapse(): void {
@@ -45,6 +52,18 @@ export class DashboardLayoutService {
     this.isUserDropdownOpen.next(!this.isUserDropdownOpen.value);
   }
 
+  toggleMobileSidebarCollapsed(): void {
+    this.isMobileSidebarCollapsed.next(!this.isMobileSidebarCollapsed.value);
+
+    if (this.isMobileSidebarCollapsed) {
+      setTimeout(() => {
+        document.addEventListener('click', this.handleOutsideMobileSidebarClicked);
+      });
+    } else {
+      document.removeEventListener('click', this.handleOutsideMobileSidebarClicked);
+    }
+  }
+
   setSidebarCollapse(value: boolean): void {
     this.isSidebarCollapsed.next(value);
   }
@@ -60,4 +79,23 @@ export class DashboardLayoutService {
   setUserDropdownOpen(value: boolean): void {
     this.isUserDropdownOpen.next(value);
   }
+
+  setMobileSidebarCollapsed(value: boolean): void {
+    this.isMobileSidebarCollapsed.next(value);
+  }
+
+  setSidebarElement(ref: ElementRef) {
+    this.sidebarElement = ref;
+  }
+
+  handleOutsideMobileSidebarClicked = (event: MouseEvent): void => {
+    const sidebarEl = this.sidebarElement?.nativeElement;
+
+    const clickedInsideSidebar = sidebarEl.contains(event.target);
+
+    if (!clickedInsideSidebar) {
+      this.setMobileSidebarCollapsed(true);
+      document.removeEventListener('click', this.handleOutsideMobileSidebarClicked);
+    }
+  };
 }
