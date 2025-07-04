@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   isNotificationsOpen = false;
   isUserDropdownOpen = false;
   isFullscreen = false;
+  isMobileSidebarCollapsed = true;
 
   constructor(public layout: DashboardLayoutService) { }
 
@@ -53,9 +54,15 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  handleMobileCollapseClicked(event: MouseEvent): void {
+    event.preventDefault();
+    this.layout.toggleMobileSidebarCollapsed();
+  }
+
   ngOnInit(): void {
     this.layout.isNotificationsOpen$.subscribe(val => this.isNotificationsOpen = val);
-    this.layout.isUserDropdownOpen$.subscribe(val => this.isUserDropdownOpen = val)
+    this.layout.isUserDropdownOpen$.subscribe(val => this.isUserDropdownOpen = val);
+    this.layout.isMobileSidebarCollapsed$.subscribe(val => this.isMobileSidebarCollapsed = val);
   }
 
   @HostListener('document:fullscreenchange')
