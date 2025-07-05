@@ -5,6 +5,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { DashboardLayoutService } from './dashboard-layout.service';
 import { SidebarModule } from './sidebar/sidebar.module';
+import { BreadcrumbComponent } from '@app/shared/components/breadcrumb/';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -17,6 +18,7 @@ import { SidebarModule } from './sidebar/sidebar.module';
     SidebarModule,
     HeaderComponent,
     FooterComponent,
+    BreadcrumbComponent,
   ]
 })
 export class DashboardLayoutComponent implements OnInit {
