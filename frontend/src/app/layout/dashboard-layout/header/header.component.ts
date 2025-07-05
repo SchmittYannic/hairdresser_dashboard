@@ -12,10 +12,12 @@ import { CommonModule } from '@angular/common';
   ]
 })
 export class HeaderComponent implements OnInit {
+  isMobile = false;
   isNotificationsOpen = false;
   isUserDropdownOpen = false;
   isFullscreen = false;
   isMobileSidebarCollapsed = true;
+  isMobileHeaderSwitched = false;
 
   constructor(public layout: DashboardLayoutService) { }
 
@@ -59,10 +61,17 @@ export class HeaderComponent implements OnInit {
     this.layout.toggleMobileSidebarCollapsed();
   }
 
+  handleMobileHeaderSwitchClicked(event: MouseEvent): void {
+    event.preventDefault();
+    this.layout.toggleMobileHeaderSwitched();
+  }
+
   ngOnInit(): void {
+    this.layout.isMobile$.subscribe(val => this.isMobile = val);
     this.layout.isNotificationsOpen$.subscribe(val => this.isNotificationsOpen = val);
     this.layout.isUserDropdownOpen$.subscribe(val => this.isUserDropdownOpen = val);
     this.layout.isMobileSidebarCollapsed$.subscribe(val => this.isMobileSidebarCollapsed = val);
+    this.layout.isMobileHeaderSwitched$.subscribe(val => this.isMobileHeaderSwitched = val);
   }
 
   @HostListener('document:fullscreenchange')

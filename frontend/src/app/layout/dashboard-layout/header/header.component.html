@@ -1,11 +1,22 @@
 <header>
-  <div class="m-header">
+  <div class="m-header" [ngStyle]="{ display: !isMobileHeaderSwitched && isMobile ? 'flex' : 'none' }">
     <a id="mobile-collapse1" class="mobile-menu" (click)="handleMobileCollapseClicked($event)">
       <span></span>
     </a>
+    <a class="b-brand" routerLink="/dashboard">
+      <div class="b-bg">
+        <i class="feather icon-trending-up"></i>
+      </div>
+      <span class="b-title">Datta Able</span>
+    </a>
   </div>
-  <div class="collapse navbar-collapse px-4" style="display: none;">
-    <div class="me-auto">
+  <a id="mobile-header" class="mobile-menu" [class.on]="isMobileHeaderSwitched"
+    (click)="handleMobileHeaderSwitchClicked($event)">
+    <i class="feather icon-more-horizontal"></i>
+  </a>
+  <div class="collapse navbar-collapse px-4"
+    [ngStyle]="{ display: isMobileHeaderSwitched && isMobile ? 'block' : 'none' }">
+    <div class="me-auto" [ngStyle]="{ display: !isMobile ? 'block' : 'none' }">
       <ul class="navbar-nav">
         <li>
           <a class="full-screen" (click)="toggleFullscreen()">

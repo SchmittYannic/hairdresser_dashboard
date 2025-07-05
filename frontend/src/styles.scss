@@ -1197,6 +1197,10 @@ fieldset:disabled .btn {
   content: "\e8c3";
 }
 
+.icon-more-horizontal::before {
+  content: "\e89b";
+}
+
 .pcoded-header .dropdown.show::before {
   left: -10px !important;
 }
@@ -1246,6 +1250,10 @@ fieldset:disabled .btn {
 }
 
 .pcoded-header .m-header {
+  display: none;
+}
+
+.pcoded-header #mobile-header {
   display: none;
 }
 
@@ -1324,6 +1332,16 @@ fieldset:disabled .btn {
   .pcoded-header .m-header .mobile-menu {
     right: auto;
     left: 20px;
+  }
+
+  .pcoded-header #mobile-header {
+    display: flex;
+    right: 20px;
+    left: unset;
+  }
+
+  .pcoded-header .navbar-nav>li:last-child {
+    padding-right: 60px;
   }
 }
 
