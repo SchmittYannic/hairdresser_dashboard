@@ -1,0 +1,27 @@
+<div class="page-header">
+  <div class="page-block">
+    <div class="row align-items-center">
+      <div class="col-md-12">
+        <div class="page-header-title">
+          <ng-container>
+            <h5 class="m-b-10">{{ currentPageTitle }}</h5>
+          </ng-container>
+        </div>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a routerLink="/dashboard">
+              Home
+            </a>
+          </li>
+          <ng-container *ngFor="let bc of breadcrumbs; let last = last">
+            <li class="breadcrumb-item">
+              <a [routerLink]="bc.url">
+                {{ bc.label }}
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
