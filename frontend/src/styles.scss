@@ -156,6 +156,7 @@
 :root {
   --bs-sidebar-width: 264px;
   --bs-sidebar-collapsed-width: 80px;
+  --bs-header-minwidth: 70px
 }
 
 body {
@@ -1136,24 +1137,24 @@ fieldset:disabled .btn {
 .pcoded-header {
   z-index: 1028;
   display: flex;
-  min-height: 70px;
+  min-height: var(--bs-header-minwidth);
   padding: 0;
   position: relative;
   top: 0;
   background: transparent;
   color: #3f4d67;
-  width: calc(100% - 264px);
-  margin-left: 264px;
+  width: calc(100% - var(--bs-sidebar-width));
+  margin-left: var(--bs-sidebar-width);
   transition: all .3s ease-in-out;
 }
 
 .sidebar-not-fixed .pcoded-header,
 .sidebar-not-fixed .pcoded-main-container {
-  margin-left: 80px;
+  margin-left: var(--bs-sidebar-collapsed-width);
 }
 
 .sidebar-not-fixed .pcoded-header {
-  width: calc(100% - 80px);
+  width: calc(100% - var(--bs-sidebar-collapsed-width));
 }
 
 .pcoded-header::before,
@@ -1323,7 +1324,7 @@ fieldset:disabled .btn {
   clear: both;
   float: unset;
   right: 0;
-  margin: 0 auto 0 264px;
+  margin: 0 auto 0 var(--bs-sidebar-width);
   min-height: 100vh;
   transition: all .3s ease-in-out;
 }
@@ -1352,7 +1353,7 @@ fieldset:disabled .btn {
 .pc-footer {
   position: relative;
   z-index: 995;
-  margin-left: 264px;
+  margin-left: var(--bs-sidebar-width);
   padding: 15px 0;
   transition: all .3s ease-in-out;
 }
@@ -1363,7 +1364,7 @@ fieldset:disabled .btn {
 }
 
 .sidebar-not-fixed .pc-footer {
-  margin-left: 80px;
+  margin-left: var(--bs-sidebar-collapsed-width);
 }
 
 @media only screen and (max-width: 1200px) and (min-width: 768px) {
@@ -1403,7 +1404,7 @@ fieldset:disabled .btn {
 
   //.pcoded-navbar,
   .sidebar {
-    margin-left: -264px;
+    margin-left: calc(-1 * var(--bs-sidebar-width));
     height: 100%;
     box-shadow: none;
   }
