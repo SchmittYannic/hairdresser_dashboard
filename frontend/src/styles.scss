@@ -1325,7 +1325,7 @@ fieldset:disabled .btn {
   float: unset;
   right: 0;
   margin: 0 auto 0 var(--bs-sidebar-width);
-  min-height: 100vh;
+  min-height: calc(100vh - (2 * var(--bs-header-minheight)));
   transition: all .3s ease-in-out;
 }
 
@@ -1356,6 +1356,7 @@ fieldset:disabled .btn {
   margin-left: var(--bs-sidebar-width);
   padding: 15px 0;
   transition: all .3s ease-in-out;
+  min-height: var(--bs-header-minheight);
 }
 
 .pc-footer .footer-wrapper {
