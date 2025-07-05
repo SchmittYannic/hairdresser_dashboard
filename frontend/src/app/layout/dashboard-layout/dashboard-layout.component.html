@@ -5,5 +5,19 @@
   }">
   <app-sidebar #sidebar class="sidebar" [class.mob-open]="!isMobileSidebarCollapsed"></app-sidebar>
   <app-header class="navbar pcoded-header navbar-expand-lg navbar-light"></app-header>
+  <div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+      <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+          <div class="main-body">
+            <div class="page-wrapper">
+              <router-outlet></router-outlet>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pc-menu-overlay" tabindex="-1"></div>
+  </div>
   <app-footer></app-footer>
 </div>
