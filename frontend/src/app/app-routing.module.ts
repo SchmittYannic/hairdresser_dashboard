@@ -19,12 +19,19 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardLayoutComponent,
+    data: { breadcrumb: 'Dashboard' },
     canActivate: [AuthGuard],
     children: [
       {
         path: '', loadComponent: () =>
           import('./dashboard-pages/home/home.component').then(m => m.HomeComponent),
-      }
+        data: { breadcrumb: 'Dashboard' },
+      },
+      {
+        path: 'schedule', loadComponent: () =>
+          import('./dashboard-pages/schedule/schedule.component').then(m => m.ScheduleComponent),
+        data: { breadcrumb: 'Schedule' },
+      },
     ]
   },
   { path: '**', redirectTo: 'dashboard' },
