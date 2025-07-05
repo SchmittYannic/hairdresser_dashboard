@@ -156,7 +156,7 @@
 :root {
   --bs-sidebar-width: 264px;
   --bs-sidebar-collapsed-width: 80px;
-  --bs-header-minwidth: 70px
+  --bs-header-minheight: 70px;
 }
 
 body {
@@ -1137,7 +1137,7 @@ fieldset:disabled .btn {
 .pcoded-header {
   z-index: 1028;
   display: flex;
-  min-height: var(--bs-header-minwidth);
+  min-height: var(--bs-header-minheight);
   padding: 0;
   position: relative;
   top: 0;
