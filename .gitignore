@@ -31,7 +31,7 @@ out/
 /backend/.project
 /backend/.settings/
 /backend/*.iml
-/backend/.env
+/backend/.env*
 /backend/application-*.yml
 /backend/application-*.yaml
 /backend/application-*.properties
@@ -50,10 +50,6 @@ out/
 /frontend/dist/
 /frontend/.angular/cache/
 /frontend/.env
-
-# Angular environment files (if used)
-# Adjust if you use environment.prod.ts or .local.ts
-/frontend/src/environments/environment.*.ts
 
 # -------------------------
 # Logs and temp files
