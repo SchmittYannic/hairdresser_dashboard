@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      uri: ${mongodb_dev_uri}
+      database: ${mongodb_dev_database}
+
+logging:
+  level:
+    root: DEBUG
+
+custom:
+  env: DEV

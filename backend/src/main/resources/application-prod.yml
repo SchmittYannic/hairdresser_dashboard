@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      uri: ${mongodb_prod_uri}
+      database: ${mongodb_prod_database}
+
+logging:
+  level:
+    root: WARN
+
+custom:
+  env: PROD

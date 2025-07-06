@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: hairdresser-dashboard
+  profiles:
+    active: dev
+
+server:
+  port: 8080

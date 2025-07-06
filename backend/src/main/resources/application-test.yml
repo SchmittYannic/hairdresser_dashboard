@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      uri: ${mongodb_test_uri}
+      database: ${mongodb_test_database}
+
+logging:
+  level:
+    root: INFO
+
+custom:
+  env: TEST
