@@ -55,8 +55,6 @@ export class BreadcrumbComponent implements OnInit {
       return this.buildBreadcrumbs(child, url, breadcrumbs);
     }
 
-    console.log(breadcrumbs)
-
     return breadcrumbs;
   }
 }
