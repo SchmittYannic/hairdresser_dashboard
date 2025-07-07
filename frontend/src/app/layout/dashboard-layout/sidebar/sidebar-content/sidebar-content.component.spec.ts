@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SidebarContentComponent } from './sidebar-content.component';
+import { NgScrollbarModule } from 'ngx-scrollbar';
+import { SidebarGroupComponent } from '../sidebar-group/sidebar-group.component';
+import { SidebarItemComponent } from '../sidebar-item/sidebar-item.component';
 
 describe('SidebarContentComponent', () => {
   let component: SidebarContentComponent;
@@ -8,9 +11,15 @@ describe('SidebarContentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SidebarContentComponent]
-    })
-    .compileComponents();
+      declarations: [
+        SidebarContentComponent,
+        SidebarGroupComponent,
+        SidebarItemComponent,
+      ],
+      imports: [
+        NgScrollbarModule,
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SidebarContentComponent);
     component = fixture.componentInstance;
