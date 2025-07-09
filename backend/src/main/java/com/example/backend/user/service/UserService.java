@@ -1,6 +1,7 @@
 package com.example.backend.user.service;
 
 import com.example.backend.common.domain.model.User;
+import com.example.backend.user.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -21,7 +22,7 @@ public class UserService {
         this.mongoTemplate = mongoTemplate;
     }
 
-    public Page<User> getUsers(int offset, int limit, String sortField, String sortOrder,
+    public Page<UserDTO> getUsers(int offset, int limit, String sortField, String sortOrder,
                                String lastname, String firstname, List<String> roles) {
 
         Pageable pageable = PageRequest.of(offset / limit, limit,
@@ -44,11 +45,29 @@ public class UserService {
             criteria = new Criteria().andOperator(filters.toArray(new Criteria[0]));
         }
 
-        Query query = new Query(criteria).with(pageable);
+        Query query = new Query(criteria);
+        query.with(pageable);
+        query.fields().exclude("password");
 
         List<User> users = mongoTemplate.find(query, User.class);
         long count = mongoTemplate.count(new Query(criteria), User.class);
 
-        return new PageImpl<>(users, pageable, count);
+        List<UserDTO> userDTOs = users.stream().map(user -> UserDTO.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .roles(user.getRoles())
+                .title(user.getTitle())
+                .lastname(user.getLastname())
+                .firstname(user.getFirstname())
+                .birthday(user.getBirthday())
+                .phonenumber(user.getPhonenumber())
+                .validated(user.isValidated())
+                .reminderemail(user.isReminderemail())
+                .birthdayemail(user.isBirthdayemail())
+                .newsletter(user.isNewsletter())
+                .build()
+        ).toList();
+
+        return new PageImpl<>(userDTOs, pageable, count);
     }
 }

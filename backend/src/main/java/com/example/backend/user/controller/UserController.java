@@ -1,7 +1,6 @@
 package com.example.backend.user.controller;
 
-import com.example.backend.auth.service.AuthService;
-import com.example.backend.common.domain.model.User;
+import com.example.backend.user.dto.UserDTO;
 import com.example.backend.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,7 +31,7 @@ public class UserController {
             @RequestParam(required = false) String firstname,
             @RequestParam(required = false) List<String> roles
     ) {
-        Page<User> page = userService.getUsers(offset, limit, sortField, sortOrder, lastname, firstname, roles);
+        Page<UserDTO> page = userService.getUsers(offset, limit, sortField, sortOrder, lastname, firstname, roles);
 
         Map<String, Object> response = new HashMap<>();
         response.put("users", page.getContent());
