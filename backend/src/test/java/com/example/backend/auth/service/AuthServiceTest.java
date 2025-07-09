@@ -5,7 +5,7 @@ import com.example.backend.auth.dto.RegisterRequest;
 import com.example.backend.auth.dto.SigninRequest;
 import com.example.backend.auth.dto.AccessTokenResponse;
 import com.example.backend.auth.security.JwtService;
-import com.example.backend.auth.model.User;
+import com.example.backend.common.domain.model.User;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
