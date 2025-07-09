@@ -1,0 +1,26 @@
+<table>
+  <thead>
+    <tr>
+      <th *ngFor="let header of table.getHeaderGroups()[0].headers" (click)="header.column.toggleSorting()"
+        style="cursor: pointer;">
+        {{ header.column.columnDef.header }}
+        <span *ngIf="header.column.getIsSorted() === 'asc'">🔼</span>
+        <span *ngIf="header.column.getIsSorted() === 'desc'">🔽</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of table.getRowModel().rows">
+      <td *ngFor="let cell of row.getVisibleCells()">
+        {{ cell.getValue() }}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="pagination-controls">
+  <button (click)="onPreviousPage()" [disabled]="pagination.pageIndex === 0">Previous</button>
+  <span>Page {{ pagination.pageIndex + 1 }}</span>
+  <button (click)="onNextPage()"
+    [disabled]="(pagination.pageIndex + 1) * pagination.pageSize >= data.length">Next</button>
+</div>
