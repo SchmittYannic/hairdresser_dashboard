@@ -1,0 +1,85 @@
+.card {
+  --bs-card-spacer-y: 1rem;
+  --bs-card-spacer-x: 1rem;
+  --bs-card-title-spacer-y: .5rem;
+  --bs-card-title-color: ;
+  --bs-card-subtitle-color: ;
+  --bs-card-border-width: var(--bs-border-width);
+  --bs-card-border-color: var(--bs-border-color-translucent);
+  --bs-card-border-radius: var(--bs-border-radius);
+  --bs-card-box-shadow: ;
+  --bs-card-inner-border-radius: calc(var(--bs-border-radius) - (var(--bs-border-width)));
+  --bs-card-cap-padding-y: .5rem;
+  --bs-card-cap-padding-x: 1rem;
+  --bs-card-cap-bg: rgba(var(--bs-body-color-rgb), .03);
+  --bs-card-cap-color: ;
+  --bs-card-height: ;
+  --bs-card-color: ;
+  --bs-card-bg: var(--bs-body-bg);
+  --bs-card-img-overlay-padding: 1rem;
+  --bs-card-group-margin: .75rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: var(--bs-card-height);
+  color: var(--bs-body-color);
+  word-wrap: break-word;
+  background-color: var(--bs-card-bg);
+  background-clip: border-box;
+  border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+  border-radius: var(--bs-card-border-radius);
+}
+
+.card {
+  border-radius: 0;
+  box-shadow: 0 1px 20px #455a6414;
+  border: none;
+  margin-bottom: 30px;
+  transition: all .5s ease-in-out;
+}
+
+.card-header {
+  padding: var(--bs-card-cap-padding-y) var(--bs-card-cap-padding-x);
+  margin-bottom: 0;
+  color: var(--bs-card-cap-color);
+  background-color: var(--bs-card-cap-bg);
+  border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
+}
+
+.card-header:first-child {
+  border-radius: var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius) 0 0;
+}
+
+.card .card-header {
+  background-color: transparent;
+  border-bottom: 1px solid #f1f1f1;
+  padding: 20px 25px;
+  position: relative;
+}
+
+.card .card-header h5 {
+  margin-bottom: 0;
+  color: #000;
+  font-size: 17px;
+  font-weight: 400;
+  display: inline-block;
+  margin-right: 10px;
+  line-height: 1.1;
+  position: relative;
+}
+
+.card .card-header h5::after {
+  content: "";
+  background-color: #04a9f5;
+  position: absolute;
+  left: -25px;
+  top: 0;
+  width: 4px;
+  height: 20px;
+}
+
+.card .card-block,
+.card .card-body {
+  padding: 30px 25px;
+}
