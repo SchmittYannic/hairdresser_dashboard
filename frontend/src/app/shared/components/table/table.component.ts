@@ -43,7 +43,8 @@ export class TableComponent<T> implements OnChanges {
 
   onHeaderClick(column: Column<T>) {
     const isColumnSortedCurrently = column.id === this.sorting.sortField;
-    const nextOrder = isColumnSortedCurrently ? 'desc' : 'asc';
+    const currentSortOrder = this.sorting.sortOrder;
+    const nextOrder = !isColumnSortedCurrently ? 'asc' : currentSortOrder === 'asc' ? 'desc' : 'asc';
     this.sortingChange.emit({ field: column.id, order: nextOrder });
   }
 
