@@ -1,89 +1,84 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import {
   createAngularTable,
   ColumnDef,
   getCoreRowModel,
-  getSortedRowModel,
-  SortingState,
-  getPaginationRowModel,
 } from '@tanstack/angular-table';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [
-    CommonModule,
-  ],
+  imports: [CommonModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
 export class TableComponent<T> implements OnChanges {
-
   @Input() data: T[] = [];
   @Input() columns: ColumnDef<T, any>[] = [];
-  @Input() pageSize = 10;
 
-  sorting: SortingState = [];
-  pagination = {
-    pageIndex: 0,
-    pageSize: this.pageSize,
-  };
+  @Input() pagination = { pageIndex: 0, pageSize: 10 };
+  @Input() sorting = { sortField: '', sortOrder: 'asc' };
+  @Input() totalItems = 0;
+
+  @Output() pageChange = new EventEmitter<number>();
+  @Output() sortingChange = new EventEmitter<{ field: string; order: 'asc' | 'desc' }>();
 
   table = {} as ReturnType<typeof createAngularTable<T>>;
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data'] || changes['columns']) {
-      this.createTable();
-    }
-  }
 
   private createTable() {
     this.table = createAngularTable<T>(() => ({
       data: this.data,
       columns: this.columns,
-      state: {
-        sorting: this.sorting,
-        pagination: this.pagination,
-      },
-      onSortingChange: updater => {
-        this.sorting = typeof updater === 'function' ? updater(this.sorting) : updater;
-        this.setTableState();
-      },
-      onPaginationChange: updater => {
-        this.pagination = typeof updater === 'function' ? updater(this.pagination) : updater;
-        this.setTableState();
-      },
+      // state: {
+      //   sorting: this.sorting,
+      //   pagination: this.pagination,
+      // },
+      // onSortingChange: updater => {
+      //   this.sorting = typeof updater === 'function' ? updater(this.sorting) : updater;
+      //   this.setTableState();
+      // },
+      // onPaginationChange: updater => {
+      //   this.pagination = typeof updater === 'function' ? updater(this.pagination) : updater;
+      //   this.setTableState();
+      // },
       getCoreRowModel: getCoreRowModel(),
-      getSortedRowModel: getSortedRowModel(),
-      getPaginationRowModel: getPaginationRowModel(),
+      //getSortedRowModel: getSortedRowModel(),
+      //getPaginationRowModel: getPaginationRowModel(),
     }));
   }
 
-  private setTableState() {
-    this.table.setOptions(prev => ({
-      ...prev,
-      data: this.data,
-      columns: this.columns,
-      state: {
-        ...prev.state,
-        sorting: this.sorting,
-        pagination: this.pagination,
-      }
-    }));
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['data'] || changes['columns']) {
+      this.createTable();
+      // this.table.setOptions(prev => ({
+      //   ...prev,
+      //   data: this.data,
+      //   columns: this.columns,
+      // }));
+    }
+  }
+
+  onHeaderClick(column: any) {
+    const current = column.getIsSorted();
+    let next: 'asc' | 'desc' = 'asc';
+
+    if (current === 'asc') next = 'desc';
+    else if (current === 'desc') next = 'asc';
+
+    this.sortingChange.emit({ field: column.id, order: next });
   }
 
   onPreviousPage() {
     if (this.pagination.pageIndex > 0) {
-      this.pagination.pageIndex--;
-      this.setTableState();
+      this.pageChange.emit(this.pagination.pageIndex - 1);
     }
   }
 
   onNextPage() {
-    if ((this.pagination.pageIndex + 1) * this.pagination.pageSize < this.data.length) {
-      this.pagination.pageIndex++;
-      this.setTableState();
+    const maxPages = Math.ceil(this.totalItems / this.pagination.pageSize);
+    if (this.pagination.pageIndex + 1 < maxPages) {
+      this.pageChange.emit(this.pagination.pageIndex + 1);
     }
   }
 }
