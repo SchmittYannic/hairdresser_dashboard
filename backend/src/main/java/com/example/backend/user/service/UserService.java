@@ -7,6 +7,7 @@ import org.springframework.data.domain.*;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Collation;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -45,8 +46,10 @@ public class UserService {
             criteria = new Criteria().andOperator(filters.toArray(new Criteria[0]));
         }
 
+        Collation collation = Collation.of("en").strength(Collation.ComparisonLevel.secondary());
+
         Query query = new Query(criteria);
-        query.with(pageable);
+        query.with(pageable).collation(collation);
         query.fields().exclude("password");
 
         List<User> users = mongoTemplate.find(query, User.class);
