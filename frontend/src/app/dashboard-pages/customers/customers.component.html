@@ -1,1 +1,3 @@
-<app-table [data]="users" [columns]="columns" [pageSize]="10"></app-table>
+<app-table [data]="users" [columns]="columns" [pagination]="pagination" [sorting]="sorting" [totalItems]="totalItems"
+  (pageChange)="onPageChange($event)" (sortingChange)="onSortingChange($event.field, $event.order)">
+</app-table>
