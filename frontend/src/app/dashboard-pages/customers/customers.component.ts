@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ColumnDef } from '@tanstack/angular-table';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { combineLatest, debounceTime, distinctUntilChanged, startWith, takeUntil, Subject } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TableComponent } from '@app/shared/components/table/table.component';
 import { User } from '@app/shared/models/user.model';
 import { UserService } from '@app/shared/services/user.service';
@@ -59,10 +60,22 @@ export class CustomersComponent implements OnInit, OnDestroy {
     {
       header: 'Telefonnummer',
       accessorKey: 'phonenumber',
+    },
+    {
+      header: 'Email',
+      accessorKey: 'email',
+    },
+    {
+      header: 'Erstellt',
+      accessorKey: 'createdAt',
     }
   ];
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   fetchUsers() {
     const { pageIndex, pageSize } = this.pagination;
@@ -105,10 +118,31 @@ export class CustomersComponent implements OnInit, OnDestroy {
     return this.selectedRoles.has(role);
   }
 
-  ngOnInit() {
+  private updateQueryParams() {
+    const queryParams: any = {
+      offset: this.pagination.pageIndex * this.pagination.pageSize,
+      limit: this.pagination.pageSize,
+      sortField: this.sorting.sortField,
+      sortOrder: this.sorting.sortOrder,
+      lastname: this.lastnameFilter.value || null,
+      firstname: this.firstnameFilter.value || null,
+    };
+
+    if (this.selectedRoles.size > 0) {
+      queryParams.roles = Array.from(this.selectedRoles);
+    }
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams,
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  private setupFilterListeners() {
     combineLatest([
-      this.lastnameFilter.valueChanges.pipe(startWith('')),
-      this.firstnameFilter.valueChanges.pipe(startWith(''))
+      this.lastnameFilter.valueChanges.pipe(startWith(this.lastnameFilter.value)),
+      this.firstnameFilter.valueChanges.pipe(startWith(this.firstnameFilter.value))
     ])
       .pipe(
         debounceTime(400),
@@ -117,10 +151,30 @@ export class CustomersComponent implements OnInit, OnDestroy {
       )
       .subscribe(() => {
         this.pagination.pageIndex = 0;
+        this.updateQueryParams();
+      });
+  }
+
+  ngOnInit() {
+    this.route.queryParamMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
+        this.pagination.pageIndex = +params.get('offset')! / (+params.get('limit')! || 10) || 0;
+        this.pagination.pageSize = +params.get('limit')! || 10;
+
+        this.sorting.sortField = params.get('sortField') || 'lastname';
+        this.sorting.sortOrder = (params.get('sortOrder') as 'asc' | 'desc') || 'asc';
+
+        this.lastnameFilter.setValue(params.get('lastname') || '', { emitEvent: false });
+        this.firstnameFilter.setValue(params.get('firstname') || '', { emitEvent: false });
+
+        const rolesParam = params.getAll('roles');
+        this.selectedRoles = new Set(rolesParam);
+
         this.fetchUsers();
       });
 
-    this.fetchUsers();
+    this.setupFilterListeners();
   }
 
   ngOnDestroy() {
