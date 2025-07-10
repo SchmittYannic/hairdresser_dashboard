@@ -40,6 +40,7 @@ describe('AppComponent', () => {
     }).compileComponents();
 
     router = TestBed.inject(Router);
+    spyOn(router, 'navigateByUrl');
     spyOn(router, 'navigate');
   });
 
@@ -67,7 +68,7 @@ describe('AppComponent', () => {
     expect(authStoreSpy.setIsRefreshLoading).toHaveBeenCalledWith(true);
     expect(authServiceSpy.refreshToken).toHaveBeenCalled();
     expect(authStoreSpy.setToken).toHaveBeenCalledWith('test-token');
-    expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/');
     expect(authStoreSpy.setIsRefreshLoading).toHaveBeenCalledWith(false);
   }));
 
