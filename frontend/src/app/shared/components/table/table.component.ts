@@ -4,6 +4,7 @@ import {
   createAngularTable,
   ColumnDef,
   getCoreRowModel,
+  Column,
 } from '@tanstack/angular-table';
 
 @Component({
@@ -30,43 +31,20 @@ export class TableComponent<T> implements OnChanges {
     this.table = createAngularTable<T>(() => ({
       data: this.data,
       columns: this.columns,
-      // state: {
-      //   sorting: this.sorting,
-      //   pagination: this.pagination,
-      // },
-      // onSortingChange: updater => {
-      //   this.sorting = typeof updater === 'function' ? updater(this.sorting) : updater;
-      //   this.setTableState();
-      // },
-      // onPaginationChange: updater => {
-      //   this.pagination = typeof updater === 'function' ? updater(this.pagination) : updater;
-      //   this.setTableState();
-      // },
       getCoreRowModel: getCoreRowModel(),
-      //getSortedRowModel: getSortedRowModel(),
-      //getPaginationRowModel: getPaginationRowModel(),
     }));
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['data'] || changes['columns']) {
       this.createTable();
-      // this.table.setOptions(prev => ({
-      //   ...prev,
-      //   data: this.data,
-      //   columns: this.columns,
-      // }));
     }
   }
 
-  onHeaderClick(column: any) {
-    const current = column.getIsSorted();
-    let next: 'asc' | 'desc' = 'asc';
-
-    if (current === 'asc') next = 'desc';
-    else if (current === 'desc') next = 'asc';
-
-    this.sortingChange.emit({ field: column.id, order: next });
+  onHeaderClick(column: Column<T>) {
+    const isColumnSortedCurrently = column.id === this.sorting.sortField;
+    const nextOrder = isColumnSortedCurrently ? 'desc' : 'asc';
+    this.sortingChange.emit({ field: column.id, order: nextOrder });
   }
 
   onPreviousPage() {
