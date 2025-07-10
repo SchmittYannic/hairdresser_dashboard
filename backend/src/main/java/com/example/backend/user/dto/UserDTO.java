@@ -9,7 +9,6 @@ import java.util.List;
 @Data
 @Builder
 public class UserDTO {
-    private String id;
     private String email;
     private List<String> roles;
     private String title;
@@ -21,4 +20,5 @@ public class UserDTO {
     private boolean reminderemail;
     private boolean birthdayemail;
     private boolean newsletter;
+    private Date createdAt;
 }

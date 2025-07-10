@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.query.Collation;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -74,7 +75,6 @@ public class UserService {
         long count = mongoTemplate.count(new Query(criteria), User.class);
 
         List<UserDTO> userDTOs = users.stream().map(user -> UserDTO.builder()
-                .id(user.getId())
                 .email(user.getEmail())
                 .roles(user.getRoles())
                 .title(user.getTitle())
@@ -86,6 +86,7 @@ public class UserService {
                 .reminderemail(user.isReminderemail())
                 .birthdayemail(user.isBirthdayemail())
                 .newsletter(user.isNewsletter())
+                .createdAt(Date.from(user.getCreatedAt()))
                 .build()
         ).toList();
 
