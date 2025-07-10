@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ColumnDef } from '@tanstack/angular-table';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { combineLatest, debounceTime, distinctUntilChanged, startWith, takeUntil, Subject } from 'rxjs';
+import { combineLatest, debounceTime, distinctUntilChanged, startWith, takeUntil, Subject, skip } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TableComponent } from '@app/shared/components/table/table.component';
 import { User } from '@app/shared/models/user.model';
@@ -149,6 +149,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
       .pipe(
         debounceTime(400),
         distinctUntilChanged(),
+        skip(1),
         takeUntil(this.destroy$)
       )
       .subscribe(() => {
