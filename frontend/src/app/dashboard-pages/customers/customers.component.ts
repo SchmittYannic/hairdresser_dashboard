@@ -4,6 +4,7 @@ import { ColumnDef } from '@tanstack/angular-table';
 import { TableComponent } from '@app/shared/components/table/table.component';
 import { User } from '@app/shared/models/user.model';
 import { UserService } from '@app/shared/services/user.service';
+import { CardComponent } from '@app/shared/components/card/card.component';
 
 @Component({
   selector: 'app-customers',
@@ -11,6 +12,7 @@ import { UserService } from '@app/shared/services/user.service';
   imports: [
     CommonModule,
     TableComponent,
+    CardComponent,
   ],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.scss'
@@ -31,16 +33,16 @@ export class CustomersComponent implements OnInit {
 
   columns: ColumnDef<User, any>[] = [
     {
-      header: 'First Name',
-      accessorKey: 'firstname',
-    },
-    {
-      header: 'Lastname',
+      header: 'Nachname',
       accessorKey: 'lastname'
     },
     {
-      header: 'Email',
-      accessorKey: 'email',
+      header: 'Vorname',
+      accessorKey: 'firstname',
+    },
+    {
+      header: 'Telefonnummer',
+      accessorKey: 'phonenumber',
     }
   ];
 

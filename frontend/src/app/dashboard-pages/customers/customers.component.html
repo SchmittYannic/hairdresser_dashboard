@@ -1,3 +1,5 @@
-<app-table [data]="users" [columns]="columns" [pagination]="pagination" [sorting]="sorting" [totalItems]="totalItems"
-  (pageChange)="onPageChange($event)" (sortingChange)="onSortingChange($event.field, $event.order)">
-</app-table>
+<app-card cardTitle="Kundenliste">
+  <app-table [data]="users" [columns]="columns" [pagination]="pagination" [sorting]="sorting" [totalItems]="totalItems"
+    (pageChange)="onPageChange($event)" (sortingChange)="onSortingChange($event.field, $event.order)">
+  </app-table>
+</app-card>
