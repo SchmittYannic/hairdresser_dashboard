@@ -23,7 +23,7 @@ export class TableComponent<T> implements OnChanges {
   @Input() totalItems = 0;
 
   @Output() pageChange = new EventEmitter<number>();
-  @Output() sortingChange = new EventEmitter<{ field: string; order: 'asc' | 'desc' }>();
+  @Output() sortingChange = new EventEmitter<{ sortField: string; sortOrder: 'asc' | 'desc' }>();
 
   table = {} as ReturnType<typeof createAngularTable<T>>;
 
@@ -45,7 +45,7 @@ export class TableComponent<T> implements OnChanges {
     const isColumnSortedCurrently = column.id === this.sorting.sortField;
     const currentSortOrder = this.sorting.sortOrder;
     const nextOrder = !isColumnSortedCurrently ? 'asc' : currentSortOrder === 'asc' ? 'desc' : 'asc';
-    this.sortingChange.emit({ field: column.id, order: nextOrder });
+    this.sortingChange.emit({ sortField: column.id, sortOrder: nextOrder });
   }
 
   onPreviousPage() {
