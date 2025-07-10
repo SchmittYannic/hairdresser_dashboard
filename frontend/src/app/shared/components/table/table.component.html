@@ -1,11 +1,12 @@
 <table>
   <thead>
     <tr>
-      <th *ngFor="let header of table.getHeaderGroups()[0].headers" (click)="header.column.toggleSorting()"
+      <th *ngFor="let header of table.getHeaderGroups()[0].headers" (click)="onHeaderClick(header.column)"
         style="cursor: pointer;">
         {{ header.column.columnDef.header }}
-        <span *ngIf="header.column.getIsSorted() === 'asc'">🔼</span>
-        <span *ngIf="header.column.getIsSorted() === 'desc'">🔽</span>
+        <span *ngIf="sorting.sortField === header.column.id">
+          {{ sorting.sortOrder === 'asc' ? '🔼' : '🔽' }}
+        </span>
       </th>
     </tr>
   </thead>
@@ -22,5 +23,5 @@
   <button (click)="onPreviousPage()" [disabled]="pagination.pageIndex === 0">Previous</button>
   <span>Page {{ pagination.pageIndex + 1 }}</span>
   <button (click)="onNextPage()"
-    [disabled]="(pagination.pageIndex + 1) * pagination.pageSize >= data.length">Next</button>
+    [disabled]="(pagination.pageIndex + 1) * pagination.pageSize >= totalItems">Next</button>
 </div>
