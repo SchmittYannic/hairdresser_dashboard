@@ -12,7 +12,7 @@
     <ul class="role-toggles">
       <li *ngFor="let role of roles">
         <button [class.active]="isRoleSelected(role)" (click)="toggleRole(role)" class="role-toggle">
-          {{ role }}
+          {{ roleLabels[role] }}
         </button>
       </li>
     </ul>

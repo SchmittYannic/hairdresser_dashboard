@@ -31,6 +31,12 @@ export class CustomersComponent implements OnInit, OnDestroy {
   roles: string[] = ['User', 'Employee', 'Admin'];
   selectedRoles: Set<string> = new Set();
 
+  roleLabels: Record<string, string> = {
+    User: 'Nutzer',
+    Employee: 'Mitarbeiter',
+    Admin: 'Admin'
+  };
+
   pagination = {
     pageIndex: 0,
     pageSize: 10
