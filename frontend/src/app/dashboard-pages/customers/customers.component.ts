@@ -95,13 +95,13 @@ export class CustomersComponent implements OnInit, OnDestroy {
 
   onPageChange(pageIndex: number) {
     this.pagination.pageIndex = pageIndex;
-    this.fetchUsers();
+    this.updateQueryParams();
   }
 
   onSortingChange(sortField: string, sortOrder: 'asc' | 'desc') {
     this.sorting = { sortField, sortOrder };
     this.pagination.pageIndex = 0;
-    this.fetchUsers();
+    this.updateQueryParams();
   }
 
   toggleRole(role: string) {
@@ -111,7 +111,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
       this.selectedRoles.add(role);
     }
     this.pagination.pageIndex = 0;
-    this.fetchUsers();
+    this.updateQueryParams();
   }
 
   isRoleSelected(role: string): boolean {
@@ -130,6 +130,8 @@ export class CustomersComponent implements OnInit, OnDestroy {
 
     if (this.selectedRoles.size > 0) {
       queryParams.roles = Array.from(this.selectedRoles);
+    } else {
+      queryParams.roles = null;
     }
 
     this.router.navigate([], {
