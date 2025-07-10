@@ -842,6 +842,19 @@ fieldset:disabled .btn {
 
 /* sidebar styles */
 
+.sidebar {
+  display: block;
+  z-index: 1029;
+  position: fixed;
+  //transition: all .3s ease-in-out;
+  box-shadow: 1px 0 20px #3f4d67;
+  width: var(--bs-sidebar-width);
+  height: 100vh;
+  top: 0;
+  background: #3f4d67;
+  color: #a9b7d0;
+}
+
 .pcoded-navbar .navbar-content,
 .pcoded-navbar .navbar-wrapper {
   width: 100%;
