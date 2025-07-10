@@ -39,7 +39,25 @@ public class UserService {
             filters.add(Criteria.where("firstname").regex(firstname, "i"));
         }
         if (roles != null && !roles.isEmpty()) {
-            filters.add(Criteria.where("roles").in(roles));
+            List<List<String>> validRoleCombinations = new ArrayList<>();
+
+            if (roles.contains("User")) {
+                validRoleCombinations.add(List.of("User"));
+            }
+            if (roles.contains("Employee")) {
+                validRoleCombinations.add(List.of("User", "Employee"));
+            }
+            if (roles.contains("Admin")) {
+                validRoleCombinations.add(List.of("User", "Employee", "Admin"));
+            }
+
+            List<Criteria> roleCriteriaList = validRoleCombinations.stream()
+                    .map(combination -> Criteria.where("roles").is(combination))
+                    .toList();
+
+            if (!roleCriteriaList.isEmpty()) {
+                filters.add(new Criteria().orOperator(roleCriteriaList.toArray(new Criteria[0])));
+            }
         }
 
         if (!filters.isEmpty()) {
