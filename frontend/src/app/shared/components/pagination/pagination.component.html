@@ -12,7 +12,7 @@
     </li>
     <ng-container *ngFor="let page of paginationPages">
       <li class="page-item" [class.active]="page === pageIndex">
-        <span *ngIf="page === pageIndex" class="page-link active no-select">
+        <span *ngIf="page === pageIndex" class="no-select">
           {{ page + 1 }}
           <span class="sr-only">
             (current)

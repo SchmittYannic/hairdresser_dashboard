@@ -36,11 +36,6 @@
 
 .page-item {
   align-self: stretch;
-
-  span {
-    display: inline-flex;
-    align-items: center;
-  }
 }
 
 .page-link {
@@ -93,7 +88,14 @@
   border-bottom-right-radius: var(--bs-pagination-border-radius);
 }
 
-.page-item.active .page-link {
+.page-item.active span {
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  padding: var(--bs-pagination-padding-y) var(--bs-pagination-padding-x);
+  margin-left: calc(-1 * var(--bs-border-width));
+  font-size: var(--bs-pagination-font-size);
+  border: var(--bs-pagination-border-width) solid var(--bs-pagination-border-color);
   color: #fff;
   background-color: #04a9f5;
   border-color: #04a9f5;
