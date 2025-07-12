@@ -4,6 +4,7 @@ import { ColumnDef } from '@tanstack/angular-table';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { combineLatest, debounceTime, distinctUntilChanged, startWith, takeUntil, Subject, skip } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { format } from 'date-fns';
 import { TableComponent } from '@app/shared/components/table/table';
 import { User } from '@app/shared/models/user.model';
 import { UserService } from '@app/shared/services/user.service';
@@ -75,6 +76,12 @@ export class CustomersComponent implements OnInit, OnDestroy {
     {
       header: 'Erstellt',
       accessorKey: 'createdAt',
+      cell: info => {
+        const rawDate = info.getValue();
+        if (!rawDate) return '';
+        const date = new Date(rawDate);
+        return format(date, 'dd.MM.yyyy HH:mm'); // or use date.toLocaleString()
+      },
     }
   ];
 
