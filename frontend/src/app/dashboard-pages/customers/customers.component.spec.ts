@@ -20,7 +20,7 @@ describe('CustomersComponent', () => {
           title: 'Mr.',
           lastname: 'Doe',
           firstname: 'John',
-          birthday: new Date('1990-01-01'),
+          birthday: '1990-01-01',
           phonenumber: '1234567890',
           validated: true,
           reminderemail: false,
