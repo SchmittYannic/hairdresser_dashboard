@@ -69,11 +69,31 @@
     margin-left: calc(-1 * var(--bs-border-width));
   }
 
+  .role-toggle:hover {
+    z-index: 2;
+    color: var(--bs-table-filter-hover-color);
+    background-color: var(--bs-table-filter-hover-bg);
+    border-color: var(--bs-table-filter-hover-border-color);
+  }
+
+  .role-toggle:focus {
+    z-index: 3;
+    color: var(--bs-table-filter-focus-color);
+    background-color: var(--bs-table-filter-focus-bg);
+    outline: 0;
+    box-shadow: var(--bs-table-filter-focus-box-shadow);
+  }
+
   .role-toggle.active {
     color: #fff;
     background-color: #04a9f5;
     border-color: #04a9f5;
   }
+}
+
+.table-pagination {
+  display: flex;
+  justify-content: space-between;
 }
 
 @media (min-width: 768px) {
