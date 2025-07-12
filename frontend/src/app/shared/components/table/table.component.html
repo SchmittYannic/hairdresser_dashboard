@@ -20,11 +20,3 @@
     </tbody>
   </table>
 </ng-scrollbar>
-
-
-<div class="pagination-controls">
-  <button (click)="onPreviousPage()" [disabled]="pagination.pageIndex === 0">Previous</button>
-  <span>Page {{ pagination.pageIndex + 1 }}</span>
-  <button (click)="onNextPage()"
-    [disabled]="(pagination.pageIndex + 1) * pagination.pageSize >= totalItems">Next</button>
-</div>

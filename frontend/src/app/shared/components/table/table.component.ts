@@ -26,7 +26,6 @@ export class TableComponent<T> implements OnChanges {
   @Input() sorting = { sortField: '', sortOrder: 'asc' };
   @Input() totalItems = 0;
 
-  @Output() pageChange = new EventEmitter<number>();
   @Output() sortingChange = new EventEmitter<{ sortField: string; sortOrder: 'asc' | 'desc' }>();
 
   table = {} as ReturnType<typeof createAngularTable<T>>;
@@ -50,18 +49,5 @@ export class TableComponent<T> implements OnChanges {
     const currentSortOrder = this.sorting.sortOrder;
     const nextOrder = !isColumnSortedCurrently ? 'asc' : currentSortOrder === 'asc' ? 'desc' : 'asc';
     this.sortingChange.emit({ sortField: column.id, sortOrder: nextOrder });
-  }
-
-  onPreviousPage() {
-    if (this.pagination.pageIndex > 0) {
-      this.pageChange.emit(this.pagination.pageIndex - 1);
-    }
-  }
-
-  onNextPage() {
-    const maxPages = Math.ceil(this.totalItems / this.pagination.pageSize);
-    if (this.pagination.pageIndex + 1 < maxPages) {
-      this.pageChange.emit(this.pagination.pageIndex + 1);
-    }
   }
 }
