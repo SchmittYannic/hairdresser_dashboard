@@ -1,5 +1,5 @@
 <div class="dropdown" [class.show]="isOpen">
-  <div class="dropdown-toggle" data-toggle="dropdown" [attr.aria-expanded]="isOpen" [class.show]="isOpen"
+  <div [class.dropdown-toggle]="arrowOutside" data-toggle="dropdown" [attr.aria-expanded]="isOpen" [class.show]="isOpen"
     (click)="toggle($event)">
     <ng-content select="[dropdown-trigger]"></ng-content>
   </div>

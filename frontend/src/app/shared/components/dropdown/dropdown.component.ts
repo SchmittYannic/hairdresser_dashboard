@@ -24,6 +24,7 @@ export class DropdownComponent implements OnInit, OnDestroy {
   private sub!: Subscription;
 
   @Input() alignRight = false;
+  @Input() arrowOutside = false;
   @Output() opened = new EventEmitter<void>();
   @Output() closed = new EventEmitter<void>();
 
