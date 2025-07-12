@@ -12,7 +12,7 @@ import { CardComponent } from '@app/shared/components/card/card';
 import { PaginationComponent } from '@app/shared/components/pagination/pagination';
 
 @Component({
-  selector: 'app-customers',
+  selector: 'app-users',
   standalone: true,
   imports: [
     CommonModule,
@@ -21,13 +21,14 @@ import { PaginationComponent } from '@app/shared/components/pagination/paginatio
     PaginationComponent,
     ReactiveFormsModule,
   ],
-  templateUrl: './customers.component.html',
-  styleUrl: './customers.component.scss'
+  templateUrl: './users.component.html',
+  styleUrl: './users.component.scss'
 })
-export class CustomersComponent implements OnInit, OnDestroy {
+export class UsersComponent implements OnInit, OnDestroy {
   users: User[] = [];
   totalItems: number = 0;
   private readonly defaultPageSize = 10;
+  private readonly minPageSize = 1;
   private readonly maxPageSize = 100;
 
   lastnameFilter = new FormControl('');
@@ -41,7 +42,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
   selectedRoles: Set<string> = new Set();
 
   roleLabels: Record<string, string> = {
-    User: 'Nutzer',
+    User: 'Kunden',
     Employee: 'Mitarbeiter',
     Admin: 'Admin'
   };
@@ -181,10 +182,10 @@ export class CustomersComponent implements OnInit, OnDestroy {
       .subscribe((value) => {
         let pageSize = Number(value);
 
-        if (isNaN(pageSize) || pageSize < 1) {
-          pageSize = 1;
-        } else if (pageSize > 100) {
-          pageSize = 100;
+        if (isNaN(pageSize) || pageSize < this.minPageSize) {
+          pageSize = this.minPageSize;
+        } else if (pageSize > this.maxPageSize) {
+          pageSize = this.maxPageSize;
         }
 
         if (pageSize !== value) {

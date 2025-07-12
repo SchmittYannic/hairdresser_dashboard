@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of, BehaviorSubject } from 'rxjs';
-import { CustomersComponent } from './customers.component';
-import { UserService } from '@app/shared/services/user.service';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
+import { of, BehaviorSubject } from 'rxjs';
+import { UsersComponent } from './users.component';
+import { UserService } from '@app/shared/services/user.service';
 
-describe('CustomersComponent', () => {
-  let component: CustomersComponent;
-  let fixture: ComponentFixture<CustomersComponent>;
+describe('UsersComponent', () => {
+  let component: UsersComponent;
+  let fixture: ComponentFixture<UsersComponent>;
   let mockUserService: jasmine.SpyObj<UserService>;
   let queryParamMap$: BehaviorSubject<any>;
   let routerSpy: jasmine.SpyObj<Router>;
@@ -50,7 +50,7 @@ describe('CustomersComponent', () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
-      imports: [CustomersComponent],
+      imports: [UsersComponent],
       providers: [
         { provide: UserService, useValue: mockUserService },
         {
@@ -63,7 +63,7 @@ describe('CustomersComponent', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CustomersComponent);
+    fixture = TestBed.createComponent(UsersComponent);
     component = fixture.componentInstance;
   });
 

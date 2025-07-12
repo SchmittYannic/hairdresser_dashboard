@@ -33,9 +33,9 @@ const routes: Routes = [
         data: { breadcrumb: 'Termine' },
       },
       {
-        path: 'customers', loadComponent: () =>
-          import('./dashboard-pages/customers/customers.component').then(m => m.CustomersComponent),
-        data: { breadcrumb: 'Kunden' },
+        path: 'users', loadComponent: () =>
+          import('./dashboard-pages/users/users.component').then(m => m.UsersComponent),
+        data: { breadcrumb: 'Nutzer' },
       },
     ]
   },
