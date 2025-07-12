@@ -19,7 +19,8 @@
 
   </div>
 
-  <app-table [data]="users" [columns]="columns" [pagination]="pagination" [sorting]="sorting" [totalItems]="totalItems">
+  <app-table [data]="users" [columns]="columns" [pagination]="pagination" [sorting]="sorting" [totalItems]="totalItems"
+    (sortingChange)="onSortingChange($event.sortField, $event.sortOrder)">
   </app-table>
 
   <hr>
