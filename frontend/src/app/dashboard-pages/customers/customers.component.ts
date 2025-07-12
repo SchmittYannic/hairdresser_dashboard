@@ -4,10 +4,11 @@ import { ColumnDef } from '@tanstack/angular-table';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { combineLatest, debounceTime, distinctUntilChanged, startWith, takeUntil, Subject, skip } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TableComponent } from '@app/shared/components/table/table.component';
+import { TableComponent } from '@app/shared/components/table/table';
 import { User } from '@app/shared/models/user.model';
 import { UserService } from '@app/shared/services/user.service';
-import { CardComponent } from '@app/shared/components/card/card.component';
+import { CardComponent } from '@app/shared/components/card/card';
+import { PaginationComponent } from '@app/shared/components/pagination/pagination';
 
 @Component({
   selector: 'app-customers',
@@ -16,6 +17,7 @@ import { CardComponent } from '@app/shared/components/card/card.component';
     CommonModule,
     TableComponent,
     CardComponent,
+    PaginationComponent,
     ReactiveFormsModule,
   ],
   templateUrl: './customers.component.html',

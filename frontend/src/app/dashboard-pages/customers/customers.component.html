@@ -18,7 +18,15 @@
     </ul>
 
   </div>
-  <app-table [data]="users" [columns]="columns" [pagination]="pagination" [sorting]="sorting" [totalItems]="totalItems"
-    (pageChange)="onPageChange($event)" (sortingChange)="onSortingChange($event.sortField, $event.sortOrder)">
+
+  <app-table [data]="users" [columns]="columns" [pagination]="pagination" [sorting]="sorting" [totalItems]="totalItems">
   </app-table>
+
+  <hr>
+
+  <div class="table-pagination">
+    <app-pagination [totalItems]="totalItems" [pageSize]="pagination.pageSize" [pageIndex]="pagination.pageIndex"
+      (pageChange)="onPageChange($event)">
+    </app-pagination>
+  </div>
 </app-card>
