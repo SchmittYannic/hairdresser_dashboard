@@ -351,6 +351,17 @@ dl {
   margin-bottom: 1rem;
 }
 
+hr {
+  margin: 1rem 0;
+  color: inherit;
+  border: 0;
+  border-top-width: 0px;
+  border-top-style: none;
+  border-top-color: currentcolor;
+  border-top: var(--bs-border-width) solid;
+  opacity: .25;
+}
+
 .nav {
   --bs-nav-link-padding-x: 1rem;
   --bs-nav-link-padding-y: .5rem;
@@ -398,6 +409,11 @@ dl {
 
 .align-items-center {
   align-items: center !important;
+}
+
+.no-select {
+  user-select: none;
+  cursor: default;
 }
 
 button {
