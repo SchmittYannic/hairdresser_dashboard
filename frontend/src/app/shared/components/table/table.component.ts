@@ -6,11 +6,15 @@ import {
   getCoreRowModel,
   Column,
 } from '@tanstack/angular-table';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    NgScrollbarModule
+  ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })

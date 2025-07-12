@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<ng-scrollbar>
   <table class="table">
     <thead>
       <tr>
@@ -19,7 +19,8 @@
       </tr>
     </tbody>
   </table>
-</div>
+</ng-scrollbar>
+
 
 <div class="pagination-controls">
   <button (click)="onPreviousPage()" [disabled]="pagination.pageIndex === 0">Previous</button>
