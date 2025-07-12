@@ -989,10 +989,6 @@ tertiary:not(:disabled):not(.disabled).active,
   color: #fff;
 }
 
-.icon-trending-up::before {
-  content: "\e8dc";
-}
-
 .b-brand .b-title {
   margin-left: 10px;
   font-weight: 300;
@@ -1067,8 +1063,20 @@ tertiary:not(:disabled):not(.disabled).active,
   transform: rotate(-45deg) translate(3px, -3px);
 }
 
+.icon-scissors::before {
+  content: "\e8bf";
+}
+
 .icon-home::before {
   content: "\e87a";
+}
+
+.icon-schedule::before {
+  content: "\e837";
+}
+
+.icon-users::before {
+  content: "\e8ea";
 }
 
 .pcoded-navbar .pcoded-inner-navbar li>a .pcoded-mtext {
