@@ -5,6 +5,7 @@ import {
   ColumnDef,
   getCoreRowModel,
   Column,
+  FlexRenderDirective,
 } from '@tanstack/angular-table';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 
@@ -13,7 +14,8 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
   standalone: true,
   imports: [
     CommonModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    FlexRenderDirective
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'

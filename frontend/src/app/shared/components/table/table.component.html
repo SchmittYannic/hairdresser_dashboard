@@ -14,7 +14,13 @@
     <tbody>
       <tr *ngFor="let row of table.getRowModel().rows">
         <td *ngFor="let cell of row.getVisibleCells()">
-          {{ cell.getValue() }}
+          <ng-container *flexRender="
+                  cell.column.columnDef.cell;
+                  props: cell.getContext();
+                  let cell
+                ">
+            <div [innerHTML]="cell"></div>
+          </ng-container>
         </td>
       </tr>
     </tbody>
