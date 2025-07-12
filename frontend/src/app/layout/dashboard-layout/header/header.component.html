@@ -29,28 +29,22 @@
     <div class="ms-auto">
       <ul class="navbar-nav">
         <li>
-          <div class="dropdown" [ngClass]="{'show' : isNotificationsOpen }">
-            <a class="dropdown-toggle" [ngClass]="{'show' : isNotificationsOpen }" data-toggle="dropdown"
-              [attr.aria-expanded]="isNotificationsOpen" (click)="handleNotificationToggleClick($event)">
-              <i class="icon feather icon-bell"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end notification" [ngClass]="{'show' : isNotificationsOpen }"
-              data-bs-popper="static">
-              TEST
+          <app-dropdown [alignRight]="true">
+            <i class="icon feather icon-bell" dropdown-trigger></i>
+
+            <div dropdown-content>
+              <div class="notification">You have new alerts!</div>
             </div>
-          </div>
+          </app-dropdown>
         </li>
         <li>
-          <div class="drp-user dropdown">
-            <a class="dropdown-toggle" [ngClass]="{'show' : isUserDropdownOpen }" data-toggle="dropdown"
-              [attr.aria-expanded]="isUserDropdownOpen" (click)="handleUserDropdownToggleClick($event)">
-              <i class="icon feather icon-settings"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end profile-notification" [ngClass]="{'show' : isUserDropdownOpen }"
-              data-bs-popper="static">
-              TEST
+          <app-dropdown [alignRight]="true">
+            <i class="icon feather icon-settings" dropdown-trigger></i>
+
+            <div dropdown-content>
+              <div class="profile-notification">TEST</div>
             </div>
-          </div>
+          </app-dropdown>
         </li>
       </ul>
     </div>
