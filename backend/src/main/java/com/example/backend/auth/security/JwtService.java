@@ -2,22 +2,42 @@ package com.example.backend.auth.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 
 @Service
 public class JwtService {
-    private final Key accessTokenKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private final Key refreshTokenKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    //private final Key accessTokenKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    //private final Key refreshTokenKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+
+    @Value("${jwt.accessTokenSecret}")
+    private String accessTokenSecretBase64;
+
+    @Value("${jwt.refreshTokenSecret}")
+    private String refreshTokenSecretBase64;
 
     @Value("${jwt.accessTokenExpirationMs:1200000}")
     private long accessTokenExpirationMs;
 
     @Value("${jwt.refreshTokenExpirationMs:604800000}")
     private long refreshTokenExpirationMs;
+
+    private Key accessTokenKey;
+    private Key refreshTokenKey;
+
+    @PostConstruct
+    public void init() {
+        byte[] accessKeyBytes = Base64.getDecoder().decode(accessTokenSecretBase64);
+        accessTokenKey = Keys.hmacShaKeyFor(accessKeyBytes);
+
+        byte[] refreshKeyBytes = Base64.getDecoder().decode(refreshTokenSecretBase64);
+        refreshTokenKey = Keys.hmacShaKeyFor(refreshKeyBytes);
+    }
 
     // Access Token
     public String generateAccessToken(String email) {
