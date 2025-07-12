@@ -38,7 +38,8 @@ export class AppComponent implements OnInit {
     this.authService.refreshToken().subscribe({
       next: (res) => {
         this.store.setToken(res.accessToken);
-        this.router.navigateByUrl(this.initialPath);
+        const redirectPath = this.initialPath === '' || this.initialPath === '/' ? '/dashboard' : this.initialPath;
+        this.router.navigateByUrl(redirectPath);
         this.store.setIsRefreshLoading(false);
       },
       error: () => {
