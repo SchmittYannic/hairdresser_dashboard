@@ -2,12 +2,12 @@
   <ul>
     <li class="page-item" [class.disabled]="pageIndex === 0">
       <button type="button" class="page-link" (click)="goToPage(0)" [disabled]="pageIndex === 0">
-        First
+        Erste
       </button>
     </li>
     <li class="page-item" [class.disabled]="pageIndex === 0">
       <button type="button" class="page-link" (click)="goToPage(pageIndex - 1)" [disabled]="pageIndex === 0">
-        Prev
+        Vorherige
       </button>
     </li>
     <ng-container *ngFor="let page of paginationPages">
@@ -26,13 +26,13 @@
     <li class="page-item" [class.disabled]="pageIndex === totalPages - 1">
       <button type="button" class="page-link" (click)="goToPage(pageIndex + 1)"
         [disabled]="pageIndex === totalPages - 1">
-        Next
+        Weiter
       </button>
     </li>
     <li class="page-item" [class.disabled]="pageIndex === totalPages - 1">
       <button type="button" class="page-link" (click)="goToPage(totalPages - 1)"
         [disabled]="pageIndex === totalPages - 1">
-        Last
+        Letzte
       </button>
     </li>
   </ul>
