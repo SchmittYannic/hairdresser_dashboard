@@ -25,15 +25,16 @@
 }
 
 .table-filter-wrapper {
+  display: grid;
+  gap: 1rem;
   margin-bottom: 30px;
-  display: flex;
-  gap: 2rem;
 }
 
 .role-toggles {
   list-style: none;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   padding-left: 0;
   margin-bottom: 0;
 
@@ -72,5 +73,16 @@
     color: #fff;
     background-color: #04a9f5;
     border-color: #04a9f5;
+  }
+}
+
+@media (min-width: 768px) {
+  .role-toggles {
+    flex-wrap: nowrap;
+  }
+
+  .table-filter-wrapper {
+    display: flex;
+    gap: 2rem;
   }
 }
