@@ -19,6 +19,7 @@
   --bs-pagination-disabled-color: var(--bs-secondary-color);
   --bs-pagination-disabled-bg: var(--bs-secondary-bg);
   --bs-pagination-disabled-border-color: var(--bs-border-color);
+  height: 100%;
   display: flex;
   padding-left: 0;
   list-style: none;
@@ -33,7 +34,17 @@
   margin-bottom: 0;
 }
 
+.page-item {
+  align-self: stretch;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
 .page-link {
+  height: 100%;
   position: relative;
   display: block;
   padding: var(--bs-pagination-padding-y) var(--bs-pagination-padding-x);
@@ -86,4 +97,10 @@
   color: #fff;
   background-color: #04a9f5;
   border-color: #04a9f5;
+}
+
+@media (min-width: 768px) {
+  .pagination ul {
+    flex-wrap: nowrap;
+  }
 }
