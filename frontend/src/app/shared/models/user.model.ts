@@ -4,7 +4,7 @@ export interface User {
   title: string;
   lastname: string;
   firstname: string;
-  birthday: Date;
+  birthday: string;
   phonenumber: string;
   validated: boolean;
   reminderemail: boolean;
