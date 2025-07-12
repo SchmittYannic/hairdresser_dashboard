@@ -8,8 +8,6 @@ export class DashboardLayoutService implements OnDestroy {
   private resizeSubscription!: Subscription;
   private isSidebarFixed = new BehaviorSubject<boolean>(true);
   private isSidebarCollapsed = new BehaviorSubject<boolean>(false);
-  private isNotificationsOpen = new BehaviorSubject<boolean>(false);
-  private isUserDropdownOpen = new BehaviorSubject<boolean>(false);
   private isMobileSidebarCollapsed = new BehaviorSubject<boolean>(true);
   private isMobileHeaderSwitched = new BehaviorSubject<boolean>(false);
   private sidebarElement?: ElementRef;
@@ -17,8 +15,6 @@ export class DashboardLayoutService implements OnDestroy {
   isMobile$ = this.isMobile.asObservable();
   isSidebarFixed$ = this.isSidebarFixed.asObservable();
   isSidebarCollapsed$ = this.isSidebarCollapsed.asObservable();
-  isNotificationsOpen$ = this.isNotificationsOpen.asObservable();
-  isUserDropdownOpen$ = this.isUserDropdownOpen.asObservable();
   isMobileSidebarCollapsed$ = this.isMobileSidebarCollapsed.asObservable();
   isMobileHeaderSwitched$ = this.isMobileHeaderSwitched.asObservable();
 
@@ -48,14 +44,6 @@ export class DashboardLayoutService implements OnDestroy {
     return this.isSidebarCollapsed.getValue();
   }
 
-  getisNotificationsOpen(): boolean {
-    return this.isNotificationsOpen.getValue();
-  }
-
-  getisUserDropdownOpen(): boolean {
-    return this.isUserDropdownOpen.getValue();
-  }
-
   getIsMobileSidebarCollapsed(): boolean {
     return this.isMobileSidebarCollapsed.getValue();
   }
@@ -70,14 +58,6 @@ export class DashboardLayoutService implements OnDestroy {
 
   toggleSidebarFixed(): void {
     this.isSidebarFixed.next(!this.isSidebarFixed.value);
-  }
-
-  toggleNotificationsOpen(): void {
-    this.isNotificationsOpen.next(!this.isNotificationsOpen.value);
-  }
-
-  toggleUserDropdownOpen(): void {
-    this.isUserDropdownOpen.next(!this.isUserDropdownOpen.value);
   }
 
   toggleMobileSidebarCollapsed(): void {
@@ -102,14 +82,6 @@ export class DashboardLayoutService implements OnDestroy {
 
   setSidebarFixed(value: boolean): void {
     this.isSidebarFixed.next(value);
-  }
-
-  setNotificationsOpen(value: boolean): void {
-    this.isNotificationsOpen.next(value);
-  }
-
-  setUserDropdownOpen(value: boolean): void {
-    this.isUserDropdownOpen.next(value);
   }
 
   setMobileSidebarCollapsed(value: boolean): void {

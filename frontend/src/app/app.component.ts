@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { AuthService } from './auth/auth.service';
 import { AuthStoreService } from './store/auth-store.service';
@@ -21,19 +22,24 @@ import { AuthStoreService } from './store/auth-store.service';
 })
 export class AppComponent implements OnInit {
   title = 'frontend';
+  private initialPath: string = '/';
 
   constructor(
     private authService: AuthService,
     private store: AuthStoreService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private location: Location
+  ) {
+    this.initialPath = this.location.path() || '/';
+  }
 
   ngOnInit(): void {
     this.store.setIsRefreshLoading(true);
     this.authService.refreshToken().subscribe({
       next: (res) => {
         this.store.setToken(res.accessToken);
-        this.router.navigate(['/dashboard']);
+        const redirectPath = this.initialPath === '' || this.initialPath === '/' ? '/dashboard' : this.initialPath;
+        this.router.navigateByUrl(redirectPath);
         this.store.setIsRefreshLoading(false);
       },
       error: () => {

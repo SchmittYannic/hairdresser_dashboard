@@ -1,0 +1,28 @@
+<ng-scrollbar>
+  <table class="table">
+    <thead>
+      <tr>
+        <th *ngFor="let header of table.getHeaderGroups()[0].headers" (click)="onHeaderClick(header.column)"
+          style="cursor: pointer;">
+          {{ header.column.columnDef.header }}
+          <span *ngIf="sorting.sortField === header.column.id">
+            {{ sorting.sortOrder === 'asc' ? '🔽' : '🔼' }}
+          </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of table.getRowModel().rows">
+        <td *ngFor="let cell of row.getVisibleCells()">
+          <ng-container *flexRender="
+                  cell.column.columnDef.cell;
+                  props: cell.getContext();
+                  let cell
+                ">
+            <div [innerHTML]="cell"></div>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-scrollbar>

@@ -1,4 +1,4 @@
-package com.example.backend.auth.model;
+package com.example.backend.common.domain.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
