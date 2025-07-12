@@ -26,9 +26,14 @@ import { PaginationComponent } from '@app/shared/components/pagination/paginatio
 export class CustomersComponent implements OnInit, OnDestroy {
   users: User[] = [];
   totalItems: number = 0;
+  private readonly defaultPageSize = 10;
+  private readonly maxPageSize = 100;
 
   lastnameFilter = new FormControl('');
   firstnameFilter = new FormControl('');
+  pageSizeControl = new FormControl(this.defaultPageSize, {
+    nonNullable: true,
+  });
   private destroy$ = new Subject<void>();
 
   roles: string[] = ['User', 'Employee', 'Admin'];
@@ -42,7 +47,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
 
   pagination = {
     pageIndex: 0,
-    pageSize: 10
+    pageSize: this.defaultPageSize
   };
 
   sorting = {
@@ -146,7 +151,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
   private setupFilterListeners() {
     combineLatest([
       this.lastnameFilter.valueChanges.pipe(startWith(this.lastnameFilter.value)),
-      this.firstnameFilter.valueChanges.pipe(startWith(this.firstnameFilter.value))
+      this.firstnameFilter.valueChanges.pipe(startWith(this.firstnameFilter.value)),
     ])
       .pipe(
         debounceTime(400),
@@ -158,20 +163,47 @@ export class CustomersComponent implements OnInit, OnDestroy {
         this.pagination.pageIndex = 0;
         this.updateQueryParams();
       });
+
+    this.pageSizeControl.valueChanges
+      .pipe(
+        startWith(this.pageSizeControl.value),
+        debounceTime(400),
+        distinctUntilChanged(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((value) => {
+        let pageSize = Number(value);
+
+        if (isNaN(pageSize) || pageSize < 1) {
+          pageSize = 1;
+        } else if (pageSize > 100) {
+          pageSize = 100;
+        }
+
+        if (pageSize !== value) {
+          this.pageSizeControl.setValue(pageSize, { emitEvent: false });
+        }
+
+        this.pagination.pageSize = pageSize;
+        this.pagination.pageIndex = 0;
+        this.updateQueryParams();
+      });
   }
 
   ngOnInit() {
     this.route.queryParamMap
       .pipe(takeUntil(this.destroy$))
       .subscribe(params => {
-        this.pagination.pageIndex = +params.get('offset')! / (+params.get('limit')! || 10) || 0;
-        this.pagination.pageSize = +params.get('limit')! || 10;
+        this.pagination.pageIndex = +params.get('offset')! / (+params.get('limit')! || this.defaultPageSize) || 0;
+        const limit = +params.get('limit')! || this.defaultPageSize;
+        this.pagination.pageSize = limit;
 
         this.sorting.sortField = params.get('sortField') || 'lastname';
         this.sorting.sortOrder = (params.get('sortOrder') as 'asc' | 'desc') || 'asc';
 
         this.lastnameFilter.setValue(params.get('lastname') || '', { emitEvent: false });
         this.firstnameFilter.setValue(params.get('firstname') || '', { emitEvent: false });
+        this.pageSizeControl.setValue(limit, { emitEvent: false });
 
         const rolesParam = params.getAll('roles');
         this.selectedRoles = new Set(rolesParam);

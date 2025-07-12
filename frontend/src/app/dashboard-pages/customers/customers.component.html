@@ -28,5 +28,11 @@
     <app-pagination [totalItems]="totalItems" [pageSize]="pagination.pageSize" [pageIndex]="pagination.pageIndex"
       (pageChange)="onPageChange($event)">
     </app-pagination>
+
+    <div class="input-group">
+      <label for="pageSize">Seitenlänge:</label>
+      <input id="pageSize" class="form-control" type="number" min="1" max="100" step="1" maxlength="3"
+        [formControl]="pageSizeControl" placeholder="Seitenlänge" />
+    </div>
   </div>
 </app-card>
