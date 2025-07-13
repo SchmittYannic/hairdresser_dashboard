@@ -1094,6 +1094,10 @@ tertiary:not(:disabled):not(.disabled).active,
   content: "\e8ea";
 }
 
+.icon-logout::before {
+  content: "\e888";
+}
+
 .pcoded-navbar .pcoded-inner-navbar li>a .pcoded-mtext {
   position: relative;
 }
@@ -1463,6 +1467,33 @@ tertiary:not(:disabled):not(.disabled).active,
 
 .sidebar-not-fixed .pc-footer {
   margin-left: var(--bs-sidebar-collapsed-width);
+}
+
+.pcoded-header .dropdown .profile-notification .pro-head {
+  color: #fff;
+  border-radius: .25rem .25rem 0 0;
+  padding: 15px;
+  position: relative;
+  background: #04a9f5;
+}
+
+.pcoded-header .dropdown .profile-notification .pro-head .dud-logout {
+  color: #fff;
+  padding-right: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pcoded-header .dropdown>.dropdown-menu {
+  padding: 0;
+  line-height: 1.4;
+  overflow: hidden;
 }
 
 @media only screen and (max-width: 1200px) and (min-width: 768px) {
