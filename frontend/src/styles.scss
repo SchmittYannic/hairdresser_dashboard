@@ -1130,6 +1130,7 @@ tertiary:not(:disabled):not(.disabled).active,
   transform: rotateY(-90deg);
   transform-origin: 0 0;
   opacity: 0;
+  width: 0;
 }
 
 .sidebar-not-fixed .pcoded-menu-caption::after {
