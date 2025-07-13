@@ -1,4 +1,5 @@
 export interface User {
+  id: string;
   email: string;
   roles: string[];
   title: string;
@@ -11,4 +12,5 @@ export interface User {
   birthdayemail: boolean;
   newsletter: boolean;
   createdAt: string;
+  updatedAt: string;
 }
