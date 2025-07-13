@@ -119,6 +119,10 @@
   .table-filter-wrapper {
     display: flex;
     gap: 2rem;
+
+    .input-group {
+      max-width: 200px;
+    }
   }
 
   .table-pagination {
