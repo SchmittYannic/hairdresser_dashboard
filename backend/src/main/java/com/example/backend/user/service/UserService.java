@@ -75,6 +75,7 @@ public class UserService {
         long count = mongoTemplate.count(new Query(criteria), User.class);
 
         List<UserDTO> userDTOs = users.stream().map(user -> UserDTO.builder()
+                .id(user.getId())
                 .email(user.getEmail())
                 .roles(user.getRoles())
                 .title(user.getTitle())
@@ -87,6 +88,7 @@ public class UserService {
                 .birthdayemail(user.isBirthdayemail())
                 .newsletter(user.isNewsletter())
                 .createdAt(Date.from(user.getCreatedAt()))
+                .updatedAt(Date.from(user.getUpdatedAt()))
                 .build()
         ).toList();
 
