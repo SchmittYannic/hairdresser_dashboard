@@ -44,8 +44,8 @@
             <div dropdown-content>
               <div class="profile-notification">
                 <div class="pro-head">
-                  <span>John Doe</span>
-                  <a class="dud-logout" title="Logout">
+                  <span *ngIf="userProfile$ | async as user">{{ user.firstname }} {{ user.lastname }}</span>
+                  <a class="dud-logout" title="Logout" (click)="handleLogoutClicked()">
                     <i class="feather icon-logout"></i>
                   </a>
                 </div>
