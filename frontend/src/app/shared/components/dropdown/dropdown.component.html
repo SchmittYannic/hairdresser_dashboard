@@ -1,0 +1,9 @@
+<div class="dropdown" [class.show]="isOpen">
+  <div [class.dropdown-toggle]="arrowOutside" data-toggle="dropdown" [attr.aria-expanded]="isOpen" [class.show]="isOpen"
+    (click)="toggle($event)">
+    <ng-content select="[dropdown-trigger]"></ng-content>
+  </div>
+  <div class="dropdown-menu" data-bs-popper="static" [class.dropdown-menu-end]="alignRight" [class.show]="isOpen" #menu>
+    <ng-content select="[dropdown-content]"></ng-content>
+  </div>
+</div>

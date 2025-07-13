@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { DashboardLayoutService } from '../dashboard-layout.service';
 import { CommonModule } from '@angular/common';
+import { DropdownComponent } from '@app/shared/components/dropdown/dropdown.component';
 
 @Component({
   selector: 'app-header',
@@ -9,29 +10,16 @@ import { CommonModule } from '@angular/common';
   styleUrl: './header.component.scss',
   imports: [
     CommonModule,
+    DropdownComponent,
   ]
 })
 export class HeaderComponent implements OnInit {
   isMobile = false;
-  isNotificationsOpen = false;
-  isUserDropdownOpen = false;
   isFullscreen = false;
   isMobileSidebarCollapsed = true;
   isMobileHeaderSwitched = false;
 
   constructor(public layout: DashboardLayoutService) { }
-
-  handleNotificationToggleClick(event: MouseEvent) {
-    event.preventDefault();
-    this.layout.toggleNotificationsOpen();
-    this.layout.setUserDropdownOpen(false);
-  }
-
-  handleUserDropdownToggleClick(event: MouseEvent) {
-    event.preventDefault();
-    this.layout.toggleUserDropdownOpen();
-    this.layout.setNotificationsOpen(false);
-  }
 
   toggleFullscreen(): void {
     const elem = document.documentElement as any;
@@ -68,8 +56,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.layout.isMobile$.subscribe(val => this.isMobile = val);
-    this.layout.isNotificationsOpen$.subscribe(val => this.isNotificationsOpen = val);
-    this.layout.isUserDropdownOpen$.subscribe(val => this.isUserDropdownOpen = val);
     this.layout.isMobileSidebarCollapsed$.subscribe(val => this.isMobileSidebarCollapsed = val);
     this.layout.isMobileHeaderSwitched$.subscribe(val => this.isMobileHeaderSwitched = val);
   }

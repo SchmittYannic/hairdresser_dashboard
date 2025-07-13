@@ -13,6 +13,12 @@ export class SidebarItemComponent {
   constructor(public router: Router) { }
 
   isActive(): boolean {
-    return this.router.url === this.link;
+    const tree = this.router.createUrlTree([this.link]);
+    return this.router.isActive(tree, {
+      paths: 'exact',
+      queryParams: 'ignored',
+      matrixParams: 'ignored',
+      fragment: 'ignored'
+    });
   }
 }

@@ -1,0 +1,128 @@
+.table-filter-wrapper {
+  --bs-table-filter-padding-x: .75rem;
+  --bs-table-filter-padding-y: .375rem;
+  --bs-table-filter-font-size: 1rem;
+  --bs-table-filter-color: var(--bs-link-color);
+  --bs-table-filter-bg: var(--bs-body-bg);
+  --bs-table-filter-border-width: var(--bs-border-width);
+  --bs-table-filter-border-color: var(--bs-border-color);
+  --bs-table-filter-border-radius: var(--bs-border-radius);
+  --bs-table-filter-hover-color: var(--bs-link-hover-color);
+  --bs-table-filter-hover-bg: var(--bs-tertiary-bg);
+  --bs-table-filter-hover-border-color: var(--bs-border-color);
+  --bs-table-filter-focus-color: var(--bs-link-hover-color);
+  --bs-table-filter-focus-bg: var(--bs-secondary-bg);
+  --bs-table-filter-focus-box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
+  --bs-table-filter-active-color: #fff;
+  --bs-table-filter-active-bg: #0d6efd;
+  --bs-table-filter-active-border-color: #0d6efd;
+  --bs-table-filter-disabled-color: var(--bs-secondary-color);
+  --bs-table-filter-disabled-bg: var(--bs-secondary-bg);
+  --bs-table-filter-disabled-border-color: var(--bs-border-color);
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+}
+
+.table-filter-wrapper {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 30px;
+}
+
+.role-toggles {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+
+  li {
+    align-self: stretch;
+  }
+
+  .role-toggle {
+    height: 100%;
+    position: relative;
+    display: block;
+    padding: var(--bs-table-filter-padding-y) var(--bs-table-filter-padding-x);
+    font-size: var(--bs-table-filter-font-size);
+    color: var(--bs-table-filter-color);
+    text-decoration: none;
+    background-color: var(--bs-table-filter-bg);
+    border: var(--bs-table-filter-border-width) solid var(--bs-table-filter-border-color);
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  }
+
+  li:first-child .role-toggle {
+    border-top-left-radius: var(--bs-table-filter-border-radius);
+    border-bottom-left-radius: var(--bs-table-filter-border-radius);
+  }
+
+  li:last-child .role-toggle {
+    border-top-right-radius: var(--bs-table-filter-border-radius);
+    border-bottom-right-radius: var(--bs-table-filter-border-radius);
+  }
+
+  li:not(:first-child) .role-toggle {
+    margin-left: calc(-1 * var(--bs-border-width));
+  }
+
+  .role-toggle:hover {
+    z-index: 2;
+    color: var(--bs-table-filter-hover-color);
+    background-color: var(--bs-table-filter-hover-bg);
+    border-color: var(--bs-table-filter-hover-border-color);
+  }
+
+  .role-toggle:focus {
+    z-index: 3;
+    color: var(--bs-table-filter-focus-color);
+    background-color: var(--bs-table-filter-focus-bg);
+    outline: 0;
+    box-shadow: var(--bs-table-filter-focus-box-shadow);
+  }
+
+  .role-toggle.active {
+    color: #fff;
+    background-color: #04a9f5;
+    border-color: #04a9f5;
+  }
+}
+
+.table-pagination {
+  display: grid;
+  gap: 1rem;
+
+  .input-group {
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+
+  label {
+    font-size: 13px;
+    font-weight: 500;
+    align-self: center;
+  }
+
+  #pageSize {
+    max-width: 70px;
+  }
+}
+
+@media (min-width: 768px) {
+  .role-toggles {
+    flex-wrap: nowrap;
+  }
+
+  .table-filter-wrapper {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .table-pagination {
+    display: flex;
+    gap: 2rem;
+  }
+}

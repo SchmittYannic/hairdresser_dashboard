@@ -1,0 +1,39 @@
+<app-card cardTitle="Nutzerliste">
+  <div class="table-filter-wrapper">
+    <div class="input-group">
+      <label class="sr-only">Nachnamen filtern</label>
+      <input class="form-control" [formControl]="lastnameFilter" type="text" placeholder="Nachnamen filtern" />
+    </div>
+    <div class="input-group">
+      <label class="sr-only">Vornamen filtern</label>
+      <input class="form-control" [formControl]="firstnameFilter" type="text" placeholder="Vornamen filtern" />
+    </div>
+
+    <ul class="role-toggles">
+      <li *ngFor="let role of roles">
+        <button [class.active]="isRoleSelected(role)" (click)="toggleRole(role)" class="role-toggle">
+          {{ roleLabels[role] }}
+        </button>
+      </li>
+    </ul>
+
+  </div>
+
+  <app-table [data]="users" [columns]="columns" [pagination]="pagination" [sorting]="sorting" [totalItems]="totalItems"
+    (sortingChange)="onSortingChange($event.sortField, $event.sortOrder)">
+  </app-table>
+
+  <hr>
+
+  <div class="table-pagination">
+    <app-pagination [totalItems]="totalItems" [pageSize]="pagination.pageSize" [pageIndex]="pagination.pageIndex"
+      (pageChange)="onPageChange($event)">
+    </app-pagination>
+
+    <div class="input-group">
+      <label for="pageSize">Seitenlänge:</label>
+      <input id="pageSize" class="form-control" type="number" min="1" max="100" step="1" maxlength="3"
+        [formControl]="pageSizeControl" placeholder="Seitenlänge" />
+    </div>
+  </div>
+</app-card>

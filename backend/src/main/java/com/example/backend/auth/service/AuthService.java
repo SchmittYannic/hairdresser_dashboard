@@ -1,7 +1,7 @@
 package com.example.backend.auth.service;
 
 import com.example.backend.auth.dto.*;
-import com.example.backend.auth.model.User;
+import com.example.backend.common.domain.model.User;
 import com.example.backend.auth.repository.UserRepository;
 import com.example.backend.auth.security.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;

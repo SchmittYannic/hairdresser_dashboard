@@ -30,7 +30,12 @@ const routes: Routes = [
       {
         path: 'schedule', loadComponent: () =>
           import('./dashboard-pages/schedule/schedule.component').then(m => m.ScheduleComponent),
-        data: { breadcrumb: 'Schedule' },
+        data: { breadcrumb: 'Termine' },
+      },
+      {
+        path: 'users', loadComponent: () =>
+          import('./dashboard-pages/users/users.component').then(m => m.UsersComponent),
+        data: { breadcrumb: 'Nutzer' },
       },
     ]
   },
