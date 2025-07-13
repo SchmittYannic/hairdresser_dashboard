@@ -11,7 +11,7 @@
         </th>
       </tr>
     </thead>
-    <tbody>
+    <tbody *ngIf="!isLoading">
       <tr *ngFor="let row of table.getRowModel().rows">
         <td *ngFor="let cell of row.getVisibleCells()">
           <ng-container *flexRender="
@@ -21,6 +21,13 @@
                 ">
             <div [innerHTML]="cell"></div>
           </ng-container>
+        </td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="isLoading">
+      <tr *ngFor="let row of table.getRowModel().rows">
+        <td *ngFor="let cell of row.getVisibleCells()">
+          <p class="paragraph-skeleton" [class.animated]="isLoading"></p>
         </td>
       </tr>
     </tbody>
