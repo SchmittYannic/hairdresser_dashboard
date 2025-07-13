@@ -13,6 +13,7 @@ import { AuthStoreService } from 'app/store/auth-store.service';
 export class SigninComponent {
   signinForm: FormGroup;
   error: string | null = null;
+  signinRequestLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -47,10 +48,12 @@ export class SigninComponent {
 
     const { email, password, saveDetails } = this.signinForm.value;
 
+    this.signinRequestLoading = true;
     this.authService.signin(email, password, saveDetails).subscribe({
       next: (res) => {
         this.store.setToken(res.accessToken);
         this.router.navigate(['/dashboard']);
+        this.signinRequestLoading = false;
       },
       error: (err) => {
         if (err.status === 403) {
@@ -60,6 +63,8 @@ export class SigninComponent {
         } else {
           this.error = 'An error occured. Try again later or contact support';
         }
+
+        this.signinRequestLoading = false;
       }
     });
   }

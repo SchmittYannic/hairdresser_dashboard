@@ -384,6 +384,21 @@ hr {
   list-style: none;
 }
 
+app-root>app-spinner>.spinner-container {
+  min-height: 100vh;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute-centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .row {
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
@@ -1079,6 +1094,10 @@ tertiary:not(:disabled):not(.disabled).active,
   content: "\e8ea";
 }
 
+.icon-logout::before {
+  content: "\e888";
+}
+
 .pcoded-navbar .pcoded-inner-navbar li>a .pcoded-mtext {
   position: relative;
 }
@@ -1115,6 +1134,7 @@ tertiary:not(:disabled):not(.disabled).active,
   transform: rotateY(-90deg);
   transform-origin: 0 0;
   opacity: 0;
+  width: 0;
 }
 
 .sidebar-not-fixed .pcoded-menu-caption::after {
@@ -1282,7 +1302,7 @@ tertiary:not(:disabled):not(.disabled).active,
 
 .pcoded-header .input-group .input-group-text,
 .pcoded-header a,
-.pcoded-header dropdown-toggle {
+.pcoded-header .dropdown-toggle {
   color: #3f4d67;
 }
 
@@ -1292,7 +1312,7 @@ tertiary:not(:disabled):not(.disabled).active,
 
 .pcoded-header .input-group .input-group-text:hover,
 .pcoded-header a:hover,
-.pcoded-header dropdown-toggle:hover {
+.pcoded-header .dropdown-toggle:hover {
   color: #04a9f5;
 }
 
@@ -1449,6 +1469,33 @@ tertiary:not(:disabled):not(.disabled).active,
   margin-left: var(--bs-sidebar-collapsed-width);
 }
 
+.pcoded-header .dropdown .profile-notification .pro-head {
+  color: #fff;
+  border-radius: .25rem .25rem 0 0;
+  padding: 15px;
+  position: relative;
+  background: #04a9f5;
+}
+
+.pcoded-header .dropdown .profile-notification .pro-head .dud-logout {
+  color: #fff;
+  padding-right: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pcoded-header .dropdown>.dropdown-menu {
+  padding: 0;
+  line-height: 1.4;
+  overflow: hidden;
+}
+
 @media only screen and (max-width: 1200px) and (min-width: 768px) {
   .sidebar-not-fixed .pcoded-menu-caption>label {
     transition: none;
@@ -1524,7 +1571,7 @@ tertiary:not(:disabled):not(.disabled).active,
 
   .pcoded-header .input-group-text,
   .pcoded-header a,
-  .pcoded-header dropdown-toggle {
+  .pcoded-header .dropdown-toggle {
     color: #fff;
   }
 

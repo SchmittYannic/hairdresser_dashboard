@@ -64,8 +64,14 @@
           </div>
           }
 
-          <button class="btn btn-primary mb-4" type="submit" [disabled]="signinForm.invalid">
-            Login
+          <button class="btn btn-primary mb-4" type="submit" [disabled]="signinForm.invalid || signinRequestLoading">
+            <div class="relative">
+              <span [style.opacity]="signinRequestLoading ? 0 : 1">
+                Login
+              </span>
+              <app-spinner *ngIf="signinRequestLoading" class="absolute-centered" [size]="18">
+              </app-spinner>
+            </div>
           </button>
         </form>
         <p class="mb-2 text-muted">

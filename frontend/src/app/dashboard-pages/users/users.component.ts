@@ -27,6 +27,7 @@ import { PaginationComponent } from '@app/shared/components/pagination/paginatio
 export class UsersComponent implements OnInit, OnDestroy {
   users: User[] = [];
   totalItems: number = 0;
+  isGetUsersLoading = false;
   private readonly defaultPageSize = 10;
   private readonly minPageSize = 1;
   private readonly maxPageSize = 100;
@@ -100,11 +101,17 @@ export class UsersComponent implements OnInit, OnDestroy {
     const firstname = this.firstnameFilter.value ?? '';
     const roles = Array.from(this.selectedRoles);
 
+    this.isGetUsersLoading = true
     this.userService
       .getUsers(offset, pageSize, sortField, sortOrder, lastname, firstname, roles)
-      .subscribe(response => {
-        this.users = response.users;
-        this.totalItems = response.total;
+      .subscribe({
+        next: response => {
+          this.users = response.users;
+          this.totalItems = response.total;
+        },
+        complete: () => {
+          this.isGetUsersLoading = false;
+        }
       });
   }
 
