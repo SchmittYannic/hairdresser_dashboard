@@ -1298,7 +1298,7 @@ tertiary:not(:disabled):not(.disabled).active,
 
 .pcoded-header .input-group .input-group-text,
 .pcoded-header a,
-.pcoded-header dropdown-toggle {
+.pcoded-header .dropdown-toggle {
   color: #3f4d67;
 }
 
@@ -1308,7 +1308,7 @@ tertiary:not(:disabled):not(.disabled).active,
 
 .pcoded-header .input-group .input-group-text:hover,
 .pcoded-header a:hover,
-.pcoded-header dropdown-toggle:hover {
+.pcoded-header .dropdown-toggle:hover {
   color: #04a9f5;
 }
 
@@ -1540,7 +1540,7 @@ tertiary:not(:disabled):not(.disabled).active,
 
   .pcoded-header .input-group-text,
   .pcoded-header a,
-  .pcoded-header dropdown-toggle {
+  .pcoded-header .dropdown-toggle {
     color: #fff;
   }
 
