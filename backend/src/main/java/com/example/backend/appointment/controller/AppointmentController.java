@@ -28,9 +28,6 @@ public class AppointmentController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end
     ) {
-        System.out.println("EMPLOYEE: " + employeeId);
-        System.out.println("DATES: " + dates);
-        System.out.println("START: " + start + " - END: " + end);
         Map<String, List<Appointment>> grouped = appointmentRepository.getGroupedAppointments(
                 employeeId, dates, start, end
         );
