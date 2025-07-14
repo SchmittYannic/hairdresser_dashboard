@@ -1,7 +1,6 @@
 package com.example.backend.appointment.repository;
 
 import com.example.backend.appointment.dto.Appointment;
-import com.mongodb.BasicDBObject;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,38 +23,35 @@ public class AppointmentRepository {
 
     public Map<String, List<Appointment>> getGroupedAppointments(
             String employeeId,
-            List<LocalDate> specificDates,
+            List<LocalDate> dates,
             LocalDate start,
             LocalDate end
     ) {
         List<AggregationOperation> pipeline = new ArrayList<>();
 
-        Criteria criteria = new Criteria();
-        if (employeeId != null && !employeeId.isEmpty()) {
-            try {
-                criteria = Criteria.where("employee").is(new ObjectId(employeeId));
-            } catch (IllegalArgumentException e) {
-                throw new RuntimeException("Invalid employeeId format: " + employeeId, e);
+        Criteria criteria;
+
+        if (dates != null && !dates.isEmpty()) {
+            List<Criteria> dateCriteria = new ArrayList<>();
+            for (LocalDate date : dates) {
+                Date from = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                Date to = Date.from(date.plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
+                dateCriteria.add(Criteria.where("start").gte(from).lt(to));
             }
-        }
 
-        System.out.println("Criteria: " + criteria.getCriteriaObject());
-
-        if (specificDates != null && !specificDates.isEmpty()) {
-            List<Date> fromDates = specificDates.stream()
-                    .map(date -> Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()))
-                    .toList();
-
-            List<Date> toDates = specificDates.stream()
-                    .map(date -> Date.from(date.plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant()))
-                    .toList();
-
-            criteria = criteria.and("start").gte(Collections.min(fromDates)).lt(Collections.max(toDates));
+            criteria = new Criteria().andOperator(
+                    Criteria.where("employee").is(new ObjectId(employeeId)),
+                    new Criteria().orOperator(dateCriteria.toArray(new Criteria[0]))
+            );
         } else if (start != null && end != null) {
             Date startDate = Date.from(start.atStartOfDay(ZoneId.systemDefault()).toInstant());
             Date endDate = Date.from(end.plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-            criteria = criteria.and("start").gte(startDate).lt(endDate);
+            criteria = new Criteria().andOperator(
+                    Criteria.where("employee").is(new ObjectId(employeeId)),
+                    Criteria.where("start").gte(startDate).lt(endDate)
+            );
+        } else {
+            criteria = Criteria.where("employee").is(new ObjectId(employeeId));
         }
 
         pipeline.add(Aggregation.match(criteria));
@@ -70,8 +66,6 @@ public class AppointmentRepository {
 
         Aggregation aggregation = Aggregation.newAggregation(pipeline);
         AggregationResults<Document> results = mongoTemplate.aggregate(aggregation, "appointments", Document.class);
-
-        System.out.println("Aggregation Pipeline: " + aggregation.toString());
 
         Map<String, List<Appointment>> grouped = new LinkedHashMap<>();
         for (Document obj : results) {
