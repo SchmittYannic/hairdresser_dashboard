@@ -1,0 +1,25 @@
+<div class="day-view-container">
+  <div class="time-column">
+    <div *ngFor="let time of times" class="time-slot">
+      <span class="time-label">
+        {{ time }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Appointments Area -->
+  <div class="appointment-column">
+    <div class="appointment-track-bg">
+      <div *ngFor="let time of times" class="appointment-track-guides"></div>
+    </div>
+    <div class="appointment-track">
+      <!-- <div *ngFor="let app of appointments" class="appointment-block" [ngStyle]="{
+          top: getAppointmentTop(new Date(app.start)),
+          height: getAppointmentHeight(app.duration)
+        }">
+        <strong>{{ app.serviceName || 'Appointment' }}</strong><br />
+        {{ app.customer }}
+      </div> -->
+    </div>
+  </div>
+</div>

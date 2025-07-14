@@ -1,0 +1,65 @@
+.day-view-container {
+  --day-view-timesslot-height: 60px;
+  display: flex;
+  position: relative;
+}
+
+.time-column {
+  width: 38px;
+  border-right: 1px solid var(--bs-border-color);
+}
+
+.time-slot {
+  position: relative;
+  height: var(--day-view-timesslot-height);
+  font-size: 12px;
+  text-align: right;
+  padding-right: 8px;
+  box-sizing: border-box;
+  color: #555;
+}
+
+.time-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(0, -50%);
+}
+
+.appointment-column {
+  flex-grow: 1;
+  position: relative;
+  background: var(--bs-tertiary-bg);
+}
+
+.appointment-track-bg {
+  position: absolute;
+  inset: 0;
+}
+
+.appointment-track-guides {
+  height: var(--day-view-timesslot-height);
+}
+
+.appointment-track-guides:not(:last-child) {
+  border-bottom: 1px dashed var(--bs-border-color);
+}
+
+.appointment-track {
+  position: relative;
+  height: 100%;
+}
+
+.appointment-block {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  background-color: #cce5ff;
+  border: 1px solid #99cfff;
+  border-left: 4px solid #3399ff;
+  padding: 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
