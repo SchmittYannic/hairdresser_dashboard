@@ -23,17 +23,20 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: '', loadComponent: () =>
+        path: '',
+        loadComponent: () =>
           import('./dashboard-pages/home/home.component').then(m => m.HomeComponent),
         data: { breadcrumb: 'Dashboard' },
       },
       {
-        path: 'schedule', loadComponent: () =>
-          import('./dashboard-pages/schedule/schedule.component').then(m => m.ScheduleComponent),
+        path: 'schedule',
+        loadChildren: () =>
+          import('./dashboard-pages/schedule/schedule.module').then(m => m.ScheduleModule),
         data: { breadcrumb: 'Termine' },
       },
       {
-        path: 'users', loadComponent: () =>
+        path: 'users',
+        loadComponent: () =>
           import('./dashboard-pages/users/users.component').then(m => m.UsersComponent),
         data: { breadcrumb: 'Nutzer' },
       },
