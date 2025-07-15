@@ -1,3 +1,30 @@
-<app-card cardTitle="Tagesansicht">
+<app-card *ngIf="viewMode$ | async as viewMode" cardTitle="{{cardLabel[viewMode]}}">
+  <div class="schedule-controls mb-4">
+    <app-dropdown #viewModeDropdown>
+      <button class="dropdown-trigger-btn btn btn-primary w-full" dropdown-trigger>{{ dropdownLabel[viewMode]
+        }}</button>
+
+      <div class="dropdown-content" dropdown-content>
+        <ul class="view-mode-options">
+          <li>
+            <a class="dropdown-item" (click)="handleViewModeChange(viewModeDropdown, 'day')">Tag</a>
+          </li>
+          <li>
+            <a class="dropdown-item" (click)="handleViewModeChange(viewModeDropdown, 'week')">Woche</a>
+          </li>
+          <li>
+            <a class="dropdown-item" (click)="handleViewModeChange(viewModeDropdown, 'month')">Monat</a>
+          </li>
+        </ul>
+      </div>
+    </app-dropdown>
+    <ng-container [ngSwitch]="viewMode">
+      <div *ngSwitchCase="'day'">
+        <input [ngModel]="selectedDate$ | async" (ngModelChange)="handleDateChange($event)" [owlDateTime]="dt"
+          [owlDateTimeTrigger]="dt" [selectMode]="'single'">
+        <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+      </div>
+    </ng-container>
+  </div>
   <router-outlet></router-outlet>
 </app-card>
