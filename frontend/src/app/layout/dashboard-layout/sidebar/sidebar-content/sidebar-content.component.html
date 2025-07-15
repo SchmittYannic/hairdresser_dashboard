@@ -2,7 +2,7 @@
   <div class="navbar-content">
     <ul class="nav pcoded-inner-navbar">
       <app-sidebar-group forId="title" labelText="Navigation">
-        <app-sidebar-item link="/dashboard">
+        <app-sidebar-item [links]="['/dashboard']">
           <a class="nav-link" routerLink="/dashboard">
             <span class="pcoded-micon">
               <i class="feather icon-home"></i>
@@ -12,8 +12,9 @@
             </span>
           </a>
         </app-sidebar-item>
-        <app-sidebar-item link="/dashboard/schedule">
-          <a class="nav-link" routerLink="/dashboard/schedule">
+        <app-sidebar-item
+          [links]="['/dashboard/schedule', '/dashboard/schedule/day', '/dashboard/schedule/week', '/dashboard/schedule/month']">
+          <a class="nav-link" [routerLink]="['/dashboard/schedule']">
             <span class="pcoded-micon">
               <i class="feather icon-schedule"></i>
             </span>
@@ -22,7 +23,7 @@
             </span>
           </a>
         </app-sidebar-item>
-        <app-sidebar-item link="/dashboard/users">
+        <app-sidebar-item [links]="['/dashboard/users']">
           <a class="nav-link" [routerLink]="['/dashboard/users']"
             [queryParams]="{offset: 0,limit: 10,sortField: 'lastname',sortOrder: 'asc'}">
             <span class="pcoded-micon">
