@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Appointment } from '@app/shared/models/appointment.model';
+import { Observable } from 'rxjs';
+import { ScheduleStore } from '../schedule.store';
 
 @Component({
   selector: 'app-day-view',
@@ -8,10 +10,19 @@ import { Appointment } from '@app/shared/models/appointment.model';
   styleUrl: './day-view.component.scss'
 })
 export class DayViewComponent {
-  @Input() appointments: Appointment[] = [];
-  @Input() date: Date = new Date();
+  appointments$: Observable<Appointment[]>;
+  selectedDate$: Observable<Date>;
 
   times: string[] = [];
+
+  constructor(private readonly store: ScheduleStore) {
+    this.selectedDate$ = this.store.selectedDate$;
+
+    this.appointments$ = this.store.select(state => {
+      const key = state.selectedDate.toISOString().slice(0, 10);
+      return state.groupedAppointments?.get(key) ?? [];
+    });
+  }
 
   ngOnInit(): void {
     this.generateTimeLabels();
@@ -28,6 +39,11 @@ export class DayViewComponent {
       const label = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
       this.times.push(label);
     }
+  }
+
+  getAppointmentTopFromString(dateString: string): string {
+    const date = new Date(dateString);
+    return this.getAppointmentTop(date);
   }
 
   getAppointmentTop(start: Date): string {

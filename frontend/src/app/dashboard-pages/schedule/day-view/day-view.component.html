@@ -12,13 +12,15 @@
       <div *ngFor="let time of times" class="appointment-track-guides"></div>
     </div>
     <div class="appointment-track">
-      <!-- <div *ngFor="let app of appointments" class="appointment-block" [ngStyle]="{
-          top: getAppointmentTop(new Date(app.start)),
-          height: getAppointmentHeight(app.duration)
-        }">
-        <strong>{{ app.serviceName || 'Appointment' }}</strong><br />
-        {{ app.customer }}
-      </div> -->
+      <ng-container *ngIf="appointments$ | async as appointments">
+        <div *ngFor="let app of appointments" class="appointment-block" [ngStyle]="{
+               top: getAppointmentTopFromString(app.start),
+               height: getAppointmentHeight(app.duration)
+             }">
+          <strong>{{ app.serviceName || 'Appointment' }}</strong><br />
+          {{ app.customer }}
+        </div>
+      </ng-container>
     </div>
   </div>
 </div>
