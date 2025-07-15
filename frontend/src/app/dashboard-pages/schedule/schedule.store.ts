@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { tapResponse } from '@ngrx/operators';
 import { Appointment } from '@app/shared/models/appointment.model';
 import { ComponentStore } from '@ngrx/component-store';
-import { tapResponse } from '@ngrx/operators';
 import { startOfWeek, endOfWeek } from 'date-fns';
 import { ScheduleService } from './schedule.service';
-import { distinctUntilChanged, filter, switchMap, tap } from 'rxjs';
+import { distinctUntilChanged, filter, switchMap, tap, withLatestFrom } from 'rxjs';
 import { User } from '@app/shared/models/user.model';
 import { AuthStoreService } from '@app/store/auth-store.service';
 
@@ -33,7 +33,7 @@ export class ScheduleStore extends ComponentStore<ScheduleState> {
     });
 
     this.userProfileEffect(this.authStore.userProfile$);
-    //this.loadAppointmentsEffect();
+    this.loadAppointments();
   }
 
   readonly userProfileEffect = this.effect<User | null>(userProfile$ =>
@@ -47,35 +47,6 @@ export class ScheduleStore extends ComponentStore<ScheduleState> {
       })
     )
   );
-
-  // readonly loadAppointmentsEffect = this.effect(() =>
-  //   this.select(({ viewMode, selectedDate, dateRange, employeeId }) => ({
-  //     viewMode,
-  //     selectedDate,
-  //     dateRange,
-  //     employeeId,
-  //   })).pipe(
-  //     filter(({ employeeId }) => !!employeeId),
-  //     switchMap(({ viewMode, selectedDate, dateRange, employeeId }) => {
-  //       if (viewMode === 'day') {
-  //         return this.scheduleService.getGroupedAppointments({
-  //           employeeId: employeeId!,
-  //           dates: [selectedDate],
-  //         });
-  //       } else {
-  //         return this.scheduleService.getGroupedAppointments({
-  //           employeeId: employeeId!,
-  //           start: dateRange.start,
-  //           end: dateRange.end,
-  //         });
-  //       }
-  //     }),
-  //     tapResponse({
-  //       next: (grouped) => this.patchState({ groupedAppointments: grouped }),
-  //       error: (err) => console.error('Failed to load appointments', err),
-  //     })
-  //   )
-  // );
 
   readonly setViewMode = this.updater<ViewMode>((state, viewMode) => ({
     ...state,
@@ -92,6 +63,43 @@ export class ScheduleStore extends ComponentStore<ScheduleState> {
     ...state,
     employeeId,
   }));
+
+  private readonly setAppointments = this.updater<Map<string, Appointment[]>>((state, groupedAppointments) => ({
+    ...state,
+    groupedAppointments,
+    error: null,
+  }));
+
+  readonly loadAppointments = this.effect((trigger$) =>
+    trigger$.pipe(
+      withLatestFrom(this.select(s => s)),
+      switchMap(([_, state]) => {
+        if (!state.employeeId) {
+          this.setAppointments(new Map());
+          return [];
+        }
+
+        //this.setLoading(true);
+
+        const { employeeId, viewMode, selectedDate, dateRange } = state;
+        const dates = viewMode === 'day' ? [selectedDate] : undefined;
+        const start = viewMode !== 'day' ? dateRange.start : undefined;
+        const end = viewMode !== 'day' ? dateRange.end : undefined;
+
+        return this.scheduleService.getGroupedAppointments({ employeeId, dates, start, end }).pipe(
+          tapResponse(
+            (data) => {
+              this.setAppointments(data);
+              //this.setLoading(false);
+            },
+            (error: any) => {
+              //this.setError(error.message || 'Failed to load appointments');
+            }
+          )
+        );
+      })
+    )
+  );
 
   readonly viewMode$ = this.select((s) => s.viewMode);
   readonly selectedDate$ = this.select((s) => s.selectedDate);
