@@ -4,7 +4,9 @@ import { ComponentStore } from '@ngrx/component-store';
 import { tapResponse } from '@ngrx/operators';
 import { startOfWeek, endOfWeek } from 'date-fns';
 import { ScheduleService } from './schedule.service';
-import { filter, switchMap } from 'rxjs';
+import { distinctUntilChanged, filter, switchMap, tap } from 'rxjs';
+import { User } from '@app/shared/models/user.model';
+import { AuthStoreService } from '@app/store/auth-store.service';
 
 export type ViewMode = 'day' | 'week' | 'month';
 
@@ -20,6 +22,7 @@ export interface ScheduleState {
 export class ScheduleStore extends ComponentStore<ScheduleState> {
   constructor(
     private readonly scheduleService: ScheduleService,
+    private readonly authStore: AuthStoreService,
   ) {
     super({
       viewMode: 'day',
@@ -29,38 +32,50 @@ export class ScheduleStore extends ComponentStore<ScheduleState> {
       groupedAppointments: new Map(),
     });
 
-    this.loadAppointmentsEffect();
+    this.userProfileEffect(this.authStore.userProfile$);
+    //this.loadAppointmentsEffect();
   }
 
-  readonly loadAppointmentsEffect = this.effect(() =>
-    this.select(state => ({
-      viewMode: state.viewMode,
-      selectedDate: state.selectedDate,
-      dateRange: state.dateRange,
-      employeeId: state.employeeId,
-    })).pipe(
-      // Only run when employeeId is present
-      filter(({ employeeId }) => !!employeeId),
-      switchMap(({ viewMode, selectedDate, dateRange, employeeId }) => {
-        if (viewMode === 'day') {
-          return this.scheduleService.getGroupedAppointments({
-            employeeId: employeeId!,
-            dates: [selectedDate],
-          });
+  readonly userProfileEffect = this.effect<User | null>(userProfile$ =>
+    userProfile$.pipe(
+      tap(profile => {
+        if (profile?.id) {
+          this.setEmployeeId(profile.id);
         } else {
-          return this.scheduleService.getGroupedAppointments({
-            employeeId: employeeId!,
-            start: dateRange.start,
-            end: dateRange.end,
-          });
+          this.setEmployeeId(null);
         }
-      }),
-      tapResponse({
-        next: (grouped) => this.patchState({ groupedAppointments: grouped }),
-        error: (err) => console.error('Failed to load appointments', err),
       })
     )
   );
+
+  // readonly loadAppointmentsEffect = this.effect(() =>
+  //   this.select(({ viewMode, selectedDate, dateRange, employeeId }) => ({
+  //     viewMode,
+  //     selectedDate,
+  //     dateRange,
+  //     employeeId,
+  //   })).pipe(
+  //     filter(({ employeeId }) => !!employeeId),
+  //     switchMap(({ viewMode, selectedDate, dateRange, employeeId }) => {
+  //       if (viewMode === 'day') {
+  //         return this.scheduleService.getGroupedAppointments({
+  //           employeeId: employeeId!,
+  //           dates: [selectedDate],
+  //         });
+  //       } else {
+  //         return this.scheduleService.getGroupedAppointments({
+  //           employeeId: employeeId!,
+  //           start: dateRange.start,
+  //           end: dateRange.end,
+  //         });
+  //       }
+  //     }),
+  //     tapResponse({
+  //       next: (grouped) => this.patchState({ groupedAppointments: grouped }),
+  //       error: (err) => console.error('Failed to load appointments', err),
+  //     })
+  //   )
+  // );
 
   readonly setViewMode = this.updater<ViewMode>((state, viewMode) => ({
     ...state,
@@ -73,17 +88,17 @@ export class ScheduleStore extends ComponentStore<ScheduleState> {
     dateRange: getWeekRange(selectedDate),
   }));
 
-  readonly setEmployeeId = this.updater<string>((state, employeeId) => ({
+  readonly setEmployeeId = this.updater<string | null>((state, employeeId) => ({
     ...state,
     employeeId,
   }));
 
-  readonly viewMode$ = this.select(s => s.viewMode);
-  readonly selectedDate$ = this.select(s => s.selectedDate);
-  readonly dateRange$ = this.select(s => s.dateRange);
-  readonly employeeId$ = this.select(s => s.employeeId);
+  readonly viewMode$ = this.select((s) => s.viewMode);
+  readonly selectedDate$ = this.select((s) => s.selectedDate);
+  readonly dateRange$ = this.select((s) => s.dateRange);
+  readonly employeeId$ = this.select(state => state.employeeId).pipe(distinctUntilChanged());
 
-  readonly groupedAppointments$ = this.select(s => s.groupedAppointments);
+  readonly groupedAppointments$ = this.select((s) => s.groupedAppointments);
 
   readonly appointmentsForSelectedDate$ = this.select(
     this.selectedDate$,
@@ -97,6 +112,6 @@ export class ScheduleStore extends ComponentStore<ScheduleState> {
 
 function getWeekRange(date: Date) {
   const start = startOfWeek(date, { weekStartsOn: 1 }); // Monday start
-  const end = endOfWeek(date, { weekStartsOn: 1 });     // Sunday end
+  const end = endOfWeek(date, { weekStartsOn: 1 }); // Sunday end
   return { start, end };
 }
