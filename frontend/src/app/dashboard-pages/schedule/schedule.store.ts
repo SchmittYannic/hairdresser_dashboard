@@ -70,34 +70,47 @@ export class ScheduleStore extends ComponentStore<ScheduleState> {
     error: null,
   }));
 
-  readonly loadAppointments = this.effect((trigger$) =>
+  readonly loadAppointments = this.effect<void>(trigger$ =>
     trigger$.pipe(
-      withLatestFrom(this.select(s => s)),
-      switchMap(([_, state]) => {
-        if (!state.employeeId) {
-          this.setAppointments(new Map());
-          return [];
-        }
-
-        //this.setLoading(true);
-
-        const { employeeId, viewMode, selectedDate, dateRange } = state;
-        const dates = viewMode === 'day' ? [selectedDate] : undefined;
-        const start = viewMode !== 'day' ? dateRange.start : undefined;
-        const end = viewMode !== 'day' ? dateRange.end : undefined;
-
-        return this.scheduleService.getGroupedAppointments({ employeeId, dates, start, end }).pipe(
-          tapResponse(
-            (data) => {
-              this.setAppointments(data);
-              //this.setLoading(false);
-            },
-            (error: any) => {
-              //this.setError(error.message || 'Failed to load appointments');
+      switchMap(() =>
+        this.select(
+          state => ({
+            employeeId: state.employeeId,
+            viewMode: state.viewMode,
+            selectedDate: state.selectedDate,
+            dateRange: state.dateRange,
+          }),
+          // Only emit when these values change
+          { debounce: true }
+        ).pipe(
+          distinctUntilChanged((prev, curr) =>
+            prev.employeeId === curr.employeeId &&
+            prev.viewMode === curr.viewMode &&
+            prev.selectedDate.getTime() === curr.selectedDate.getTime() &&
+            prev.dateRange.start.getTime() === curr.dateRange.start.getTime() &&
+            prev.dateRange.end.getTime() === curr.dateRange.end.getTime()
+          ),
+          switchMap(({ employeeId, viewMode, selectedDate, dateRange }) => {
+            if (!employeeId) {
+              this.setAppointments(new Map());
+              return [];
             }
-          )
-        );
-      })
+
+            const dates = viewMode === 'day' ? [selectedDate] : undefined;
+            const start = viewMode !== 'day' ? dateRange.start : undefined;
+            const end = viewMode !== 'day' ? dateRange.end : undefined;
+
+            return this.scheduleService.getGroupedAppointments({ employeeId, dates, start, end }).pipe(
+              tapResponse(
+                data => this.setAppointments(data),
+                error => {
+                  // handle error here
+                }
+              )
+            );
+          })
+        )
+      )
     )
   );
 
