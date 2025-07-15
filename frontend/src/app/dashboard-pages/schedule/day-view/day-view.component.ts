@@ -9,7 +9,7 @@ import { Appointment } from '@app/shared/models/appointment.model';
 })
 export class DayViewComponent {
   @Input() appointments: Appointment[] = [];
-  @Input() date: Date = new Date(); // current day shown
+  @Input() date: Date = new Date();
 
   times: string[] = [];
 
