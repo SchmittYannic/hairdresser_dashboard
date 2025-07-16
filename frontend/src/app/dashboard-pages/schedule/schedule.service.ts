@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
+import { format } from 'date-fns';
 import { Appointment } from '@app/shared/models/appointment.model';
 import { environment } from 'environments/environment';
 
@@ -22,13 +23,15 @@ export class ScheduleService {
 
     if (options.dates && options.dates.length) {
       for (const date of options.dates) {
-        const dateStr = date.toISOString().split('T')[0];
-        params = params.append('dates', dateStr);
+        const dateFormatted = format(date, 'yyyy-MM-dd');
+        params = params.append('dates', dateFormatted);
       }
     } else if (options.start && options.end) {
+      const startFormatted = format(options.start, 'yyyy-MM-dd');
+      const endFormatted = format(options.end, 'yyyy-MM-dd');
       params = params
-        .set('start', options.start.toISOString().split('T')[0])
-        .set('end', options.end.toISOString().split('T')[0]);
+        .set('start', startFormatted)
+        .set('end', endFormatted);
     }
 
     return this.http.get<{ [date: string]: Appointment[] }>(this.apiUrl, { params }).pipe(

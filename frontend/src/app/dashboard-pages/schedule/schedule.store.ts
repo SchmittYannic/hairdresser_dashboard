@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
 import { tapResponse } from '@ngrx/operators';
-import { Appointment } from '@app/shared/models/appointment.model';
-import { ComponentStore } from '@ngrx/component-store';
+import { distinctUntilChanged, switchMap, tap } from 'rxjs';
+import { format } from 'date-fns';
 import { startOfWeek, endOfWeek } from 'date-fns';
-import { ScheduleService } from './schedule.service';
-import { distinctUntilChanged, filter, switchMap, tap, withLatestFrom } from 'rxjs';
-import { User } from '@app/shared/models/user.model';
+import { ComponentStore } from '@ngrx/component-store';
+
 import { AuthStoreService } from '@app/store/auth-store.service';
+import { ScheduleService } from './schedule.service';
+import { Appointment } from '@app/shared/models/appointment.model';
+import { User } from '@app/shared/models/user.model';
 
 export type ViewMode = 'day' | 'week' | 'month';
 
 export interface ScheduleState {
   viewMode: ViewMode;
-  selectedDate: Date; // for day view
-  dateRange: { start: Date; end: Date }; // for week/month view
+  selectedDate: Date;
+  dateRange: { start: Date; end: Date };
   employeeId: string | null;
   groupedAppointments: Map<string, Appointment[]>;
 }
@@ -125,7 +127,7 @@ export class ScheduleStore extends ComponentStore<ScheduleState> {
     this.selectedDate$,
     this.groupedAppointments$,
     (date, grouped) => {
-      const key = date.toISOString().split('T')[0];
+      const key = format(date, 'yyyy-MM-dd');
       return grouped.get(key) || [];
     }
   );

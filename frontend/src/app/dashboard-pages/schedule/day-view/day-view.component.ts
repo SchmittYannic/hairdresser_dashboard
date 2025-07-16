@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Appointment } from '@app/shared/models/appointment.model';
 import { Observable } from 'rxjs';
+import { format } from 'date-fns';
 import { ScheduleStore } from '../schedule.store';
 
 @Component({
@@ -19,7 +20,7 @@ export class DayViewComponent {
     this.selectedDate$ = this.store.selectedDate$;
 
     this.appointments$ = this.store.select(state => {
-      const key = state.selectedDate.toISOString().slice(0, 10);
+      const key = format(state.selectedDate, 'yyyy-MM-dd');
       return state.groupedAppointments?.get(key) ?? [];
     });
   }
