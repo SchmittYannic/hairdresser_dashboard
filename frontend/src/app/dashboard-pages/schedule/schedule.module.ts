@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from '@danielmoncada/angular-datetime-picker';
 
 import { ScheduleComponent } from './schedule.component';
 import { ScheduleRoutingModule } from './schedule-routing.module';
@@ -31,6 +31,7 @@ import { MonthViewComponent } from './month-view/month-view.component';
   ],
   providers: [
     ScheduleStore,
+    { provide: OWL_DATE_TIME_LOCALE, useValue: 'de' },
   ],
   exports: [ScheduleComponent]
 })
