@@ -50,10 +50,10 @@ export class DayViewComponent {
   getAppointmentTop(start: Date): string {
     const minutes = start.getHours() * 60 + start.getMinutes();
     const dayStart = 7 * 60; // 7:00 AM
-    return `${(minutes - dayStart) * 2}px`; // 2px per minute
+    return `${(minutes - dayStart) * 1}px`; // 1px per minute
   }
 
   getAppointmentHeight(duration: number): string {
-    return `${duration * 2}px`; // 2px per minute
+    return `${duration * 1}px`; // 1px per minute
   }
 }
