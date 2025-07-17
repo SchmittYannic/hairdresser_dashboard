@@ -19,10 +19,16 @@
       </div>
     </app-dropdown>
     <ng-container [ngSwitch]="viewMode">
-      <div *ngSwitchCase="'day'">
-        <input [ngModel]="selectedDate$ | async" (ngModelChange)="handleDateChange($event)" [owlDateTime]="dt"
+      <div *ngSwitchCase="'day'" class="date-select">
+        <button type="button" (click)="handleChangeDay(-1)">
+          <i class="feather icon-chevron-left"></i>
+        </button>
+        <input size="8" [ngModel]="selectedDate$ | async" (ngModelChange)="handleDateChange($event)" [owlDateTime]="dt"
           [owlDateTimeTrigger]="dt" [selectMode]="'single'">
         <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+        <button type="button" (click)="handleChangeDay(1)">
+          <i class="feather icon-chevron-right"></i>
+        </button>
       </div>
     </ng-container>
   </div>
