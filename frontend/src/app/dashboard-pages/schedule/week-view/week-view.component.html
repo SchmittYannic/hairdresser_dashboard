@@ -1,1 +1,35 @@
-<p>week-view works!</p>
+<div class="week-view-container">
+  <!-- Time Column -->
+  <div class="time-column">
+    <div class="time-slot-header"></div>
+    <div *ngFor="let time of times" class="time-slot">
+      <span class="time-label">{{ time }}</span>
+    </div>
+  </div>
+
+  <!-- Day Columns -->
+  <ng-container *ngIf="appointmentsByDate$ | async as appointmentsMap">
+    <div class="days-column">
+      <div class="day" *ngFor="let date of weekDays">
+        <div class="day-header">{{ date | date: 'EEE dd.MM' }}</div>
+
+        <div class="day-schedule">
+          <div class="appointment-track-bg">
+            <div *ngFor="let time of times" class="appointment-track-guides"></div>
+          </div>
+
+          <div class="appointment-track">
+            <div *ngFor="let app of appointmentsMap.get(getDateKey(date)) || []" class="appointment-block"
+              [ngClass]="app.serviceName" [ngStyle]="{
+              top: getAppointmentTopFromString(app.start),
+              height: getAppointmentHeight(app.duration)
+            }">
+              <strong>{{ app.serviceName || 'Appointment' }}</strong><br />
+              {{ app.customerFirstname }} {{ app.customerLastname }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
