@@ -12,16 +12,25 @@ import { startOfWeek, addDays, format } from 'date-fns';
 })
 export class WeekViewComponent implements OnInit {
   times: string[] = [];
-  weekDays: Date[] = [];
+  selectedDate$: Observable<Date>;
+  weekDays$: Observable<Date[]>;
   appointmentsByDate$: Observable<Map<string, Appointment[]>>;
 
   constructor(private readonly store: ScheduleStore) {
+    this.selectedDate$ = this.store.selectedDate$;
+
+    this.weekDays$ = this.selectedDate$.pipe(
+      map((selected) => {
+        const start = startOfWeek(selected, { weekStartsOn: 1 });
+        return Array.from({ length: 7 }, (_, i) => addDays(start, i));
+      })
+    );
+
     this.appointmentsByDate$ = this.store.select(state => state.groupedAppointments);
   }
 
   ngOnInit(): void {
     this.generateTimeLabels();
-    this.generateWeekDays();
   }
 
   generateTimeLabels(): void {
@@ -33,11 +42,6 @@ export class WeekViewComponent implements OnInit {
       const label = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
       this.times.push(label);
     }
-  }
-
-  generateWeekDays(): void {
-    const start = startOfWeek(new Date(), { weekStartsOn: 1 }); // Monday
-    this.weekDays = Array.from({ length: 7 }, (_, i) => addDays(start, i));
   }
 
   getAppointmentTopFromString(dateString: string): string {

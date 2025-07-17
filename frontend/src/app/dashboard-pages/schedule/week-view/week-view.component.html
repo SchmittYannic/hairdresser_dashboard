@@ -2,13 +2,13 @@
   <div class="week-view-headers">
     <ng-container *ngIf="appointmentsByDate$ | async as appointmentsMap">
       <div class="day-header"></div>
-      <ng-container *ngFor="let date of weekDays">
+      <ng-container *ngFor="let day of weekDays$ | async">
         <div class="day-header">
           <div>
-            {{ date | date: 'EEEE' }}
+            {{ day | date: 'EEEE' }}
           </div>
           <div>
-            {{ date | date: 'dd.MM' }}
+            {{ day | date: 'dd.MM' }}
           </div>
         </div>
       </ng-container>
@@ -22,13 +22,13 @@
     </div>
     <ng-container *ngIf="appointmentsByDate$ | async as appointmentsMap">
       <div class="days-column">
-        <div class="day" *ngFor="let date of weekDays">
+        <div class="day" *ngFor="let day of weekDays$ | async">
           <div class="appointment-track-bg">
             <div *ngFor="let time of times" class="appointment-track-guides"></div>
           </div>
 
           <div class="appointment-track">
-            <div *ngFor="let app of appointmentsMap.get(getDateKey(date)) || []" class="appointment-block"
+            <div *ngFor="let app of appointmentsMap.get(getDateKey(day)) || []" class="appointment-block"
               [ngClass]="app.serviceName" [ngStyle]="{
               top: getAppointmentTopFromString(app.start),
               height: getAppointmentHeight(app.duration)
