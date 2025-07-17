@@ -36,6 +36,18 @@
           <i class="feather icon-chevron-right"></i>
         </button>
       </div>
+
+      <div *ngSwitchCase="'week'" class="date-select">
+        <button type="button" (click)="handleChangeDay(-7)">
+          <i class="feather icon-chevron-left"></i>
+        </button>
+        <input size="8" [ngModel]="selectedDate$ | async" (ngModelChange)="handleDateChange($event)" [owlDateTime]="dt"
+          [owlDateTimeTrigger]="dt" [selectMode]="'single'">
+        <owl-date-time [pickerType]="'calendar'" [firstDayOfWeek]="1" #dt></owl-date-time>
+        <button type="button" (click)="handleChangeDay(7)">
+          <i class="feather icon-chevron-right"></i>
+        </button>
+      </div>
     </ng-container>
   </div>
   <router-outlet></router-outlet>
