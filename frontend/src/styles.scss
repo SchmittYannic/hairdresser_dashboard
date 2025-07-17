@@ -1112,6 +1112,22 @@ tertiary:not(:disabled):not(.disabled).active,
   content: "\e888";
 }
 
+.icon-chevron-down::before {
+  content: "\e842";
+}
+
+.icon-chevron-left::before {
+  content: "\e843";
+}
+
+.icon-chevron-right::before {
+  content: "\e844";
+}
+
+.icon-chevron-up::before {
+  content: "\e845";
+}
+
 .pcoded-navbar .pcoded-inner-navbar li>a .pcoded-mtext {
   position: relative;
 }
