@@ -64,4 +64,11 @@ export class ScheduleComponent implements OnInit {
     dropdown.close();
     this.router.navigate(['/dashboard/schedule', viewMode]);
   }
+
+  handleChangeDay(offset: number): void {
+    const current = this.scheduleStore.getSelectedDate();
+    const updated = new Date(current);
+    updated.setDate(current.getDate() + offset);
+    this.scheduleStore.setSelectedDate(updated);
+  }
 }
