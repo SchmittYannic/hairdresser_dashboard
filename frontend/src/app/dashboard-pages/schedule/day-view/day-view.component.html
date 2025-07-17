@@ -13,11 +13,11 @@
     </div>
     <div class="appointment-track">
       <ng-container *ngIf="appointments$ | async as appointments">
-        <div *ngFor="let app of appointments" class="appointment-block" [ngStyle]="{
+        <div *ngFor="let app of appointments" class="appointment-block" [ngClass]="app.serviceName" [ngStyle]="{
                top: getAppointmentTopFromString(app.start),
                height: getAppointmentHeight(app.duration)
              }">
-          <strong>{{ app.serviceName || 'Appointment' }}</strong><br />
+          <strong style="margin-right: 10px;">{{ app.serviceName || 'Appointment' }}</strong>
           {{ app.customerFirstname }} {{ app.customerLastname }}
         </div>
       </ng-container>
