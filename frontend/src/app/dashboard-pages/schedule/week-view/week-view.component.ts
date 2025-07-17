@@ -48,11 +48,11 @@ export class WeekViewComponent implements OnInit {
   getAppointmentTop(start: Date): string {
     const minutes = start.getHours() * 60 + start.getMinutes();
     const dayStart = 7 * 60;
-    return `${(minutes - dayStart) * 1}px`;
+    return `${(minutes - dayStart) * 2}px`;
   }
 
   getAppointmentHeight(duration: number): string {
-    return `${duration * 1}px`;
+    return `${duration * 2}px`;
   }
 
   getDateKey(date: Date): string {

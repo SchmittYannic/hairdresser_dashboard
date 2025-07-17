@@ -1,63 +1,68 @@
 .week-view-container {
-  --week-view-timesslot-height: 30px;
   --week-view-time-column-width: 38px;
+  --week-view-timesslot-height: 60px;
+  --week-view-day-column-width: 70px;
+  display: flex;
+  flex-direction: column;
+}
+
+.week-view-headers {
   display: grid;
-  grid-template-columns: var(--week-view-time-column-width) 1fr;
-  position: relative;
-}
-
-.time-column {
-  display: flex;
-  flex-direction: column;
-  border-right: 1px solid var(--bs-border-color);
-
-  .time-slot {
-    width: 100%;
-    position: relative;
-    height: var(--week-view-timesslot-height);
-    padding-right: 5px;
-    box-sizing: border-box;
-    font-size: 12px;
-    color: #555;
-  }
-
-  .time-label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(0, -50%);
-  }
-}
-
-.time-slot-header {
-  height: 30px; // Match the header height in appointment column
-}
-
-.days-column {
-  display: flex;
-  flex-grow: 1;
-  background: var(--bs-tertiary-bg);
-}
-
-.day {
-  flex: 1;
-  border-right: 1px solid var(--bs-border-color);
-  display: flex;
-  flex-direction: column;
+  grid-template-columns: var(--week-view-time-column-width) repeat(7, 1fr);
 }
 
 .day-header {
   text-align: center;
   font-weight: bold;
   padding: 4px 0;
-  background-color: var(--bs-light);
-  border-bottom: 1px solid var(--bs-border-color);
-  font-size: 13px;
+  border-right: 1px solid var(--bs-border-color);
 }
 
-.day-schedule {
+.day-header:first-child {
+  width: var(--week-view-time-column-width);
+}
+
+.day-header:not(:first-child) {
+  background: var(--bs-secondary-bg);
+  border-top: 1px solid var(--bs-border-color);
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+.week-view-schedule {
+  display: grid;
+  grid-template-columns: var(--week-view-time-column-width) 1fr;
+}
+
+.time-column {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--bs-border-color);
+}
+
+.time-slot {
   position: relative;
-  flex: 1;
+  height: var(--week-view-timesslot-height);
+  padding-right: 5px;
+  font-size: 12px;
+  color: #555;
+}
+
+.time-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(0, -50%);
+}
+
+.days-column {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: var(--bs-tertiary-bg);
+}
+
+.day {
+  position: relative;
+  border-right: 1px solid var(--bs-border-color);
 }
 
 .appointment-track-bg {
@@ -83,4 +88,58 @@
   font-size: 12px;
   box-sizing: border-box;
   overflow: hidden;
+}
+
+.appointment-block.Schneiden {
+  background-color: #cce5ff;
+  border: 1px solid #99cfff;
+  border-left: 4px solid #3399ff;
+}
+
+.appointment-block.KindU6 {
+  background-color: #ffe6e6;
+  border: 1px solid #ffcccc;
+  border-left: 4px solid #ff4d4d;
+}
+
+.appointment-block.KindU12 {
+  background-color: #e6ffe6;
+  border: 1px solid #ccffcc;
+  border-left: 4px solid #33cc33;
+}
+
+.appointment-block.TeenU14 {
+  background-color: #fff5cc;
+  border: 1px solid #ffe680;
+  border-left: 4px solid #ffcc00;
+}
+
+.appointment-block.Cornrows {
+  background-color: #f9e6ff;
+  border: 1px solid #e0b3ff;
+  border-left: 4px solid #cc66ff;
+}
+
+.appointment-block.Greyblending {
+  background-color: #f0f0f0;
+  border: 1px solid #d9d9d9;
+  border-left: 4px solid #999999;
+}
+
+.appointment-block.Rasur {
+  background-color: #fce5cd;
+  border: 1px solid #f9cb9c;
+  border-left: 4px solid #e69138;
+}
+
+.appointment-block.Coloration {
+  background-color: #f8e6e9;
+  border: 1px solid #f2c2cb;
+  border-left: 4px solid #d6336c;
+}
+
+.appointment-block.Dauerwelle {
+  background-color: #e6f2ff;
+  border: 1px solid #b3d7ff;
+  border-left: 4px solid #3399ff;
 }

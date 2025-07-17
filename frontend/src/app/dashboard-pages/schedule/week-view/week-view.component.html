@@ -1,19 +1,28 @@
 <div class="week-view-container">
-  <!-- Time Column -->
-  <div class="time-column">
-    <div class="time-slot-header"></div>
-    <div *ngFor="let time of times" class="time-slot">
-      <span class="time-label">{{ time }}</span>
-    </div>
+  <div class="week-view-headers">
+    <ng-container *ngIf="appointmentsByDate$ | async as appointmentsMap">
+      <div class="day-header"></div>
+      <ng-container *ngFor="let date of weekDays">
+        <div class="day-header">
+          <div>
+            {{ date | date: 'EEEE' }}
+          </div>
+          <div>
+            {{ date | date: 'dd.MM' }}
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
   </div>
-
-  <!-- Day Columns -->
-  <ng-container *ngIf="appointmentsByDate$ | async as appointmentsMap">
-    <div class="days-column">
-      <div class="day" *ngFor="let date of weekDays">
-        <div class="day-header">{{ date | date: 'EEE dd.MM' }}</div>
-
-        <div class="day-schedule">
+  <div class="week-view-schedule">
+    <div class="time-column">
+      <div *ngFor="let time of times" class="time-slot">
+        <span class="time-label">{{ time }}</span>
+      </div>
+    </div>
+    <ng-container *ngIf="appointmentsByDate$ | async as appointmentsMap">
+      <div class="days-column">
+        <div class="day" *ngFor="let date of weekDays">
           <div class="appointment-track-bg">
             <div *ngFor="let time of times" class="appointment-track-guides"></div>
           </div>
@@ -24,12 +33,12 @@
               top: getAppointmentTopFromString(app.start),
               height: getAppointmentHeight(app.duration)
             }">
-              <strong>{{ app.serviceName || 'Appointment' }}</strong><br />
+              <strong style="margin-right: 10px;">{{ app.serviceName || 'Appointment' }}</strong>
               {{ app.customerFirstname }} {{ app.customerLastname }}
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </ng-container>
+    </ng-container>
+  </div>
 </div>
