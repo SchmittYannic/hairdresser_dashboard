@@ -17,7 +17,11 @@
   text-align: right;
   padding-right: 8px;
   box-sizing: border-box;
-  color: #555;
+  color: var(--bs-gray-600);
+}
+
+.time-slot:last-child {
+  height: 0;
 }
 
 .time-label {
@@ -44,6 +48,15 @@
 
 .appointment-track-guides:not(:last-child) {
   border-bottom: 1px dashed var(--bs-border-color);
+}
+
+.appointment-track-guides:last-child {
+  border-bottom: none;
+  height: 0;
+}
+
+.appointment-track-guides:nth-last-child(2) {
+  border-bottom: none;
 }
 
 .appointment-track {
