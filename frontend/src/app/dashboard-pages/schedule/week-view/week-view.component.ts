@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ScheduleStore } from '../schedule.store';
-import { Appointment } from '@app/shared/models/appointment.model';
 import { Observable, map } from 'rxjs';
 import { startOfWeek, addDays, format } from 'date-fns';
+import { ScheduleStore } from 'app/dashboard-pages/schedule/schedule.store';
+import { Appointment } from 'app/shared/models/appointment.model';
 
 @Component({
   selector: 'app-week-view',
@@ -61,5 +61,14 @@ export class WeekViewComponent implements OnInit {
 
   getDateKey(date: Date): string {
     return format(date, 'yyyy-MM-dd');
+  }
+
+  isSameDay(d1: Date, d2: Date | null): boolean {
+    if (!d1 || !d2) return false;
+    return (
+      d1.getFullYear() === d2.getFullYear() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getDate() === d2.getDate()
+    );
   }
 }

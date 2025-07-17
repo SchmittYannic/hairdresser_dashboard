@@ -28,6 +28,11 @@
   border-bottom: 1px solid var(--bs-border-color);
 }
 
+.day-header.selected {
+  color: #fff;
+  background-color: #04a9f5;
+}
+
 .week-view-schedule {
   display: grid;
   grid-template-columns: var(--week-view-time-column-width) 1fr;

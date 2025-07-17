@@ -3,7 +3,7 @@
     <ng-container *ngIf="appointmentsByDate$ | async as appointmentsMap">
       <div class="day-header"></div>
       <ng-container *ngFor="let day of weekDays$ | async">
-        <div class="day-header">
+        <div class="day-header" [ngClass]="{ 'selected': isSameDay(day, selectedDate$ | async) }">
           <div>
             {{ day | date: 'EEEE' }}
           </div>
