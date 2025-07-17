@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { filter, map, Observable } from 'rxjs';
-import { ScheduleStore, ViewMode } from './schedule.store';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { format } from 'date-fns';
+import { de } from 'date-fns/locale';
+import { ScheduleStore, ViewMode } from './schedule.store';
 import { DropdownComponent } from '@app/shared/components/dropdown/dropdown.component';
-import { Appointment } from '@app/shared/models/appointment.model';
 
 @Component({
   selector: 'app-schedule',
@@ -70,5 +71,10 @@ export class ScheduleComponent implements OnInit {
     const updated = new Date(current);
     updated.setDate(current.getDate() + offset);
     this.scheduleStore.setSelectedDate(updated);
+  }
+
+  getFormattedDate(date: Date | null): string {
+    if (!date) return "SELECTED_DATE_EQUALS_NULL"
+    return format(date, 'EEEE, d. MMMM yyyy', { locale: de });
   }
 }
