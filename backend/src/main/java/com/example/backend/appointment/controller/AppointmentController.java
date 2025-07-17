@@ -1,6 +1,6 @@
 package com.example.backend.appointment.controller;
 
-import com.example.backend.appointment.dto.Appointment;
+import com.example.backend.appointment.dto.ScheduleAppointmentDTO;
 import com.example.backend.appointment.repository.AppointmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,13 +22,13 @@ public class AppointmentController {
     private final AppointmentRepository appointmentRepository;
 
     @GetMapping("/grouped")
-    public ResponseEntity<Map<String, List<Appointment>>> getGroupedAppointments(
+    public ResponseEntity<Map<String, List<ScheduleAppointmentDTO>>> getGroupedAppointments(
             @RequestParam String employeeId,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) List<LocalDate> dates,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end
     ) {
-        Map<String, List<Appointment>> grouped = appointmentRepository.getGroupedAppointments(
+        Map<String, List<ScheduleAppointmentDTO>> grouped = appointmentRepository.getGroupedAppointments(
                 employeeId, dates, start, end
         );
         return ResponseEntity.ok(grouped);

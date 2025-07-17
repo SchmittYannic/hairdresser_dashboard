@@ -1,6 +1,6 @@
 package com.example.backend.appointment.repository;
 
-import com.example.backend.appointment.dto.Appointment;
+import com.example.backend.appointment.dto.ScheduleAppointmentDTO;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class AppointmentRepository {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    public Map<String, List<Appointment>> getGroupedAppointments(
+    public Map<String, List<ScheduleAppointmentDTO>> getGroupedAppointments(
             String employeeId,
             List<LocalDate> dates,
             LocalDate start,
@@ -57,7 +57,17 @@ public class AppointmentRepository {
         pipeline.add(Aggregation.match(criteria));
 
         pipeline.add(
-                Aggregation.project("employee", "customer", "service_name", "duration", "start", "end", "remarks", "createdAt", "updatedAt")
+                Aggregation.lookup("users", "customer", "_id", "customerData")
+        );
+
+        pipeline.add(
+                Aggregation.unwind("customerData", true) // true = preserve null/empty
+        );
+
+        pipeline.add(
+                Aggregation.project("employee", "customer", "service_name", "duration", "start", "end")
+                        .and("customerData.firstname").as("customerFirstname")
+                        .and("customerData.lastname").as("customerLastname")
                         .andExpression("dateToString('%Y-%m-%d', start)").as("dateGroup")
         );
 
@@ -67,11 +77,11 @@ public class AppointmentRepository {
         Aggregation aggregation = Aggregation.newAggregation(pipeline);
         AggregationResults<Document> results = mongoTemplate.aggregate(aggregation, "appointments", Document.class);
 
-        Map<String, List<Appointment>> grouped = new LinkedHashMap<>();
+        Map<String, List<ScheduleAppointmentDTO>> grouped = new LinkedHashMap<>();
         for (Document obj : results) {
             String date = obj.getString("_id");
-            List<Appointment> items = ((List<?>) obj.get("appointments")).stream()
-                    .map(o -> mongoTemplate.getConverter().read(Appointment.class, (Document) o))
+            List<ScheduleAppointmentDTO> items = ((List<?>) obj.get("appointments")).stream()
+                    .map(o -> mongoTemplate.getConverter().read(ScheduleAppointmentDTO.class, (Document) o))
                     .toList();
             grouped.put(date, items);
         }
