@@ -7,13 +7,19 @@
       <div class="dropdown-content" dropdown-content>
         <ul class="view-mode-options">
           <li>
-            <a class="dropdown-item" (click)="handleViewModeChange(viewModeDropdown, 'day')">Tag</a>
+            <a class="dropdown-item" (click)="handleViewModeChange(viewModeDropdown, 'day')">
+              {{ dropdownLabel['day']}}
+            </a>
           </li>
           <li>
-            <a class="dropdown-item" (click)="handleViewModeChange(viewModeDropdown, 'week')">Woche</a>
+            <a class="dropdown-item" (click)="handleViewModeChange(viewModeDropdown, 'week')">
+              {{ dropdownLabel['week']}}
+            </a>
           </li>
           <li>
-            <a class="dropdown-item" (click)="handleViewModeChange(viewModeDropdown, 'month')">Monat</a>
+            <a class="dropdown-item" (click)="handleViewModeChange(viewModeDropdown, 'month')">
+              {{ dropdownLabel['month']}}
+            </a>
           </li>
         </ul>
       </div>

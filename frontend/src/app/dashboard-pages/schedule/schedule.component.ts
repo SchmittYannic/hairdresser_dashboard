@@ -17,16 +17,10 @@ export class ScheduleComponent implements OnInit {
   selectedDate$!: Observable<Date>;
   // appointments$!: Observable<Appointment[]>;
 
-  cardLabel: Record<string, string> = {
+  dropdownLabel: Record<string, string> = {
     day: 'Tagesansicht',
     week: 'Wochenansicht',
     month: 'Monatsansicht'
-  };
-
-  dropdownLabel: Record<string, string> = {
-    day: 'Tag',
-    week: 'Woche',
-    month: 'Monat'
   };
 
   constructor(
