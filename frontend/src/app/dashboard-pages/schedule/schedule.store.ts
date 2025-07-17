@@ -61,6 +61,10 @@ export class ScheduleStore extends ComponentStore<ScheduleState> {
     dateRange: getWeekRange(selectedDate),
   }));
 
+  getSelectedDate(): Date {
+    return this.get(s => s.selectedDate);
+  }
+
   readonly setEmployeeId = this.updater<string | null>((state, employeeId) => ({
     ...state,
     employeeId,
