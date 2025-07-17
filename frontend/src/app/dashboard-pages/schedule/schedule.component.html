@@ -25,7 +25,7 @@
         </button>
         <input size="8" [ngModel]="selectedDate$ | async" (ngModelChange)="handleDateChange($event)" [owlDateTime]="dt"
           [owlDateTimeTrigger]="dt" [selectMode]="'single'">
-        <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+        <owl-date-time [pickerType]="'calendar'" [firstDayOfWeek]="1" #dt></owl-date-time>
         <button type="button" (click)="handleChangeDay(1)">
           <i class="feather icon-chevron-right"></i>
         </button>
