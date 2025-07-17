@@ -21,8 +21,8 @@ public class Appointment {
     @Id
     private String id;
 
-    private String employee; // employee ID
-    private String customer; // customer ID
+    private String employee;
+    private String customer;
 
     @Field("service_name")
     private String serviceName;
