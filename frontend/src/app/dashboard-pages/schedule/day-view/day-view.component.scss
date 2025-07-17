@@ -1,11 +1,12 @@
 .day-view-container {
   --day-view-timesslot-height: 30px;
+  --day-view-time-column-width: 38px;
   display: flex;
   position: relative;
 }
 
 .time-column {
-  width: 38px;
+  width: var(--day-view-time-column-width);
   border-right: 1px solid var(--bs-border-color);
 }
 
