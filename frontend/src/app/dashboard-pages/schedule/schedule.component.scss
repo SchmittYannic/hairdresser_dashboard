@@ -1,3 +1,73 @@
 .schedule-controls {
   display: flex;
+  justify-content: space-between;
+}
+
+.schedule-controls .btn {
+  margin: 0;
+}
+
+.date-select {
+  --bs-date-select-padding-x: .75rem;
+  --bs-date-select-padding-y: .375rem;
+  --bs-date-select-font-size: 1rem;
+  --bs-date-select-color: var(--bs-link-color);
+  --bs-date-select-bg: var(--bs-body-bg);
+  --bs-date-select-border-width: var(--bs-border-width);
+  --bs-date-select-border-color: var(--bs-border-color);
+  --bs-date-select-border-radius: var(--bs-border-radius);
+  --bs-date-select-hover-color: var(--bs-link-hover-color);
+  --bs-date-select-hover-bg: var(--bs-tertiary-bg);
+  --bs-date-select-hover-border-color: var(--bs-border-color);
+  --bs-date-select-focus-color: var(--bs-link-hover-color);
+  --bs-date-select-focus-bg: var(--bs-secondary-bg);
+  --bs-date-select-focus-box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
+  --bs-date-select-active-color: #fff;
+  --bs-date-select-active-bg: #0d6efd;
+  --bs-date-select-active-border-color: #0d6efd;
+  --bs-date-select-disabled-color: var(--bs-secondary-color);
+  --bs-date-select-disabled-bg: var(--bs-secondary-bg);
+  --bs-date-select-disabled-border-color: var(--bs-border-color);
+  display: flex;
+}
+
+.date-select button,
+.date-select input {
+  height: 100%;
+  position: relative;
+  display: block;
+  padding: var(--bs-date-select-padding-y) var(--bs-date-select-padding-x);
+  font-size: var(--bs-date-select-font-size);
+  color: var(--bs-date-select-color);
+  text-decoration: none;
+  background-color: var(--bs-date-select-bg);
+  border: var(--bs-date-select-border-width) solid var(--bs-date-select-border-color);
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.date-select button:hover,
+.date-select input:hover {
+  z-index: 2;
+  color: var(--bs-date-select-hover-color);
+  background-color: var(--bs-date-select-hover-bg);
+  border-color: var(--bs-date-select-hover-border-color);
+}
+
+.date-select button:active {
+  background-color: var(--bs-date-select-focus-bg);
+}
+
+.date-select button:first-child {
+  border-top-left-radius: var(--bs-date-select-border-radius);
+  border-bottom-left-radius: var(--bs-date-select-border-radius);
+}
+
+.date-select button:last-child {
+  border-top-right-radius: var(--bs-date-select-border-radius);
+  border-bottom-right-radius: var(--bs-date-select-border-radius);
+}
+
+.date-select:not(:first-child) button,
+.date-select:not(:first-child) input {
+  margin-left: calc(-1 * var(--bs-border-width));
 }
