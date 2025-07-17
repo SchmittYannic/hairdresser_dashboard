@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { filter, map, Observable } from 'rxjs';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { format } from 'date-fns';
+import { endOfWeek, format, startOfWeek } from 'date-fns';
 import { de } from 'date-fns/locale';
 import { ScheduleStore, ViewMode } from './schedule.store';
 import { DropdownComponent } from '@app/shared/components/dropdown/dropdown.component';
@@ -70,5 +70,15 @@ export class ScheduleComponent implements OnInit {
   getFormattedDate(date: Date | null): string {
     if (!date) return "SELECTED_DATE_EQUALS_NULL"
     return format(date, 'EEEE, d. MMMM yyyy', { locale: de });
+  }
+
+  getWeekViewTitle(date: Date): string {
+    const weekStart = startOfWeek(date, { weekStartsOn: 1 }); // Monday
+    const weekEnd = endOfWeek(date, { weekStartsOn: 1 });     // Sunday
+
+    const formattedStart = format(weekStart, 'd. MMMM', { locale: de });
+    const formattedEnd = format(weekEnd, 'd. MMMM yyyy', { locale: de });
+
+    return `${formattedStart} - ${formattedEnd}`;
   }
 }
