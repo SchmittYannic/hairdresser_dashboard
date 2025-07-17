@@ -30,8 +30,8 @@ export class DayViewComponent {
   }
 
   generateTimeLabels(): void {
-    const startHour = 7;
-    const endHour = 19;
+    const startHour = 8;
+    const endHour = 18;
     this.times = [];
 
     for (let minutes = startHour * 60; minutes <= endHour * 60; minutes += 30) {
