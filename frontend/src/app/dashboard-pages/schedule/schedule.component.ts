@@ -15,7 +15,6 @@ import { DropdownComponent } from '@app/shared/components/dropdown/dropdown.comp
 export class ScheduleComponent implements OnInit {
   viewMode$!: Observable<ViewMode>;
   selectedDate$!: Observable<Date>;
-  // appointments$!: Observable<Appointment[]>;
 
   dropdownLabel: Record<string, string> = {
     day: 'Tagesansicht',
@@ -30,7 +29,6 @@ export class ScheduleComponent implements OnInit {
   ) {
     this.viewMode$ = this.scheduleStore.viewMode$;
     this.selectedDate$ = this.scheduleStore.selectedDate$;
-    // this.appointments$ = this.scheduleStore.appointmentsForSelectedDate$;
   }
 
   ngOnInit(): void {
@@ -73,8 +71,8 @@ export class ScheduleComponent implements OnInit {
   }
 
   getWeekViewTitle(date: Date): string {
-    const weekStart = startOfWeek(date, { weekStartsOn: 1 }); // Monday
-    const weekEnd = endOfWeek(date, { weekStartsOn: 1 });     // Sunday
+    const weekStart = startOfWeek(date, { weekStartsOn: 1 });
+    const weekEnd = endOfWeek(date, { weekStartsOn: 1 });
 
     const formattedStart = format(weekStart, 'd. MMMM', { locale: de });
     const formattedEnd = format(weekEnd, 'd. MMMM yyyy', { locale: de });
