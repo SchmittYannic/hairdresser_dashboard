@@ -3,6 +3,7 @@ import { Appointment } from '@app/shared/models/appointment.model';
 import { Observable } from 'rxjs';
 import { format } from 'date-fns';
 import { ScheduleStore } from '../schedule.store';
+import { getAppointmentTop, generateTimeLabels } from '@app/shared/utils/time-utils';
 
 @Component({
   selector: 'app-day-view',
@@ -26,34 +27,15 @@ export class DayViewComponent {
   }
 
   ngOnInit(): void {
-    this.generateTimeLabels();
-  }
-
-  generateTimeLabels(): void {
-    const startHour = 8;
-    const endHour = 18;
-    this.times = [];
-
-    for (let minutes = startHour * 60; minutes <= endHour * 60; minutes += 30) {
-      const hrs = Math.floor(minutes / 60);
-      const mins = minutes % 60;
-      const label = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
-      this.times.push(label);
-    }
+    this.times = generateTimeLabels();
   }
 
   getAppointmentTopFromString(dateString: string): string {
     const date = new Date(dateString);
-    return this.getAppointmentTop(date);
-  }
-
-  getAppointmentTop(start: Date): string {
-    const minutes = start.getHours() * 60 + start.getMinutes();
-    const dayStart = 7 * 60; // 7:00 AM
-    return `${(minutes - dayStart) * 1}px`; // 1px per minute
+    return getAppointmentTop({ appointmentStart: date });
   }
 
   getAppointmentHeight(duration: number): string {
-    return `${duration * 1}px`; // 1px per minute
+    return `${duration * 1}px`;
   }
 }

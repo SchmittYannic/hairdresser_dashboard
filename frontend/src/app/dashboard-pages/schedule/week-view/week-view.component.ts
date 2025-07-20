@@ -3,6 +3,7 @@ import { Observable, map } from 'rxjs';
 import { startOfWeek, addDays, format } from 'date-fns';
 import { ScheduleStore } from 'app/dashboard-pages/schedule/schedule.store';
 import { Appointment } from 'app/shared/models/appointment.model';
+import { getAppointmentTop, generateTimeLabels } from '@app/shared/utils/time-utils';
 
 @Component({
   selector: 'app-week-view',
@@ -30,29 +31,12 @@ export class WeekViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.generateTimeLabels();
-  }
-
-  generateTimeLabels(): void {
-    const startHour = 8;
-    const endHour = 18;
-    for (let minutes = startHour * 60; minutes <= endHour * 60; minutes += 30) {
-      const hrs = Math.floor(minutes / 60);
-      const mins = minutes % 60;
-      const label = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
-      this.times.push(label);
-    }
+    this.times = generateTimeLabels();
   }
 
   getAppointmentTopFromString(dateString: string): string {
     const date = new Date(dateString);
-    return this.getAppointmentTop(date);
-  }
-
-  getAppointmentTop(start: Date): string {
-    const minutes = start.getHours() * 60 + start.getMinutes();
-    const dayStart = 7 * 60;
-    return `${(minutes - dayStart) * 2}px`;
+    return getAppointmentTop({ appointmentStart: date, unitPerMinute: 2 });
   }
 
   getAppointmentHeight(duration: number): string {

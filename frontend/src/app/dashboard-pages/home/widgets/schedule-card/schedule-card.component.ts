@@ -42,7 +42,7 @@ export class ScheduleCardComponent implements OnInit {
 
   getAppointmentTopFromString(dateString: string): string {
     const date = new Date(dateString);
-    return getAppointmentTop(date, 8, 0, 1);
+    return getAppointmentTop({ appointmentStart: date });
   }
 
   getAppointmentHeight(duration: number): string {
