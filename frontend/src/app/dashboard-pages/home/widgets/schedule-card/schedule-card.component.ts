@@ -14,7 +14,7 @@ import { generateTimeLabels, getAppointmentTop } from '@app/shared/utils/time-ut
 })
 export class ScheduleCardComponent implements OnInit {
   appointments$: Observable<Appointment[]> = of([]);
-  readonly today = new Date();
+  today = new Date();
   times: string[] = [];
 
   constructor(
