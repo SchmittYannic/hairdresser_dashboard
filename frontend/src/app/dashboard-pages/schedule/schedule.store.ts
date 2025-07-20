@@ -138,7 +138,7 @@ export class ScheduleStore extends ComponentStore<ScheduleState> {
 }
 
 function getWeekRange(date: Date) {
-  const start = startOfWeek(date, { weekStartsOn: 1 }); // Monday start
-  const end = endOfWeek(date, { weekStartsOn: 1 }); // Sunday end
+  const start = startOfWeek(date, { weekStartsOn: 1 });
+  const end = endOfWeek(date, { weekStartsOn: 1 });
   return { start, end };
 }
