@@ -13,7 +13,7 @@ import { AuthStoreService } from './store/auth-store.service';
   standalone: false,
 })
 export class AppComponent implements OnInit {
-  title = 'frontend';
+  title = 'Hairdresser Dashboard';
   private initialPath: string = '/';
 
   constructor(
