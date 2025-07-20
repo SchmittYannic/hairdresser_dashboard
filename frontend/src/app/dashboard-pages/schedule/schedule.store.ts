@@ -6,7 +6,7 @@ import { startOfWeek, endOfWeek } from 'date-fns';
 import { ComponentStore } from '@ngrx/component-store';
 
 import { AuthStoreService } from '@app/store/auth-store.service';
-import { ScheduleService } from './schedule.service';
+import { ScheduleService } from '@app/shared/services/schedule.service';
 import { Appointment } from '@app/shared/models/appointment.model';
 import { User } from '@app/shared/models/user.model';
 

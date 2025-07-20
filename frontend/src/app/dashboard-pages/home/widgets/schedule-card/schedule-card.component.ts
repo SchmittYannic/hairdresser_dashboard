@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ScheduleService } from '@app/dashboard-pages/schedule/schedule.service';
+import { ScheduleService } from '@app/shared/services/schedule.service';
 import { Appointment } from '@app/shared/models/appointment.model';
 import { AuthStoreService } from '@app/store/auth-store.service';
 import { Observable, map, of, switchMap } from 'rxjs';
