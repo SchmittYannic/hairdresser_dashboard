@@ -1,9 +1,16 @@
 <div class="card">
-  <div class="card-header">
-    <h5>
-      {{ cardTitle }}
-    </h5>
-  </div>
+  <ng-container *ngIf="hasHeaderLink(); else noLink">
+    <a class="card-header link" [routerLink]="headerLink">
+      <h5>{{ cardTitle }}</h5>
+    </a>
+  </ng-container>
+
+  <ng-template #noLink>
+    <div class="card-header">
+      <h5>{{ cardTitle }}</h5>
+    </div>
+  </ng-template>
+
   <div class="collapsedCard">
     <div class="card-block">
       <ng-content></ng-content>
