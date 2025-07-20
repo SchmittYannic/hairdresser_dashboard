@@ -8,12 +8,12 @@ describe('SidebarItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SidebarItemComponent]
-    })
-    .compileComponents();
+      declarations: [SidebarItemComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SidebarItemComponent);
     component = fixture.componentInstance;
+    component.links = ['/'];
     fixture.detectChanges();
   });
 
