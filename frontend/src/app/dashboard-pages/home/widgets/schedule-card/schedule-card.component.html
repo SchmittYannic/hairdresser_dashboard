@@ -1,0 +1,26 @@
+<div class="schedule-card-container">
+  <div class="time-column">
+    <div *ngFor="let time of times" class="time-slot">
+      <span class="time-label">
+        {{ time }}
+      </span>
+    </div>
+  </div>
+
+  <div class="appointment-column">
+    <div class="appointment-track-bg">
+      <div *ngFor="let time of times" class="appointment-track-guides"></div>
+    </div>
+    <div class="appointment-track">
+      <ng-container *ngIf="appointments$ | async as appointments">
+        <div *ngFor="let app of appointments" class="appointment-block" [ngClass]="app.serviceName" [ngStyle]="{
+               top: getAppointmentTopFromString(app.start),
+               height: getAppointmentHeight(app.duration)
+             }">
+          <strong style="margin-right: 10px;">{{ app.serviceName || 'Appointment' }}</strong>
+          {{ app.customerFirstname }} {{ app.customerLastname }}
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
