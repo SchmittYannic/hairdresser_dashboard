@@ -13,12 +13,19 @@ export function generateTimeLabels(
   return times;
 }
 
-export function getAppointmentTop(
-  appointmentStart: Date,
-  startHour: number = 8,
-  startMinute: number = 0,
-  unitPerMinute: number = 1,
-): string {
+type getAppointmentTopParams = {
+  appointmentStart: Date
+  startHour?: number
+  startMinute?: number
+  unitPerMinute?: number
+}
+
+export function getAppointmentTop({
+  appointmentStart,
+  startHour = 8,
+  startMinute = 0,
+  unitPerMinute = 1,
+}: getAppointmentTopParams): string {
   if (startHour < 0 || startHour > 24) {
     throw new Error(`Invalid startHour: ${startHour}. Must be between 0 and 24.`);
   }
