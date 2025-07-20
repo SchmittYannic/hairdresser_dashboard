@@ -24,8 +24,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () =>
-          import('./dashboard-pages/home/home.component').then(m => m.HomeComponent),
+        loadChildren: () =>
+          import('./dashboard-pages/home/home.module').then(m => m.HomeModule),
         data: { breadcrumb: 'Dashboard' },
       },
       {
