@@ -46,6 +46,6 @@ export class ScheduleCardComponent implements OnInit {
   }
 
   getAppointmentHeight(duration: number): string {
-    return `${duration * 1}px`; // 1px per minute
+    return `${duration * 1}px`;
   }
 }
