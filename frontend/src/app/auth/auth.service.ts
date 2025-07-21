@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthStoreService } from 'app/store/auth-store.service';
 import { environment } from 'environments/environment';
+import { User } from '@app/shared/models/user.model';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -30,10 +33,20 @@ export class AuthService {
     );
   }
 
-  logout() {
-    return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).subscribe(() => {
-      this.store.clearToken();
-      this.router.navigate(['/signin']);
-    });
+  logout(): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/logout`, {}, { withCredentials: true });
+  }
+
+  loadUserProfile(): Observable<User> {
+    return this.http.get<User>(`${environment.apiUrl}/users/me`, { withCredentials: true }).pipe(
+      tap({
+        next: profile => this.store.setUserProfile(profile),
+        error: _ => console.error('Error loading profile')
+      })
+    );
+  }
+
+  get currentUserProfile(): User | null {
+    return this.store.getUserProfile();
   }
 }

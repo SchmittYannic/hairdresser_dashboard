@@ -15,6 +15,7 @@ describe('UsersComponent', () => {
     const usersResponse = {
       users: [
         {
+          id: '23423hhhjf',
           email: 'john@example.com',
           roles: ['role'],
           title: 'Mr.',
@@ -26,7 +27,8 @@ describe('UsersComponent', () => {
           reminderemail: false,
           birthdayemail: false,
           newsletter: true,
-          createdAt: new Date().toISOString()
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
         }
       ],
       total: 1

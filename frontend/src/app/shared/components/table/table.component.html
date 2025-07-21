@@ -5,13 +5,18 @@
         <th *ngFor="let header of table.getHeaderGroups()[0].headers" (click)="onHeaderClick(header.column)"
           style="cursor: pointer;">
           {{ header.column.columnDef.header }}
-          <span *ngIf="sorting.sortField === header.column.id">
-            {{ sorting.sortOrder === 'asc' ? '🔽' : '🔼' }}
-          </span>
+          <ng-container *ngIf="sorting.sortField === header.column.id">
+            <span *ngIf="sorting.sortOrder === 'asc'">
+              <i class="feather icon-chevron-down"></i>
+            </span>
+            <span *ngIf="sorting.sortOrder === 'desc'">
+              <i class="feather icon-chevron-up"></i>
+            </span>
+          </ng-container>
         </th>
       </tr>
     </thead>
-    <tbody>
+    <tbody *ngIf="!isLoading">
       <tr *ngFor="let row of table.getRowModel().rows">
         <td *ngFor="let cell of row.getVisibleCells()">
           <ng-container *flexRender="
@@ -21,6 +26,13 @@
                 ">
             <div [innerHTML]="cell"></div>
           </ng-container>
+        </td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="isLoading">
+      <tr *ngFor="let row of table.getRowModel().rows">
+        <td *ngFor="let cell of row.getVisibleCells()">
+          <p class="paragraph-skeleton" [class.animated]="isLoading"></p>
         </td>
       </tr>
     </tbody>

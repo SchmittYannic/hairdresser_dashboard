@@ -33,7 +33,7 @@
             <i class="icon feather icon-bell" dropdown-trigger></i>
 
             <div dropdown-content>
-              <div class="notification">You have new alerts!</div>
+              <div class="notification">work in progress</div>
             </div>
           </app-dropdown>
         </li>
@@ -42,7 +42,14 @@
             <i class="icon feather icon-settings" dropdown-trigger></i>
 
             <div dropdown-content>
-              <div class="profile-notification">TEST</div>
+              <div class="profile-notification">
+                <div class="pro-head">
+                  <span *ngIf="userProfile$ | async as user">{{ user.firstname }} {{ user.lastname }}</span>
+                  <a class="dud-logout" title="Logout" (click)="handleLogoutClicked()">
+                    <i class="feather icon-logout"></i>
+                  </a>
+                </div>
+              </div>
             </div>
           </app-dropdown>
         </li>

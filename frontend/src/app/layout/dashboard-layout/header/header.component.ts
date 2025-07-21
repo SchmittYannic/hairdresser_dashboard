@@ -1,7 +1,13 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { DashboardLayoutService } from '../dashboard-layout.service';
 import { CommonModule } from '@angular/common';
-import { DropdownComponent } from '@app/shared/components/dropdown/dropdown.component';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+
+import { DashboardLayoutService } from 'app/layout/dashboard-layout/dashboard-layout.service';
+import { AuthService } from 'app/auth/auth.service';
+import { AuthStoreService } from 'app/store/auth-store.service';
+import { DropdownComponent } from 'app/shared/components/dropdown/dropdown.component';
+import { User } from 'app/shared/models/user.model';
 
 @Component({
   selector: 'app-header',
@@ -14,12 +20,19 @@ import { DropdownComponent } from '@app/shared/components/dropdown/dropdown.comp
   ]
 })
 export class HeaderComponent implements OnInit {
+  userProfile$!: Observable<User | null>;
+
   isMobile = false;
   isFullscreen = false;
   isMobileSidebarCollapsed = true;
   isMobileHeaderSwitched = false;
 
-  constructor(public layout: DashboardLayoutService) { }
+  constructor(
+    public layout: DashboardLayoutService,
+    private authService: AuthService,
+    private store: AuthStoreService,
+    private router: Router,
+  ) { }
 
   toggleFullscreen(): void {
     const elem = document.documentElement as any;
@@ -54,7 +67,23 @@ export class HeaderComponent implements OnInit {
     this.layout.toggleMobileHeaderSwitched();
   }
 
+  handleLogoutClicked(): void {
+    this.authService.logout().subscribe({
+      next: () => {
+        this.store.clearToken();
+        this.router.navigate(['/signin']);
+      },
+      error: (_) => {
+        console.error('Logout failed');
+        this.store.clearToken();
+        this.router.navigate(['/signin']);
+      }
+    });
+  }
+
   ngOnInit(): void {
+    this.userProfile$ = this.store.userProfile$;
+
     this.layout.isMobile$.subscribe(val => this.isMobile = val);
     this.layout.isMobileSidebarCollapsed$.subscribe(val => this.isMobileSidebarCollapsed = val);
     this.layout.isMobileHeaderSwitched$.subscribe(val => this.isMobileHeaderSwitched = val);

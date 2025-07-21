@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { finalize, switchMap } from 'rxjs';
 
 import { AuthService } from './auth/auth.service';
 import { AuthStoreService } from './store/auth-store.service';
@@ -10,18 +11,9 @@ import { AuthStoreService } from './store/auth-store.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   standalone: false,
-  styles: [`
-    .loading-screen {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100dvh;
-      font-size: 1.5rem;
-    }
-  `]
 })
 export class AppComponent implements OnInit {
-  title = 'frontend';
+  title = 'Hairdresser Dashboard';
   private initialPath: string = '/';
 
   constructor(
@@ -35,17 +27,25 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.setIsRefreshLoading(true);
-    this.authService.refreshToken().subscribe({
-      next: (res) => {
+
+    this.authService.refreshToken().pipe(
+      switchMap((res) => {
         this.store.setToken(res.accessToken);
-        const redirectPath = this.initialPath === '' || this.initialPath === '/' ? '/dashboard' : this.initialPath;
-        this.router.navigateByUrl(redirectPath);
+        return this.authService.loadUserProfile();
+      }),
+      finalize(() => {
         this.store.setIsRefreshLoading(false);
+      })
+    ).subscribe({
+      next: () => {
+        const redirectPath = this.initialPath === '' || this.initialPath === '/'
+          ? '/dashboard'
+          : this.initialPath;
+        this.router.navigateByUrl(redirectPath);
       },
       error: () => {
         this.store.clearToken();
         this.router.navigate(['/signin']);
-        this.store.setIsRefreshLoading(false);
       }
     });
   }

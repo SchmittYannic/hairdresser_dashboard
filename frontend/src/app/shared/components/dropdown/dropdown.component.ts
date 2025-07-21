@@ -59,6 +59,13 @@ export class DropdownComponent implements OnInit, OnDestroy {
     }
   }
 
+  close() {
+    if (this.isOpen) {
+      this.isOpen = false;
+      this.closed.emit();
+    }
+  }
+
   @HostListener('document:click', ['$event'])
   closeIfClickedOutside(event: MouseEvent) {
     const target = event.target as HTMLElement;

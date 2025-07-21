@@ -21,8 +21,25 @@ describe('AppComponent', () => {
   let authStoreSpy: jasmine.SpyObj<AuthStoreService>;
   let router: Router;
 
+  const mockUser = {
+    id: '23423hhhjf',
+    email: 'john@example.com',
+    roles: ['role'],
+    title: 'Mr.',
+    lastname: 'Doe',
+    firstname: 'John',
+    birthday: '1990-01-01',
+    phonenumber: '1234567890',
+    validated: true,
+    reminderemail: false,
+    birthdayemail: false,
+    newsletter: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+
   beforeEach(async () => {
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['refreshToken']);
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['refreshToken', 'loadUserProfile']);
     authStoreSpy = jasmine.createSpyObj('AuthStoreService', [
       'setIsRefreshLoading',
       'setToken',
@@ -50,19 +67,19 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should have the "frontend" title', () => {
+  it('should have the "Hairdresser Dashboard" title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toBe('frontend');
+    expect(app.title).toBe('Hairdresser Dashboard');
   });
 
-  it('should call refreshToken and redirect to /dashboard if initial path is /', fakeAsync(() => {
+  it('should refresh token, load user profile, and redirect to /dashboard if initial path is /', fakeAsync(() => {
     const tokenResponse = { accessToken: 'test-token' };
     authServiceSpy.refreshToken.and.returnValue(of(tokenResponse));
+    authServiceSpy.loadUserProfile.and.returnValue(of(mockUser));
 
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-
     (app as any).initialPath = '/';
 
     fixture.detectChanges();
@@ -71,17 +88,18 @@ describe('AppComponent', () => {
     expect(authStoreSpy.setIsRefreshLoading).toHaveBeenCalledWith(true);
     expect(authServiceSpy.refreshToken).toHaveBeenCalled();
     expect(authStoreSpy.setToken).toHaveBeenCalledWith('test-token');
+    expect(authServiceSpy.loadUserProfile).toHaveBeenCalled();
     expect(router.navigateByUrl).toHaveBeenCalledWith('/dashboard');
     expect(authStoreSpy.setIsRefreshLoading).toHaveBeenCalledWith(false);
   }));
 
-  it('should call refreshToken and redirect to preserved initialPath if not "/"', fakeAsync(() => {
+  it('should refresh token, load user profile, and redirect to preserved initialPath if not "/"', fakeAsync(() => {
     const tokenResponse = { accessToken: 'test-token' };
     authServiceSpy.refreshToken.and.returnValue(of(tokenResponse));
+    authServiceSpy.loadUserProfile.and.returnValue(of(mockUser));
 
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-
     (app as any).initialPath = '/some-feature';
 
     fixture.detectChanges();
@@ -90,20 +108,36 @@ describe('AppComponent', () => {
     expect(authStoreSpy.setIsRefreshLoading).toHaveBeenCalledWith(true);
     expect(authServiceSpy.refreshToken).toHaveBeenCalled();
     expect(authStoreSpy.setToken).toHaveBeenCalledWith('test-token');
+    expect(authServiceSpy.loadUserProfile).toHaveBeenCalled();
     expect(router.navigateByUrl).toHaveBeenCalledWith('/some-feature');
     expect(authStoreSpy.setIsRefreshLoading).toHaveBeenCalledWith(false);
   }));
 
-  it('should call refreshToken and handle error by navigating to /signin', fakeAsync(() => {
+  it('should handle refreshToken error and navigate to /signin', fakeAsync(() => {
     authServiceSpy.refreshToken.and.returnValue(throwError(() => new Error('fail')));
 
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-
     tick();
 
     expect(authStoreSpy.setIsRefreshLoading).toHaveBeenCalledWith(true);
     expect(authServiceSpy.refreshToken).toHaveBeenCalled();
+    expect(authStoreSpy.clearToken).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/signin']);
+    expect(authStoreSpy.setIsRefreshLoading).toHaveBeenCalledWith(false);
+  }));
+
+  it('should handle loadUserProfile error and navigate to /signin', fakeAsync(() => {
+    const tokenResponse = { accessToken: 'test-token' };
+    authServiceSpy.refreshToken.and.returnValue(of(tokenResponse));
+    authServiceSpy.loadUserProfile.and.returnValue(throwError(() => new Error('fail')));
+
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    tick();
+
+    expect(authServiceSpy.refreshToken).toHaveBeenCalled();
+    expect(authServiceSpy.loadUserProfile).toHaveBeenCalled();
     expect(authStoreSpy.clearToken).toHaveBeenCalled();
     expect(router.navigate).toHaveBeenCalledWith(['/signin']);
     expect(authStoreSpy.setIsRefreshLoading).toHaveBeenCalledWith(false);

@@ -21,6 +21,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
   styleUrl: './table.component.scss'
 })
 export class TableComponent<T> implements OnChanges {
+  @Input() isLoading: boolean = false;
   @Input() data: T[] = [];
   @Input() columns: ColumnDef<T, any>[] = [];
 

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'app/auth/auth.service';
 import { AuthStoreService } from 'app/store/auth-store.service';
+import { finalize, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-signin',
@@ -13,6 +14,7 @@ import { AuthStoreService } from 'app/store/auth-store.service';
 export class SigninComponent {
   signinForm: FormGroup;
   error: string | null = null;
+  signinRequestLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -46,19 +48,27 @@ export class SigninComponent {
     }
 
     const { email, password, saveDetails } = this.signinForm.value;
+    this.signinRequestLoading = true;
 
-    this.authService.signin(email, password, saveDetails).subscribe({
-      next: (res) => {
+    this.authService.signin(email, password, saveDetails).pipe(
+      switchMap((res) => {
         this.store.setToken(res.accessToken);
+        return this.authService.loadUserProfile();
+      }),
+      finalize(() => {
+        this.signinRequestLoading = false;
+      })
+    ).subscribe({
+      next: () => {
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         if (err.status === 403) {
           this.error = 'Access denied: not an employee or admin';
         } else if (err.status === 401) {
-          this.error = 'Login failed. Please check your credentials.'
+          this.error = 'Login failed. Please check your credentials.';
         } else {
-          this.error = 'An error occured. Try again later or contact support';
+          this.error = 'An error occurred. Try again later or contact support.';
         }
       }
     });

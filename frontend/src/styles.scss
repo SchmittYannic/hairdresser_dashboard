@@ -1,3 +1,5 @@
+@import '@danielmoncada/angular-datetime-picker/assets/style/picker.min.css';
+
 @font-face {
   font-display: swap;
   font-family: 'Open Sans';
@@ -382,6 +384,33 @@ hr {
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
+}
+
+app-root>app-spinner>.spinner-container {
+  min-height: 100dvh;
+
+  // .loading-screen {
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   height: 100dvh;
+  //   font-size: 1.5rem;
+  // }
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute-centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.w-full {
+  width: 100%;
 }
 
 .row {
@@ -1079,6 +1108,26 @@ tertiary:not(:disabled):not(.disabled).active,
   content: "\e8ea";
 }
 
+.icon-logout::before {
+  content: "\e888";
+}
+
+.icon-chevron-down::before {
+  content: "\e842";
+}
+
+.icon-chevron-left::before {
+  content: "\e843";
+}
+
+.icon-chevron-right::before {
+  content: "\e844";
+}
+
+.icon-chevron-up::before {
+  content: "\e845";
+}
+
 .pcoded-navbar .pcoded-inner-navbar li>a .pcoded-mtext {
   position: relative;
 }
@@ -1115,6 +1164,7 @@ tertiary:not(:disabled):not(.disabled).active,
   transform: rotateY(-90deg);
   transform-origin: 0 0;
   opacity: 0;
+  width: 0;
 }
 
 .sidebar-not-fixed .pcoded-menu-caption::after {
@@ -1282,7 +1332,7 @@ tertiary:not(:disabled):not(.disabled).active,
 
 .pcoded-header .input-group .input-group-text,
 .pcoded-header a,
-.pcoded-header dropdown-toggle {
+.pcoded-header .dropdown-toggle {
   color: #3f4d67;
 }
 
@@ -1292,7 +1342,7 @@ tertiary:not(:disabled):not(.disabled).active,
 
 .pcoded-header .input-group .input-group-text:hover,
 .pcoded-header a:hover,
-.pcoded-header dropdown-toggle:hover {
+.pcoded-header .dropdown-toggle:hover {
   color: #04a9f5;
 }
 
@@ -1449,6 +1499,72 @@ tertiary:not(:disabled):not(.disabled).active,
   margin-left: var(--bs-sidebar-collapsed-width);
 }
 
+.pcoded-header .dropdown .profile-notification .pro-head {
+  color: #fff;
+  border-radius: .25rem .25rem 0 0;
+  padding: 15px;
+  position: relative;
+  background: #04a9f5;
+}
+
+.pcoded-header .dropdown .profile-notification .pro-head .dud-logout {
+  color: #fff;
+  padding-right: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pcoded-header .dropdown>.dropdown-menu {
+  padding: 0;
+  line-height: 1.4;
+  overflow: hidden;
+}
+
+.dropdown-content ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
+  clear: both;
+  font-weight: 400;
+  color: var(--bs-dropdown-link-color);
+  text-align: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+  border-radius: var(--bs-dropdown-item-border-radius, 0);
+  cursor: pointer;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  color: var(--bs-dropdown-link-hover-color);
+  background-color: var(--bs-dropdown-link-hover-bg);
+}
+
+.dropdown-trigger-btn::after {
+  display: inline-block;
+  margin-left: .255em;
+  vertical-align: .255em;
+  content: "";
+  border-top: .3em solid;
+  border-right: .3em solid transparent;
+  border-bottom: 0;
+  border-left: .3em solid transparent;
+}
+
 @media only screen and (max-width: 1200px) and (min-width: 768px) {
   .sidebar-not-fixed .pcoded-menu-caption>label {
     transition: none;
@@ -1524,7 +1640,7 @@ tertiary:not(:disabled):not(.disabled).active,
 
   .pcoded-header .input-group-text,
   .pcoded-header a,
-  .pcoded-header dropdown-toggle {
+  .pcoded-header .dropdown-toggle {
     color: #fff;
   }
 
