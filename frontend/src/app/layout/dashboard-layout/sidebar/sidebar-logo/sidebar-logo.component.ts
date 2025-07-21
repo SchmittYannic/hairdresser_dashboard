@@ -16,7 +16,6 @@ export class SidebarLogoComponent {
   handleCollapseClick(event: MouseEvent) {
     event.preventDefault();
     this.layoutService.toggleSidebarFixed();
-    //this.layoutService.toggleSidebarCollapse();
   }
 
   ngOnInit(): void {

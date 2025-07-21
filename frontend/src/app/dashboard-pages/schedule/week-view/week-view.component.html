@@ -1,0 +1,44 @@
+<div class="week-view-container">
+  <div class="week-view-headers">
+    <ng-container *ngIf="appointmentsByDate$ | async as appointmentsMap">
+      <div class="day-header"></div>
+      <ng-container *ngFor="let day of weekDays$ | async">
+        <div class="day-header" [ngClass]="{ 'selected': isSameDay(day, selectedDate$ | async) }">
+          <div>
+            {{ day | date: 'EEEE' }}
+          </div>
+          <div>
+            {{ day | date: 'dd.MM' }}
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+  <div class="week-view-schedule">
+    <div class="time-column">
+      <div *ngFor="let time of times" class="time-slot">
+        <span class="time-label">{{ time }}</span>
+      </div>
+    </div>
+    <ng-container *ngIf="appointmentsByDate$ | async as appointmentsMap">
+      <div class="days-column">
+        <div class="day" *ngFor="let day of weekDays$ | async">
+          <div class="appointment-track-bg">
+            <div *ngFor="let time of times" class="appointment-track-guides"></div>
+          </div>
+
+          <div class="appointment-track">
+            <div *ngFor="let app of appointmentsMap.get(getDateKey(day)) || []" class="appointment-block"
+              [ngClass]="app.serviceName" [ngStyle]="{
+              top: getAppointmentTopFromString(app.start),
+              height: getAppointmentHeight(app.duration)
+            }">
+              <strong style="margin-right: 10px;">{{ app.serviceName || 'Appointment' }}</strong>
+              {{ app.customerFirstname }} {{ app.customerLastname }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

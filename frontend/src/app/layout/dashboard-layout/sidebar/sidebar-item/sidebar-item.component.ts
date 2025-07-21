@@ -8,17 +8,19 @@ import { Router } from '@angular/router';
   styleUrl: './sidebar-item.component.scss'
 })
 export class SidebarItemComponent {
-  @Input() link!: string;
+  @Input() links!: string[];
 
   constructor(public router: Router) { }
 
   isActive(): boolean {
-    const tree = this.router.createUrlTree([this.link]);
-    return this.router.isActive(tree, {
-      paths: 'exact',
-      queryParams: 'ignored',
-      matrixParams: 'ignored',
-      fragment: 'ignored'
+    return this.links.some(link => {
+      const tree = this.router.createUrlTree([link]);
+      return this.router.isActive(tree, {
+        paths: 'exact',
+        queryParams: 'ignored',
+        matrixParams: 'ignored',
+        fragment: 'ignored'
+      });
     });
   }
 }

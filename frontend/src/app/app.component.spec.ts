@@ -67,10 +67,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should have the "frontend" title', () => {
+  it('should have the "Hairdresser Dashboard" title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toBe('frontend');
+    expect(app.title).toBe('Hairdresser Dashboard');
   });
 
   it('should refresh token, load user profile, and redirect to /dashboard if initial path is /', fakeAsync(() => {

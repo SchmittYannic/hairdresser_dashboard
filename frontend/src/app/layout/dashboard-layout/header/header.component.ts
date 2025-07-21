@@ -82,7 +82,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userProfile$ = this.authService.userProfile$;
+    this.userProfile$ = this.store.userProfile$;
 
     this.layout.isMobile$.subscribe(val => this.isMobile = val);
     this.layout.isMobileSidebarCollapsed$.subscribe(val => this.isMobileSidebarCollapsed = val);

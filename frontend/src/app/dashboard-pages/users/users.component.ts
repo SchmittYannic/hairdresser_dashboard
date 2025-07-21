@@ -82,7 +82,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         const rawDate = info.getValue();
         if (!rawDate) return '';
         const date = new Date(rawDate);
-        return format(date, 'dd.MM.yyyy HH:mm'); // or use date.toLocaleString()
+        return format(date, 'dd.MM.yyyy HH:mm');
       },
     }
   ];

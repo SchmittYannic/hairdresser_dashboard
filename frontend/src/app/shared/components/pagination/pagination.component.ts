@@ -17,8 +17,8 @@ export class PaginationComponent {
   @Output() pageChange = new EventEmitter<number>();
 
   get paginationPages(): number[] {
-    const totalPages = this.totalPages; // total number of pages
-    const current = this.pageIndex;     // 0-based
+    const totalPages = this.totalPages;
+    const current = this.pageIndex;
     const maxVisible = 5;
     const pages: number[] = [];
 
