@@ -34,7 +34,10 @@
               height: getAppointmentHeight(app.duration)
             }">
               <strong style="margin-right: 10px;">{{ app.serviceName || 'Appointment' }}</strong>
+              <br>
               {{ app.customerFirstname }} {{ app.customerLastname }}
+              <br>
+              {{ app.start | date:'shortTime' }} - {{ app.end | date:'shortTime' }}
             </div>
           </div>
         </div>

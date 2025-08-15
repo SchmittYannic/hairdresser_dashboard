@@ -76,12 +76,12 @@ describe('WeekViewComponent', () => {
 
   it('getAppointmentTopFromString should return correct pixel value with scaling', () => {
     const px = component.getAppointmentTopFromString('2024-07-17T09:15:00');
-    expect(px).toBe('150px'); // (9*60 + 15) - (8*60) = 75 * 2 = 150px
+    expect(px).toBe('225px'); // (9*90 + 15) - (8*90) = 75 * 3 = 225px
   });
 
   it('getAppointmentHeight should return scaled height string', () => {
     const result = component.getAppointmentHeight(30);
-    expect(result).toBe('60px');
+    expect(result).toBe('90px');
   });
 
   it('getDateKey should return correctly formatted string', () => {
